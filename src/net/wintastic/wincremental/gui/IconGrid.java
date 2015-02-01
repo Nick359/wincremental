@@ -1,5 +1,6 @@
 package net.wintastic.wincremental.gui;
 
+import net.wintastic.lwjgl.Input;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class IconGrid {
         int vertDisplacement = 0;
         int horizDisplacement = 0;
         while (iconsNotPlaced) {
-            icons.get(i).position = new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + 16f), position.y + (vertDisplacement + 1) * (verticalPadding + 16f));
+            icons.get(i).setPosition(new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + 16f), position.y + (vertDisplacement + 1) * (verticalPadding + 16f)));
 
             if (i >= icons.size() - 1) {
                 iconsNotPlaced = false;
@@ -76,6 +77,14 @@ public class IconGrid {
             if (i == iconsPerLine) {
                 vertDisplacement++;
                 horizDisplacement = 0;
+            }
+        }
+    }
+
+    public void checkIconHovering(){
+        for (int i = 0; i < icons.size(); i++) {
+            if (icons.get(i).contains(Input.mousePosition())){
+                icons.get(i).getTooltip().draw();
             }
         }
     }
