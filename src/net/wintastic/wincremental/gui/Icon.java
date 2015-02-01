@@ -14,12 +14,11 @@ public class Icon {
 
     public Icon(Vector2f position){
         this.position = position;
-        tooltip = new Tooltip(position);
+        tooltip = new Tooltip();
     }
 
     public void setPosition(Vector2f position){
         this.position = position;
-        tooltip.setPosition(position);
     }
 
     public boolean contains(Vector2f other){
