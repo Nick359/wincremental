@@ -11,10 +11,12 @@ public class GameManager {
 
     GUI gui;
     Board board;
+    public static Player player;
 
     public void init() {
         gui = new GUI();
         board = new Board((Game.resX - leftMenuWidth) / tileSize, (Game.resY - topBarHeight) / tileSize);
+        player = new Player();
     }
 
     public void update() {

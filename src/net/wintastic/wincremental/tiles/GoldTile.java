@@ -13,8 +13,8 @@ public class GoldTile extends Tile {
 
     @Override
     public void clickAction() {
-        // TODO: implement action
-        this.position = new Vector2f(0,0);
+        // TODO: change 1 to something dynamic
+        GameManager.player.changeGold(1);
     }
 
     @Override
