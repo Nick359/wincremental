@@ -21,7 +21,7 @@ public class Board {
         tiles = new Tile[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (MathHelper.randomInt(0, 100) < 1)
+                if (MathHelper.randomChance(0.2f))
                     tiles[i][j] = new GoldTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize));
                 else
                     tiles[i][j] = new GrassTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize));

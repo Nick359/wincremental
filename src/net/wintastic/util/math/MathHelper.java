@@ -116,6 +116,17 @@ public class MathHelper {
         return Math.random() * (max - min) + min;
     }
 
+    /**
+     * Returns a random value true with probability given by chance
+     *
+     * @param chance The change the return value will be true, as a percentage (ex. 50)
+     * @return The result of the probability calculation
+     */
+    public static boolean randomChance(float chance) {
+        if (chance < 0) throw new IllegalArgumentException("Change cannot be smaller than 0%");
+        return Math.random() < chance / 100;
+    }
+
     public static boolean floatEquals(float a, float b) {
         return floatEquals(a, b, 0.00001f);
     }
