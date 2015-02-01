@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 
+import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Shape2D;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
@@ -25,7 +26,7 @@ public class Tooltip {
     }
 
     public void draw(){
-        Shape2D.drawRectangle(position, 300, 200, 0f, new Color(200, 200, 200), true);
+        Shape2D.drawRectangle(Input.mousePosition(), 300, 200, 0f, new Color(200, 200, 200), true);
     }
 
 }
