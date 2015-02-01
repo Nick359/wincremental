@@ -22,8 +22,8 @@ public class GameManager {
     }
 
     public void draw() {
-        gui.draw();
         board.draw();
+        gui.draw();
     }
 
 }
