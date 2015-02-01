@@ -2,7 +2,7 @@ package net.wintastic;
 
 import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.LWJGLGame;
-import net.wintastic.multipaint.GameManager;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
