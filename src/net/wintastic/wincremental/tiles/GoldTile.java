@@ -5,20 +5,21 @@ import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
-public class GrassTile extends Tile {
+public class GoldTile extends Tile {
 
-    public GrassTile(Vector2f position) {
+    public GoldTile(Vector2f position) {
         super(position);
     }
 
     @Override
     public void clickAction() {
-
+        // TODO: implement action
+        this.position = new Vector2f(0,0);
     }
 
     @Override
     protected Sprite getSprite() {
-        return AssetLibrary.grassTileSprite;
+        return AssetLibrary.goldTileSprite;
     }
 
     @Override
