@@ -4,11 +4,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-/**
- * Created by Nick on 01/02/2015.
- */
 public class IconGrid {
 
     String name;
@@ -64,8 +60,6 @@ public class IconGrid {
     }
 
     private void calculateIconPositions() {
-        int numLines = (int) Math.ceil(icons.size() / iconsPerLine);
-
         boolean iconsNotPlaced = true;
         int i = 0;
         int vertDisplacement = 0;
@@ -79,7 +73,7 @@ public class IconGrid {
 
             i++;
             horizDisplacement++;
-            if (i == iconsPerLine - 1) {
+            if (i == iconsPerLine) {
                 vertDisplacement++;
                 horizDisplacement = 0;
             }
