@@ -2,10 +2,8 @@ package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.Input;
 import net.wintastic.util.math.MathHelper;
-import net.wintastic.wincremental.tiles.GoldTile;
-import net.wintastic.wincremental.tiles.GrassTile;
+import net.wintastic.wincremental.tiles.ResourceTile;
 import net.wintastic.wincremental.tiles.Tile;
-import net.wintastic.wincremental.tiles.WoodTile;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Board {
@@ -23,12 +21,11 @@ public class Board {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (MathHelper.randomChance(0.2f))
-                    tiles[i][j] = new GoldTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize));
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Gold);
                 else if (MathHelper.randomChance(4))
-                    tiles[i][j] = new WoodTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize));
-
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Wood);
                 else
-                    tiles[i][j] = new GrassTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize));
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Grass);
             }
         }
     }
