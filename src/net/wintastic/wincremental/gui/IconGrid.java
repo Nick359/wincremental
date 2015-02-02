@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.Input;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class IconGrid {
         int vertDisplacement = 0;
         int horizDisplacement = 0;
         while (iconsNotPlaced) {
-            icons.get(i).setPosition(new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + 16f), position.y + (vertDisplacement + 1) * (verticalPadding + 16f)));
+            icons.get(i).setPosition(new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + GameManager.tileSize), position.y + (vertDisplacement + 1) * (verticalPadding + GameManager.tileSize)));
 
             if (i >= icons.size() - 1) {
                 iconsNotPlaced = false;

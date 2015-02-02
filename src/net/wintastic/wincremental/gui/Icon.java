@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 import net.wintastic.wincremental.AssetLibrary;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Icon {
@@ -22,8 +23,7 @@ public class Icon {
     }
 
     public boolean contains(Vector2f other){
-        //TODO change magic numbers 16f
-        return (other.x >= position.x && other.x <= position.x+16f && other.y >= position.y && other.y <= position.y+16f);
+        return (other.x >= position.x && other.x <= position.x+ GameManager.tileSize && other.y >= position.y && other.y <= position.y+GameManager.tileSize);
     }
 
     public Tooltip getTooltip(){

@@ -1,6 +1,5 @@
 package net.wintastic.wincremental.gui;
 
-
 import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Shape2D;
 import net.wintastic.lwjgl.Text;

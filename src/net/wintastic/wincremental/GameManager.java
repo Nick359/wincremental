@@ -20,6 +20,7 @@ public class GameManager {
     }
 
     public void update() {
+        gui.update();
         board.update();
     }
 
