@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Tile {
@@ -14,5 +15,8 @@ public abstract class Tile {
 
     protected abstract Sprite getSprite();
 
-    public abstract void draw();
+    public void draw() {
+        getSprite().position = new Vector2f(position.x + GameManager.leftMenuWidth, position.y + GameManager.topBarHeight);
+        getSprite().draw();
+    }
 }

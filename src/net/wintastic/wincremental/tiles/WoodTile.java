@@ -5,20 +5,20 @@ import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
-public class GrassTile extends Tile {
+public class WoodTile extends Tile {
 
-    public GrassTile(Vector2f position) {
+    public WoodTile(Vector2f position) {
         super(position);
     }
 
     @Override
     public void clickAction() {
-
+        // TODO: change 1 to something dynamic
+        GameManager.player.changeWood(1);
     }
 
     @Override
     protected Sprite getSprite() {
-        return AssetLibrary.grassTileSprite;
+        return AssetLibrary.woodTileSprite;
     }
-
 }
