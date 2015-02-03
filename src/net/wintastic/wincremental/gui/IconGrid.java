@@ -9,7 +9,11 @@ import java.util.List;
 
 public class IconGrid {
 
-    String name;
+    public static enum GridType {
+        TEST, BUILDING
+    }
+
+    GridType type;
     Vector2f position;
     List<Icon> icons;
     int verticalPadding;
@@ -17,46 +21,57 @@ public class IconGrid {
     int iconsPerLine;
 
     public IconGrid() {
-        this("icon_grid", new Vector2f(0f, 0f), 4, 4, 6);
+        this(GridType.TEST, new Vector2f(0f, 0f), 4, 4, 6);
     }
 
-    public IconGrid(String name) {
-        this(name, new Vector2f(0f, 0f), 4, 4, 6);
+    public IconGrid(GridType type) {
+        this(type, new Vector2f(0f, 0f), 4, 4, 6);
     }
 
-    public IconGrid(String name, Vector2f position, int verticalPadding, int horizontalPadding, int iconsPerLine) {
-        this.name = name;
+    public IconGrid(GridType type, Vector2f position, int verticalPadding, int horizontalPadding, int iconsPerLine) {
+        this.type = type;
         this.position = position;
         this.verticalPadding = verticalPadding;
         this.horizontalPadding = horizontalPadding;
         this.iconsPerLine = iconsPerLine;
         icons = new ArrayList<Icon>();
 
-        testInit();
+        init();
     }
 
-    private void testInit() {
-        Icon testIcon1 = new Icon();
-        Icon testIcon2 = new Icon();
-        Icon testIcon3 = new Icon();
-        Icon testIcon4 = new Icon();
-        Icon testIcon5 = new Icon();
-        Icon testIcon6 = new Icon();
-        Icon testIcon7 = new Icon();
-        Icon testIcon8 = new Icon();
-        Icon testIcon9 = new Icon();
-        Icon testIcon10 = new Icon();
+    private void init() {
 
-        icons.add(testIcon1);
-        icons.add(testIcon2);
-        icons.add(testIcon3);
-        icons.add(testIcon4);
-        icons.add(testIcon5);
-        icons.add(testIcon6);
-        icons.add(testIcon7);
-        icons.add(testIcon8);
-        icons.add(testIcon9);
-        icons.add(testIcon10);
+        switch (type) {
+            case TEST:
+                Icon testIcon1 = new Icon();
+                Icon testIcon2 = new Icon();
+                Icon testIcon3 = new Icon();
+                Icon testIcon4 = new Icon();
+                Icon testIcon5 = new Icon();
+                Icon testIcon6 = new Icon();
+                Icon testIcon7 = new Icon();
+                Icon testIcon8 = new Icon();
+                Icon testIcon9 = new Icon();
+                Icon testIcon10 = new Icon();
+                icons.add(testIcon1);
+                icons.add(testIcon2);
+                icons.add(testIcon3);
+                icons.add(testIcon4);
+                icons.add(testIcon5);
+                icons.add(testIcon6);
+                icons.add(testIcon7);
+                icons.add(testIcon8);
+                icons.add(testIcon9);
+                icons.add(testIcon10);
+                break;
+            case BUILDING:
+                Icon tentIcon = new Icon(Icon.IconType.TENT);
+                icons.add(tentIcon);
+                break;
+        }
+
+
+
 
         calculateIconPositions();
     }

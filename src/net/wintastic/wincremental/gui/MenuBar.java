@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.Shape2D;
+import net.wintastic.lwjgl.Text;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
@@ -11,15 +12,17 @@ import java.util.List;
 public class MenuBar {
 
     List<IconGrid> iconGrids;
+    Text buildingLabel;
 
     public MenuBar() {
         iconGrids = new ArrayList<IconGrid>();
-        testInit();
+        init();
     }
 
-    private void testInit() {
-        IconGrid testGrid = new IconGrid("test_grid");
-        iconGrids.add(testGrid);
+    private void init() {
+        IconGrid buildingGrid = new IconGrid(IconGrid.GridType.BUILDING, new Vector2f(10f, 32f), 4, 4, 6);
+        iconGrids.add(buildingGrid);
+        buildingLabel = new Text(new Vector2f(32f, 40f), "Buildings", "Arial", 1, 16, org.newdawn.slick.Color.black, 300, 0f);
     }
 
     public void draw() {
@@ -34,6 +37,7 @@ public class MenuBar {
             iconGrids.get(i).checkIconHovering();
         }
 
+        buildingLabel.draw();
     }
 
 }

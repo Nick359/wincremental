@@ -14,12 +14,16 @@ public class Toolbar {
 
     public Toolbar(){
         resourceDisplays = new ArrayList<ResourceDisplay>();
-        testInit();
+        init();
     }
 
-    private void testInit(){
-        ResourceDisplay resDisplay1 = new ResourceDisplay(new Vector2f(0f,0f));
-        resourceDisplays.add(resDisplay1);
+    private void init(){
+        ResourceDisplay woodDisplay = new ResourceDisplay(Icon.IconType.WOOD, new Vector2f(0f,0f));
+        resourceDisplays.add(woodDisplay);
+
+        ResourceDisplay goldDisplay = new ResourceDisplay(Icon.IconType.GOLD, new Vector2f(92f,0f));
+        resourceDisplays.add(goldDisplay);
+
     }
 
     public void update(){
