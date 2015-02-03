@@ -6,7 +6,7 @@ public class GameManager {
 
     public static final int tileSize = 16;
     public static final int iconSize = 32;
-    public static final int leftMenuWidth = 320;
+    public static final int menuBarWidth = 320;
     public static final int toolbarHeight = 32;
     public static final int resX = 1280;
     public static final int resY = 720;
@@ -17,7 +17,7 @@ public class GameManager {
 
     public void init() {
         gui = new GUI();
-        board = new Board((resX - leftMenuWidth) / tileSize, (resY - toolbarHeight) / tileSize);
+        board = new Board((resX - menuBarWidth) / tileSize, (resY - toolbarHeight) / tileSize);
         player = new Player();
     }
 

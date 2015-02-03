@@ -32,13 +32,13 @@ public class Board {
 
     public void update() {
         if (Input.isButtonPressed(0) && mouseInBoard()) {
-            Vector2f p = new Vector2f((Input.mousePosition().x - GameManager.leftMenuWidth) / GameManager.tileSize, (Input.mousePosition().y - GameManager.toolbarHeight) / GameManager.tileSize);
+            Vector2f p = new Vector2f((Input.mousePosition().x - GameManager.menuBarWidth) / GameManager.tileSize, (Input.mousePosition().y - GameManager.toolbarHeight) / GameManager.tileSize);
             tiles[((int) p.x)][((int) p.y)].clickAction();
         }
     }
 
     private boolean mouseInBoard() {
-        return Input.mousePosition().x >= GameManager.leftMenuWidth && Input.mousePosition().y >= GameManager.toolbarHeight;
+        return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().y >= GameManager.toolbarHeight;
     }
 
     public void draw() {
