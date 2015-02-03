@@ -3,7 +3,7 @@ package net.wintastic.wincremental;
 public class Player {
 
     public static enum ResourceType {
-        Gold, Wood
+        GOLD, WOOD
     }
 
     private int gold;
@@ -23,13 +23,13 @@ public class Player {
     }
 
     public boolean changeResource(ResourceType type, int amount) {
-        if (type == ResourceType.Gold) {
+        if (type == ResourceType.GOLD) {
             if (gold + amount < 0)
                 return false;
             this.gold += amount;
             return true;
 
-        } else if (type == ResourceType.Wood) {
+        } else if (type == ResourceType.WOOD) {
             if (wood + amount < 0)
                 return false;
             this.wood += amount;

@@ -21,11 +21,11 @@ public class Board {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (MathHelper.randomChance(0.2f))
-                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Gold);
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.GOLD);
                 else if (MathHelper.randomChance(4))
-                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Wood);
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.WOOD);
                 else
-                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.Grass);
+                    tiles[i][j] = new ResourceTile(new Vector2f(i * GameManager.tileSize, j * GameManager.tileSize), ResourceTile.TileType.GRASS);
             }
         }
     }

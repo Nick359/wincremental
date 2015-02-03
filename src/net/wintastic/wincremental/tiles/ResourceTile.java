@@ -9,9 +9,9 @@ import org.lwjgl.util.vector.Vector2f;
 public class ResourceTile extends Tile {
 
     public static enum TileType {
-        Grass(AssetLibrary.grassTileSprite),
-        Gold(AssetLibrary.goldTileSprite),
-        Wood(AssetLibrary.woodTileSprite);
+        GRASS(AssetLibrary.grassTileSprite),
+        GOLD(AssetLibrary.goldTileSprite),
+        WOOD(AssetLibrary.woodTileSprite);
 
         Sprite sprite;
 
@@ -20,10 +20,10 @@ public class ResourceTile extends Tile {
         }
 
         void clickAction() {
-            if (this == Gold)
-                GameManager.player.changeResource(Player.ResourceType.Gold, 1);
-            else if (this == Wood)
-                GameManager.player.changeResource(Player.ResourceType.Wood, 1);
+            if (this == GOLD)
+                GameManager.player.changeResource(Player.ResourceType.GOLD, 1);
+            else if (this == WOOD)
+                GameManager.player.changeResource(Player.ResourceType.WOOD, 1);
         }
     }
 
@@ -31,7 +31,7 @@ public class ResourceTile extends Tile {
 
     public ResourceTile(Vector2f position) {
         super(position);
-        this.type = TileType.Grass;
+        this.type = TileType.GRASS;
     }
 
     public ResourceTile(Vector2f position, TileType type) {
