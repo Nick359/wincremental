@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.Shape2D;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -28,7 +29,7 @@ public class GUI {
     }
 
     public void draw() {
-        Shape2D.drawRectangle(new Vector2f(0f, 16f), 320, 720, 0f, new Color(255,255,240), true);
+        Shape2D.drawRectangle(new Vector2f(0f, GameManager.toolbarHeight), GameManager.leftMenuWidth, GameManager.resY, 0f, new Color(255,255,240), true);
         toolbar.draw();
 
         //Draw Icon Grids

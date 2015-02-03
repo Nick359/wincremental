@@ -1,13 +1,15 @@
 package net.wintastic.wincremental;
 
-import net.wintastic.Game;
 import net.wintastic.wincremental.gui.GUI;
 
 public class GameManager {
 
     public static final int tileSize = 16;
+    public static final int iconSize = 32;
     public static final int leftMenuWidth = 320;
-    public static final int topBarHeight = 16;
+    public static final int toolbarHeight = 32;
+    public static final int resX = 1280;
+    public static final int resY = 720;
 
     GUI gui;
     Board board;
@@ -15,7 +17,7 @@ public class GameManager {
 
     public void init() {
         gui = new GUI();
-        board = new Board((Game.resX - leftMenuWidth) / tileSize, (Game.resY - topBarHeight) / tileSize);
+        board = new Board((resX - leftMenuWidth) / tileSize, (resY - toolbarHeight) / tileSize);
         player = new Player();
     }
 

@@ -16,7 +16,7 @@ public abstract class Tile {
     protected abstract Sprite getSprite();
 
     public void draw() {
-        getSprite().position = new Vector2f(position.x + GameManager.leftMenuWidth, position.y + GameManager.topBarHeight);
+        getSprite().position = new Vector2f(position.x + GameManager.leftMenuWidth, position.y + GameManager.toolbarHeight);
         getSprite().draw();
     }
 }

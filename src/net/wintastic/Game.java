@@ -12,8 +12,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Game implements LWJGLGame {
-    public static int resX = 1280;
-    public static int resY = 720;
     boolean fullscreen = false;
 
     long fps;
@@ -24,7 +22,7 @@ public class Game implements LWJGLGame {
     @Override
     public void start() {
         lastFPS = getTime();
-        initGL(resX, resY, fullscreen);
+        initGL(GameManager.resX, GameManager.resY, fullscreen);
         init();
 
         while (true) {

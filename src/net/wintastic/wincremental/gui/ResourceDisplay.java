@@ -14,7 +14,7 @@ public class ResourceDisplay {
     public ResourceDisplay(Vector2f position){
         this.position = position;
         icon = new Icon(position);
-        text = new Text(new Vector2f(position.x + GameManager.tileSize + 6f, position.y ), "Ressource Display", "Arial", 1, 12);
+        text = new Text(new Vector2f(position.x + GameManager.iconSize + 6f, position.y + (GameManager.iconSize / 4) ), "Ressource Display", "Arial", 1, 16);
         text.color = Color.black;
     }
 

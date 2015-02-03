@@ -23,7 +23,7 @@ public class Icon {
     }
 
     public boolean contains(Vector2f other){
-        return (other.x >= position.x && other.x <= position.x+ GameManager.tileSize && other.y >= position.y && other.y <= position.y+GameManager.tileSize);
+        return (other.x >= position.x && other.x <= position.x+ GameManager.iconSize && other.y >= position.y && other.y <= position.y+GameManager.iconSize);
     }
 
     public Tooltip getTooltip(){

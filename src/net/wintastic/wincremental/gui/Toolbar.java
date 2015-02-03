@@ -1,6 +1,7 @@
 package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.Shape2D;
+import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -28,7 +29,7 @@ public class Toolbar {
     }
 
     public void draw(){
-        Shape2D.drawRectangle(new Vector2f(0f, 0f), 1280, 16, 0f, new Color(255, 222, 173), true);
+        Shape2D.drawRectangle(new Vector2f(0f, 0f), GameManager.resX, GameManager.toolbarHeight, 0f, new Color(255, 222, 173), true);
 
         for (int i = 0; i < resourceDisplays.size(); i++){
             resourceDisplays.get(i).draw();

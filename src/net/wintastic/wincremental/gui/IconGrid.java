@@ -67,7 +67,7 @@ public class IconGrid {
         int vertDisplacement = 0;
         int horizDisplacement = 0;
         while (iconsNotPlaced) {
-            icons.get(i).setPosition(new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + GameManager.tileSize), position.y + (vertDisplacement + 1) * (verticalPadding + GameManager.tileSize)));
+            icons.get(i).setPosition(new Vector2f(position.x + (horizDisplacement + 1) * (horizontalPadding + GameManager.iconSize), position.y + (vertDisplacement + 1) * (verticalPadding + GameManager.iconSize)));
 
             if (i >= icons.size() - 1) {
                 iconsNotPlaced = false;
