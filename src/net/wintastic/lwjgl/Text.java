@@ -12,6 +12,7 @@ public class Text extends GameObject implements Drawable {
     public TrueTypeFont font;
     public String text;
     public Color color;
+    public int maxWidth; //TODO: Implement
     public float layerDepth;
     public boolean visible;
 
@@ -25,15 +26,26 @@ public class Text extends GameObject implements Drawable {
     }
 
     public Text(Vector2f position, String text, String fontName, int fontStyle, int fontSize, Color color) {
-        this(position, text, fontName, fontStyle, fontSize, color, 1);
+        this(position, text, fontName, fontStyle, fontSize, color, 0, 1);
     }
 
-    public Text(Vector2f position, String text, String fontName, int fontStyle, int fontSize, Color color, float layerDepth) {
+    /**
+     * @param position   The position of the top left corner of the text
+     * @param text       The text contents
+     * @param fontName   The font name of the text (ex. "Times New Roman")
+     * @param fontStyle  The font style (ex. Font.PLAIN)
+     * @param fontSize   The size of the text
+     * @param color      The color of the text (ex. Color.white)
+     * @param maxWidth   The max width the text is allowed to go before breaking on a new line
+     * @param layerDepth The depth at which the text will be drawn, between 0 and 1
+     */
+    public Text(Vector2f position, String text, String fontName, int fontStyle, int fontSize, Color color, int maxWidth, float layerDepth) {
         this.position = position;
         this.text = text;
         this.awtFont = new Font(fontName, fontStyle, fontSize);
         this.font = new TrueTypeFont(awtFont, true);
         this.color = color;
+        this.maxWidth = maxWidth;
         this.layerDepth = layerDepth;
         this.visible = true;
 
