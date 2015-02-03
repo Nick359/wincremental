@@ -6,6 +6,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Text extends GameObject implements Drawable {
     public Font awtFont;
@@ -15,6 +18,8 @@ public class Text extends GameObject implements Drawable {
     public int maxWidth; //TODO: Implement
     public float layerDepth;
     public boolean visible;
+
+    private List<String> lines;
 
     //TODO: Maximum font size 64??
     public Text(Vector2f position, String text) {
@@ -49,8 +54,28 @@ public class Text extends GameObject implements Drawable {
         this.layerDepth = layerDepth;
         this.visible = true;
 
+        this.lines = calculateLines(this.text);
+
         DrawBatch.add(this);
     }
+
+    private List<String> calculateLines(String text) {
+        List<String> lines = new ArrayList<String>();
+        if (maxWidth == 0 || font.getWidth(text) <= maxWidth) {
+            lines.add(text);
+        } else {
+            String[] words = text.split(" ");
+            for (int i = 0; i < words.length; ) {
+                String line = "";
+                while (i < words.length && font.getWidth(line + words[i]) <= maxWidth) {
+                    line += words[i++] + " ";
+                }
+                lines.add(line);
+            }
+        }
+        return lines;
+    }
+
 
     public int getWidth() {
         return font.getWidth(text);
@@ -78,7 +103,10 @@ public class Text extends GameObject implements Drawable {
     @Override
     public void draw() {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        this.font.drawString(this.position.x, this.position.y, this.text, this.color);
+        for (int i = 0; i < lines.size(); i++) {
+            this.font.drawString(this.position.x, this.position.y + this.getHeight() * i, this.lines.get(i), this.color);
+
+        }
     }
 
     @Override
