@@ -71,8 +71,6 @@ public class IconGrid {
         }
 
 
-
-
         calculateIconPositions();
     }
 
@@ -97,9 +95,9 @@ public class IconGrid {
         }
     }
 
-    public void checkIconHovering(){
+    public void checkIconHovering() {
         for (int i = 0; i < icons.size(); i++) {
-            if (icons.get(i).contains(Input.mousePosition())){
+            if (icons.get(i).contains(Input.mousePosition())) {
                 icons.get(i).getTooltip().draw();
             }
         }

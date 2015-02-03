@@ -11,14 +11,15 @@ public class GameManager {
     public static final int resX = 1280;
     public static final int resY = 720;
 
+    public static Player player;
     GUI gui;
     Board board;
-    public static Player player;
+
 
     public void init() {
+        player = new Player();
         gui = new GUI();
         board = new Board((resX - menuBarWidth) / tileSize, (resY - toolbarHeight) / tileSize);
-        player = new Player();
     }
 
     public void update() {

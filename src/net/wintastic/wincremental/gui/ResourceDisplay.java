@@ -1,5 +1,6 @@
 package net.wintastic.wincremental.gui;
 
+import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Text;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
@@ -19,15 +20,23 @@ public class ResourceDisplay {
     }
 
     public void update() {
-        switch (icon.type){
+        switch (icon.type) {
             case TEST:
                 break;
             case GOLD:
                 text.setText(Integer.toString(GameManager.player.getGold()));
+                icon.getTooltip().update();
                 break;
             case WOOD:
                 text.setText(Integer.toString(GameManager.player.getWood()));
+                icon.getTooltip().update();
                 break;
+        }
+    }
+
+    public void checkIconHovering() {
+        if (icon.contains(Input.mousePosition())) {
+            icon.getTooltip().draw();
         }
     }
 
