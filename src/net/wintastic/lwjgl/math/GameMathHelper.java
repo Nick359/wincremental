@@ -53,7 +53,6 @@ public class GameMathHelper {
      * @param maxX   The maximum X value the Vector can have.
      * @param minY   The minimum Y value the Vector can have.
      * @param maxY   The maximum Y value the Vector can have.
-     * @return The clamped Vector, whose position is contained within the boundary.
      */
     public static void clamp(Vector2f vector, float minX, float maxX, float minY, float maxY) {
         vector.set(MathHelper.clamp(vector.x, minX, maxX), MathHelper.clamp(vector.y, minY, maxY));

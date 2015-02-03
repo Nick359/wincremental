@@ -22,7 +22,7 @@ public abstract class Input {
 
     public static boolean isKeyPressed(int key) {
         if (isKeyUp(key)) {
-            pressedKeys.remove((Object) key);
+            pressedKeys.remove((Integer) key);
             return false;
         }
         if (pressedKeys.contains(key)) {
@@ -33,7 +33,7 @@ public abstract class Input {
     }
 
     public static boolean wasKeyDown(int key) {
-        return pressedKeys.contains((Object) key);
+        return pressedKeys.contains((Integer) key);
     }
 
     public static boolean isButtonDown(int button) {
@@ -46,7 +46,7 @@ public abstract class Input {
 
     public static boolean isButtonPressed(int button) {
         if (isButtonUp(button)) {
-            pressedButtons.remove((Object) button);
+            pressedButtons.remove((Integer) button);
             return false;
         }
         if (pressedButtons.contains(button)) {
@@ -57,7 +57,7 @@ public abstract class Input {
     }
 
     public static boolean wasButtonDown(int button) {
-        return pressedButtons.contains((Object) button);
+        return pressedButtons.contains((Integer) button);
     }
 
     public static int scrollWheel() {

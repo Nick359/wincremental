@@ -1,7 +1,6 @@
 package net.wintastic.lwjgl;
 
 import net.wintastic.lwjgl.math.GameMathHelper;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
