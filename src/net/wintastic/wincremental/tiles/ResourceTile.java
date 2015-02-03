@@ -22,10 +22,14 @@ public class ResourceTile extends Tile {
         }
 
         void clickAction() {
-            if (this == GOLD)
-                GameManager.player.changeResource(Player.ResourceType.GOLD, 1);
-            else if (this == WOOD)
-                GameManager.player.changeResource(Player.ResourceType.WOOD, 1);
+            switch (this) {
+                case GOLD:
+                    GameManager.player.changeResource(Player.ResourceType.GOLD, 1);
+                    break;
+                case WOOD:
+                    GameManager.player.changeResource(Player.ResourceType.WOOD, 1);
+                    break;
+            }
         }
     }
 
