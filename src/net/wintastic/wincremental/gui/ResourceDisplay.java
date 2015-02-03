@@ -23,10 +23,10 @@ public class ResourceDisplay {
             case TEST:
                 break;
             case GOLD:
-                text.text = Integer.toString(GameManager.player.getGold());
+                text.setText(Integer.toString(GameManager.player.getGold()));
                 break;
             case WOOD:
-                text.text = Integer.toString(GameManager.player.getWood());
+                text.setText(Integer.toString(GameManager.player.getWood()));
                 break;
         }
     }

@@ -13,7 +13,7 @@ import java.util.List;
 public class Text extends GameObject implements Drawable {
     public Font awtFont;
     public TrueTypeFont font;
-    public String text;
+    private String text;
     public Color color;
     public int maxWidth; //TODO: Implement
     public float layerDepth;
@@ -76,6 +76,14 @@ public class Text extends GameObject implements Drawable {
         return lines;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        this.lines = calculateLines(this.text);
+    }
 
     public int getWidth() {
         return font.getWidth(text);
