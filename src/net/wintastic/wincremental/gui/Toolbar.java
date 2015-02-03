@@ -38,9 +38,5 @@ public class Toolbar {
         for (int i = 0; i < resourceDisplays.size(); i++) {
             resourceDisplays.get(i).draw();
         }
-
-        for (int i = 0; i < resourceDisplays.size(); i++) {
-            resourceDisplays.get(i).checkIconHovering();
-        }
     }
 }

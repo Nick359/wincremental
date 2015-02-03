@@ -33,10 +33,6 @@ public class MenuBar {
             iconGrids.get(i).draw();
         }
 
-        for (int i = 0; i < iconGrids.size(); i++) {
-            iconGrids.get(i).checkIconHovering();
-        }
-
         buildingLabel.draw();
     }
 

@@ -1,5 +1,6 @@
 package net.wintastic.wincremental.gui;
 
+import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
@@ -58,6 +59,9 @@ public class Icon {
     public void draw() {
         type.sprite.position = position;
         type.sprite.draw();
+        if (contains(Input.mousePosition())){
+            tooltip.draw();
+        }
     }
 
 }
