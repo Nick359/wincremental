@@ -23,19 +23,21 @@ public class Camera {
     }
 
     public void update() {
-        if(Input.isKeyDown(Keyboard.KEY_UP))
+        if (Input.isKeyDown(Keyboard.KEY_UP))
             move(Direction.UP);
-        if(Input.isKeyDown(Keyboard.KEY_DOWN))
+        if (Input.isKeyDown(Keyboard.KEY_DOWN))
             move(Direction.DOWN);
-        if(Input.isKeyDown(Keyboard.KEY_LEFT))
+        if (Input.isKeyDown(Keyboard.KEY_LEFT))
             move(Direction.LEFT);
-        if(Input.isKeyDown(Keyboard.KEY_RIGHT))
+        if (Input.isKeyDown(Keyboard.KEY_RIGHT))
             move(Direction.RIGHT);
 
 
         GameMathHelper.addVector(position, velocity);
-        GameMathHelper.lerp(velocity, new Vector2f(0,0), acceleration / 2);
+        GameMathHelper.lerp(velocity, new Vector2f(0, 0), acceleration / 2);
         GameMathHelper.clamp(velocity, -maxSpeed, maxSpeed, -maxSpeed, maxSpeed);
+        GameMathHelper.clamp(position, GameManager.viewportWidth * GameManager.tileSize, GameManager.mapWidth * GameManager.tileSize - GameManager.viewportWidth * GameManager.tileSize,
+                GameManager.viewportHeight * GameManager.tileSize, GameManager.mapHeight * GameManager.tileSize - GameManager.viewportHeight * GameManager.tileSize);
     }
 
     public void move(Direction direction) {
