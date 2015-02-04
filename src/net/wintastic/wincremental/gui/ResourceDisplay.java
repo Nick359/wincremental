@@ -1,22 +1,29 @@
 package net.wintastic.wincremental.gui;
 
-import net.wintastic.lwjgl.Input;
+import net.wintastic.lwjgl.DrawBatch;
+import net.wintastic.lwjgl.Drawable;
 import net.wintastic.lwjgl.Text;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 
-public class ResourceDisplay {
+public class ResourceDisplay implements Drawable {
 
     Icon icon;
     Text text;
     Vector2f position;
+    float layerDepth;
+    boolean visible;
 
     public ResourceDisplay(Icon.IconType type, Vector2f position) {
         this.position = position;
-        icon = new Icon(type, position);
+        icon = new Icon(type, position, 0.1f, true);
         text = new Text(new Vector2f(position.x + GameManager.iconSize + 6f, position.y + (GameManager.iconSize / 4)), "Resource_Display", "Arial", 1, 16);
         text.color = Color.black;
+        layerDepth = 0.1f;
+        visible = true;
+
+        DrawBatch.add(this);
     }
 
     public void update() {
@@ -34,8 +41,32 @@ public class ResourceDisplay {
         }
     }
 
+    @Override
+    public void setLayerDepth(float layerDepth) {
+        this.layerDepth = layerDepth;
+    }
+
+    @Override
+    public float getLayerDepth() {
+        return layerDepth;
+    }
+
     public void draw() {
-        icon.draw();
         text.draw();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
+
+    @Override
+    public int compareTo(Drawable o) {
+        if (this.layerDepth < o.getLayerDepth())
+            return -1;
+        else if (this.layerDepth > o.getLayerDepth())
+            return 1;
+        else
+            return 0;
     }
 }

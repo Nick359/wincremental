@@ -1,22 +1,26 @@
 package net.wintastic.wincremental.gui;
 
-import net.wintastic.lwjgl.Input;
-import net.wintastic.lwjgl.Shape2D;
-import net.wintastic.lwjgl.Text;
+import net.wintastic.lwjgl.*;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
-public class Tooltip {
+public class Tooltip implements Drawable {
 
     Icon parentIcon;
     Text headerText;
     Text bodyText;
     Text footerText;
+    private float layerDepth;
+    boolean visible;
 
     public Tooltip(Icon parentIcon) {
         this.parentIcon = parentIcon;
+        layerDepth = 0.3f;
+        visible = false;
         init();
+
+        DrawBatch.add(this);
     }
 
     private void init() {
@@ -64,6 +68,17 @@ public class Tooltip {
         }
     }
 
+    @Override
+    public void setLayerDepth(float layerDepth) {
+        this.layerDepth = layerDepth;
+    }
+
+    @Override
+    public float getLayerDepth() {
+        return layerDepth;
+    }
+
+    @Override
     public void draw() {
         Shape2D.drawRectangle(Input.mousePosition(), 300, 200, 0f, new Color(200, 200, 200), true);
         headerText.position = new Vector2f(Input.mousePosition().x + 12f, Input.mousePosition().y + 6f);
@@ -74,4 +89,18 @@ public class Tooltip {
         footerText.draw();
     }
 
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
+
+    @Override
+    public int compareTo(Drawable o) {
+        if (this.layerDepth < o.getLayerDepth())
+            return -1;
+        else if (this.layerDepth > o.getLayerDepth())
+            return 1;
+        else
+            return 0;
+    }
 }
