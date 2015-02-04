@@ -67,10 +67,10 @@ public class IconGrid {
             case BUILDING:
                 Icon tentIcon = new Icon(Icon.IconType.TENT);
                 icons.add(tentIcon);
+                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED);
+                icons.add(storageShedIcon);
                 break;
         }
-
-
         calculateIconPositions();
     }
 
@@ -95,12 +95,14 @@ public class IconGrid {
         }
     }
 
-    public void checkIconHovering() {
+    public Icon getSelectedIcon(){
         for (int i = 0; i < icons.size(); i++) {
             if (icons.get(i).contains(Input.mousePosition())) {
-                icons.get(i).getTooltip().draw();
+                icons.get(i).selected = true;
+                return icons.get(i);
             }
         }
+        return new Icon();
     }
 
     public void draw() {

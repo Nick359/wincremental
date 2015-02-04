@@ -12,6 +12,7 @@ public class GUI {
 
     public void update() {
         toolbar.update();
+        menuBar.update();
     }
 
     public void draw() {

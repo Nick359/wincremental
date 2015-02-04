@@ -11,13 +11,16 @@ public class Icon {
     public static enum IconType {
         TEST(AssetLibrary.testIconSprite),
         TENT(AssetLibrary.tentIconSprite),
+        STORAGE_SHED(AssetLibrary.storageShedIconSprite),
         GOLD(AssetLibrary.goldIconSprite),
         WOOD(AssetLibrary.woodIconSprite);
 
         Sprite sprite;
+        Sprite selectedSprite;
 
         IconType(Sprite sprite) {
             this.sprite = sprite;
+            this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite;
         }
 
         //TODO Add a click action for icons
@@ -29,6 +32,7 @@ public class Icon {
     IconType type;
     Vector2f position;
     Tooltip tooltip;
+    boolean selected;
 
     public Icon() {
         this(IconType.TEST, new Vector2f(0f, 0f));
@@ -41,6 +45,7 @@ public class Icon {
     public Icon(IconType type, Vector2f position) {
         this.type = type;
         this.position = position;
+        this.selected = false;
         tooltip = new Tooltip(this);
     }
 
@@ -57,9 +62,13 @@ public class Icon {
     }
 
     public void draw() {
+        if (selected) {
+            type.selectedSprite.position = new Vector2f(position.x - 2, position.y - 2);
+            type.selectedSprite.draw();
+        }
         type.sprite.position = position;
         type.sprite.draw();
-        if (contains(Input.mousePosition())){
+        if (contains(Input.mousePosition())) {
             tooltip.draw();
         }
     }

@@ -31,7 +31,7 @@ public class Board {
     }
 
     public void update() {
-        if (Input.isButtonPressed(0) && mouseInBoard()) {
+        if (mouseInBoard() && Input.isButtonPressed(0)) {
             Vector2f p = new Vector2f((Input.mousePosition().x - GameManager.menuBarWidth) / GameManager.tileSize, (Input.mousePosition().y - GameManager.toolbarHeight) / GameManager.tileSize);
             tiles[((int) p.x)][((int) p.y)].clickAction();
         }

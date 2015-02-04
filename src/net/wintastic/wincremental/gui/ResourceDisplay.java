@@ -34,12 +34,6 @@ public class ResourceDisplay {
         }
     }
 
-    public void checkIconHovering() {
-        if (icon.contains(Input.mousePosition())) {
-            icon.getTooltip().draw();
-        }
-    }
-
     public void draw() {
         icon.draw();
         text.draw();

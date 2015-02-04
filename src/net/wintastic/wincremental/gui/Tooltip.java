@@ -31,6 +31,11 @@ public class Tooltip {
                 bodyText = new Text(new Vector2f(0f, 0f), "-10 WOOD     +3 POPULATION", "Arial", 0, 12);
                 footerText = new Text(new Vector2f(0f, 0f), "There's nothing like a good tent to get naked in.", "Arial", 2, 12);
                 break;
+            case STORAGE_SHED:
+                headerText = new Text(new Vector2f(0f, 0f), "Storage Shed", "Arial", 1, 16);
+                bodyText = new Text(new Vector2f(0f, 0f), "-20 WOOD     +100 CAPACITY", "Arial", 0, 12);
+                footerText = new Text(new Vector2f(0f, 0f), "A humble place to put your crap in.", "Arial", 2, 12, org.newdawn.slick.Color.white, 256, 0f);
+                break;
             case WOOD:
                 headerText = new Text(new Vector2f(0f, 0f), "Wood", "Arial", 1, 16);
                 bodyText = new Text(new Vector2f(0f, 0f), "You have " + GameManager.player.getWood() + " wood.", "Arial", 0, 12);

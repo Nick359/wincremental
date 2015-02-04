@@ -30,6 +30,7 @@ public class GameMathHelper {
         v1.set(v1.x + v2.x, v1.y + v2.y);
     }
 
+    //TODO add subtractVector
     /**
      * Returns a new vector multiplied by a scalar
      *
