@@ -13,7 +13,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
     public boolean visible;
 
     public Shape2D() {
-        DrawBatch.add(this);
+//        DrawBatch.add(this);
         visible = true;
     }
 

@@ -56,7 +56,7 @@ public class Text extends GameObject implements Drawable {
 
         this.lines = calculateLines(this.text);
 
-        DrawBatch.add(this);
+//        DrawBatch.add(this);
     }
 
     private List<String> calculateLines(String text) {

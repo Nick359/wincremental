@@ -1,5 +1,6 @@
 package net.wintastic.wincremental;
 
+import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.wincremental.gui.GUI;
 
 public class GameManager {
@@ -28,8 +29,8 @@ public class GameManager {
     }
 
     public void draw() {
-        board.draw();
         gui.draw();
+        DrawBatch.draw();
     }
 
 }
