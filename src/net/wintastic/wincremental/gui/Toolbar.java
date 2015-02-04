@@ -18,7 +18,7 @@ public class Toolbar implements Drawable {
 
     public Toolbar() {
         resourceDisplays = new ArrayList<ResourceDisplay>();
-        layerDepth = 0;
+        layerDepth = 0.4f;
         visible = true;
         init();
 

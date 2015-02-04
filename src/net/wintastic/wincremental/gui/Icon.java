@@ -51,17 +51,17 @@ public class Icon implements Drawable {
     boolean visible;
 
     public Icon() {
-        this(IconType.TEST, new Vector2f(0f, 0f), 0f, false);
+        this(IconType.TEST, new Vector2f(0f, 0f), false);
     }
 
-    public Icon(IconType type, float layerDepth, boolean visible) {
-        this(type, new Vector2f(0f, 0f), layerDepth, visible);
+    public Icon(IconType type, boolean visible) {
+        this(type, new Vector2f(0f, 0f), visible);
     }
 
-    public Icon(IconType type, Vector2f position, float layerDepth, boolean visible) {
+    public Icon(IconType type, Vector2f position, boolean visible) {
         this.type = type;
         this.position = position;
-        this.layerDepth = layerDepth;
+        this.layerDepth = 0.6f;
         this.selected = false;
         this.visible = visible;
         tooltip = new Tooltip(this);

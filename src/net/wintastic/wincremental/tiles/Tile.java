@@ -12,12 +12,12 @@ public abstract class Tile implements Drawable {
     boolean visible;
 
     public Tile(Vector2f position) {
-        this(position, 0, true);
+        this(position, true);
     }
 
-    public Tile(Vector2f position, float layerDepth, boolean visible) {
+    public Tile(Vector2f position, boolean visible) {
         this.position = position;
-        this.layerDepth = layerDepth;
+        this.layerDepth = 0.2f;
         this.visible = visible;
         DrawBatch.add(this);
     }
@@ -25,6 +25,12 @@ public abstract class Tile implements Drawable {
     public abstract void clickAction();
 
     protected abstract Sprite getSprite();
+
+    public Vector2f getCameraPosition() {
+        float x = position.x + GameManager.menuBarWidth - GameManager.camera.position.x;
+        float y = position.y + GameManager.toolbarHeight - GameManager.camera.position.y;
+        return new Vector2f(x,y);
+    }
 
     @Override
     public void setLayerDepth(float layerDepth) {
@@ -38,13 +44,14 @@ public abstract class Tile implements Drawable {
 
     @Override
     public void draw() {
-        getSprite().position = new Vector2f(position.x + GameManager.menuBarWidth, position.y + GameManager.toolbarHeight);
+        getSprite().position = getCameraPosition();
         getSprite().draw();
     }
 
     @Override
     public boolean isVisible() {
-        return this.visible;
+        Vector2f p = getCameraPosition();
+        return p.x >= GameManager.menuBarWidth - GameManager.tileSize && p.x <= GameManager.resX && p.y >= GameManager.toolbarHeight - GameManager.tileSize && p.y <= GameManager.resY;
     }
 
     @Override

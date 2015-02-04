@@ -10,7 +10,7 @@ public class Camera {
         UP, DOWN, LEFT, RIGHT
     }
 
-    Vector2f position;
+    public Vector2f position;
     Vector2f velocity;
     float maxSpeed;
     float acceleration;

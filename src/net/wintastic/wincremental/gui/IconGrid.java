@@ -65,9 +65,9 @@ public class IconGrid {
                 icons.add(testIcon10);
                 break;
             case BUILDING:
-                Icon tentIcon = new Icon(Icon.IconType.TENT, 0.1f, true);
+                Icon tentIcon = new Icon(Icon.IconType.TENT, true);
                 icons.add(tentIcon);
-                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED, 0.1f, true);
+                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED, true);
                 icons.add(storageShedIcon);
                 break;
         }

@@ -17,10 +17,10 @@ public class ResourceDisplay implements Drawable {
 
     public ResourceDisplay(Icon.IconType type, Vector2f position) {
         this.position = position;
-        icon = new Icon(type, position, 0.1f, true);
+        icon = new Icon(type, position, true);
         text = new Text(new Vector2f(position.x + GameManager.iconSize + 6f, position.y + (GameManager.iconSize / 4)), "Resource_Display", "Arial", 1, 16);
         text.color = Color.black;
-        layerDepth = 0.1f;
+        layerDepth = 0.6f;
         visible = true;
 
         DrawBatch.add(this);

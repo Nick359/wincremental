@@ -18,7 +18,7 @@ public class MenuBar implements Drawable {
 
     public MenuBar() {
         iconGrids = new ArrayList<IconGrid>();
-        layerDepth = 0;
+        layerDepth = 0.4f;
         visible = true;
         init();
 

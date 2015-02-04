@@ -16,7 +16,7 @@ public class Tooltip implements Drawable {
 
     public Tooltip(Icon parentIcon) {
         this.parentIcon = parentIcon;
-        layerDepth = 0.3f;
+        layerDepth = 0.8f;
         visible = false;
         init();
 

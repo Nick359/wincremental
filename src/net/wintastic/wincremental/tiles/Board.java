@@ -4,10 +4,7 @@ import net.wintastic.lwjgl.Input;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.gui.MenuBar;
-import net.wintastic.wincremental.tiles.ResourceTile;
-import net.wintastic.wincremental.tiles.Tile;
 import org.lwjgl.util.vector.Vector2f;
-import sun.security.tools.keytool.Resources_sv;
 
 public class Board {
     Tile[][] tiles;
@@ -39,7 +36,7 @@ public class Board {
 
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
-            Vector2f p = new Vector2f((Input.mousePosition().x - GameManager.menuBarWidth) / GameManager.tileSize, (Input.mousePosition().y - GameManager.toolbarHeight) / GameManager.tileSize);
+            Vector2f p = new Vector2f((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.position.x) / GameManager.tileSize, (Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.position.y) / GameManager.tileSize);
             Tile t = tiles[((int) p.x)][((int) p.y)];
             t.clickAction();
             if (t instanceof ResourceTile && ((ResourceTile) t).type == ResourceTile.ResourceTileType.GRASS && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
@@ -50,13 +47,5 @@ public class Board {
 
     private boolean mouseInBoard() {
         return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
-    }
-
-    public void draw() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                tiles[i][j].draw();
-            }
-        }
     }
 }
