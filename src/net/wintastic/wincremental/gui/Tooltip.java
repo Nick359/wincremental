@@ -53,7 +53,7 @@ public class Tooltip implements Drawable {
         }
     }
 
-    public void update(){
+    public void update() {
         switch (parentIcon.type) {
             case TEST:
                 break;

@@ -95,7 +95,7 @@ public class IconGrid {
         }
     }
 
-    public Icon getSelectedIcon(){
+    public Icon getSelectedIcon() {
         for (int i = 0; i < icons.size(); i++) {
             if (icons.get(i).contains(Input.mousePosition())) {
                 icons.get(i).selected = true;

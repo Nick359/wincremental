@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Toolbar implements Drawable{
+public class Toolbar implements Drawable {
 
     List<ResourceDisplay> resourceDisplays;
     float layerDepth;

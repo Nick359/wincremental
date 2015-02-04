@@ -38,7 +38,7 @@ public class MenuBar implements Drawable {
     public void update() {
         if (mouseInMenu() && Input.isButtonPressed(0)) {
             if (selectedIcon != null)
-            selectedIcon.selected = false;
+                selectedIcon.selected = false;
 
             for (int i = 0; i < iconGrids.size(); i++) {
                 selectedIcon = iconGrids.get(i).getSelectedIcon();
