@@ -1,7 +1,8 @@
-package net.wintastic.wincremental;
+package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Input;
 import net.wintastic.util.math.MathHelper;
+import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.tiles.ResourceTile;
 import net.wintastic.wincremental.tiles.Tile;
 import org.lwjgl.util.vector.Vector2f;

@@ -8,6 +8,8 @@ import java.util.List;
 
 public class GameMathHelper {
 
+    public static final Vector2f VECTOR2F_ZERO = new Vector2f(0,0);
+
     /**
      * This method calculates the scalar distance between two points.
      *
