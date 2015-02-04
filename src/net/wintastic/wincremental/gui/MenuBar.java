@@ -32,7 +32,7 @@ public class MenuBar implements Drawable {
     }
 
     private boolean mouseInMenu() {
-        return (Input.mousePosition().x < GameManager.menuBarWidth && Input.mousePosition().y > GameManager.toolbarHeight);
+        return Input.mousePosition().x > 0 && Input.mousePosition().x < GameManager.menuBarWidth && Input.mousePosition().y > GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
     }
 
     public void update() {

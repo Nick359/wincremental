@@ -49,7 +49,7 @@ public class Board {
     }
 
     private boolean mouseInBoard() {
-        return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().y >= GameManager.toolbarHeight;
+        return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
     }
 
     public void draw() {
