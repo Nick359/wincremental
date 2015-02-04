@@ -12,7 +12,7 @@ public class MenuBar implements Drawable {
 
     List<IconGrid> iconGrids;
     Text buildingLabel;
-    Icon selectedIcon;
+    public static Icon selectedIcon;
     float layerDepth;
     boolean visible;
 

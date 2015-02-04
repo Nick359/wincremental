@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class ResourceTile extends Tile {
 
-    public static enum TileType {
+    public static enum ResourceTileType {
         GRASS(AssetLibrary.grassTileSprite, 0),
         GOLD(AssetLibrary.goldTileSprite, 10),
         WOOD(AssetLibrary.woodTileSprite, 20);
@@ -16,7 +16,7 @@ public class ResourceTile extends Tile {
         Sprite sprite;
         int initialSize;
 
-        TileType(Sprite sprite, int initialSize) {
+        ResourceTileType(Sprite sprite, int initialSize) {
             this.sprite = sprite;
             this.initialSize = initialSize;
         }
@@ -33,16 +33,16 @@ public class ResourceTile extends Tile {
         }
     }
 
-    TileType type;
+    ResourceTileType type;
     int currentSize;
 
     public ResourceTile(Vector2f position) {
         super(position);
-        this.type = TileType.GRASS;
+        this.type = ResourceTileType.GRASS;
         this.currentSize = this.type.initialSize;
     }
 
-    public ResourceTile(Vector2f position, TileType type) {
+    public ResourceTile(Vector2f position, ResourceTileType type) {
         super(position);
         this.type = type;
         this.currentSize = this.type.initialSize;
@@ -53,7 +53,7 @@ public class ResourceTile extends Tile {
         type.clickAction();
         this.currentSize--;
         if (currentSize == 0)
-            this.type = TileType.GRASS;
+            this.type = ResourceTileType.GRASS;
     }
 
     @Override

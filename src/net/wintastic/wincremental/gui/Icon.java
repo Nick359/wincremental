@@ -6,6 +6,7 @@ import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
+import net.wintastic.wincremental.tiles.BuildingTile;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Icon implements Drawable {
@@ -25,16 +26,27 @@ public class Icon implements Drawable {
             this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite;
         }
 
+        public BuildingTile.BuildingTileType getBuildingTileType(){
+            switch(this){
+                case TENT:
+                    return BuildingTile.BuildingTileType.TENT;
+                case STORAGE_SHED:
+                    return BuildingTile.BuildingTileType.STORAGE_SHED;
+                default:
+                    return null;
+            }
+        }
+
         //TODO Add a click action for icons
         //void clickAction() {
         //
         //  }
     }
 
-    IconType type;
+    public IconType type;
     Vector2f position;
     Tooltip tooltip;
-    boolean selected;
+    public boolean selected;
     float layerDepth;
     boolean visible;
 
