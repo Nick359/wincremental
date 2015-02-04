@@ -102,6 +102,6 @@ public class IconGrid {
                 return icons.get(i);
             }
         }
-        return new Icon();
+        return null;
     }
 }
