@@ -12,7 +12,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Game implements LWJGLGame {
-    boolean fullscreen = false;
 
     long fps;
     long lastFPS;
@@ -22,7 +21,7 @@ public class Game implements LWJGLGame {
     @Override
     public void start() {
         lastFPS = getTime();
-        initGL(GameManager.resX, GameManager.resY, fullscreen);
+        initGL(GameManager.resX, GameManager.resY, GameManager.fullscreen);
         init();
 
         while (true) {
@@ -103,7 +102,7 @@ public class Game implements LWJGLGame {
 
             Display.setDisplayMode(targetDisplayMode);
             Display.setFullscreen(fullscreen);
-            Display.setVSyncEnabled(true);
+            Display.setVSyncEnabled(false);
 
         } catch (LWJGLException e) {
             System.out.println("Unable to setup mode " + width + "x" + height + " fullscreen=" + fullscreen + e);

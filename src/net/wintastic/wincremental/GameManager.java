@@ -9,6 +9,7 @@ public class GameManager {
 
     public static final int resX = 1280;
     public static final int resY = 720;
+    public static boolean fullscreen = false;
 
     public static final int tileSize = 16;
     public static final int iconSize = 32;
@@ -27,7 +28,7 @@ public class GameManager {
 
     public void init() {
         player = new Player();
-        camera = new Camera(new Vector2f(mapWidth*tileSize/2, mapHeight*tileSize/2));
+        camera = new Camera(new Vector2f(mapWidth * tileSize / 2, mapHeight * tileSize / 2));
         gui = new GUI();
         board = new Board(mapWidth, mapHeight);
     }
