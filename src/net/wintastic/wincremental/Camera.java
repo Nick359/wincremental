@@ -14,6 +14,7 @@ public class Camera {
     Vector2f velocity;
     float maxSpeed;
     float acceleration;
+    Vector2f prevMousePosition;
 
     public Camera(Vector2f position) {
         this.position = position;
@@ -23,6 +24,11 @@ public class Camera {
     }
 
     public void update() {
+        handleKeyboardInput();
+        handleMouseInput();
+    }
+
+    private void handleKeyboardInput() {
         if (Input.isKeyDown(Keyboard.KEY_UP))
             move(Direction.UP);
         if (Input.isKeyDown(Keyboard.KEY_DOWN))
@@ -36,8 +42,21 @@ public class Camera {
         GameMathHelper.addVector(position, velocity);
         GameMathHelper.lerp(velocity, new Vector2f(0, 0), acceleration / 2);
         GameMathHelper.clamp(velocity, -maxSpeed, maxSpeed, -maxSpeed, maxSpeed);
-        GameMathHelper.clamp(position, GameManager.viewportWidth * GameManager.tileSize, GameManager.mapWidth * GameManager.tileSize - GameManager.viewportWidth * GameManager.tileSize,
-                GameManager.viewportHeight * GameManager.tileSize, GameManager.mapHeight * GameManager.tileSize - GameManager.viewportHeight * GameManager.tileSize);
+        GameMathHelper.clamp(position, 0, GameManager.mapWidth * GameManager.tileSize - GameManager.viewportWidth * GameManager.tileSize,
+                0, GameManager.mapHeight * GameManager.tileSize - GameManager.viewportHeight * GameManager.tileSize);
+    }
+
+    private void handleMouseInput() {
+        if(Input.isButtonDown(2)) {
+            velocity = new Vector2f(0,0);
+            if(prevMousePosition != null) {
+                Vector2f p = Input.mousePosition();
+                GameMathHelper.addVector(position, new Vector2f(prevMousePosition.x - p.x, prevMousePosition.y - p.y));
+            }
+            prevMousePosition = Input.mousePosition();
+        } else {
+            prevMousePosition = null;
+        }
     }
 
     public void move(Direction direction) {
