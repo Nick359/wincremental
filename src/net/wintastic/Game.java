@@ -102,7 +102,7 @@ public class Game implements LWJGLGame {
 
             Display.setDisplayMode(targetDisplayMode);
             Display.setFullscreen(fullscreen);
-            Display.setVSyncEnabled(false);
+            Display.setVSyncEnabled(GameManager.fullscreen);
 
         } catch (LWJGLException e) {
             System.out.println("Unable to setup mode " + width + "x" + height + " fullscreen=" + fullscreen + e);
