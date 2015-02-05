@@ -7,12 +7,16 @@ import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TileRadiusIndicator implements Drawable {
 
     int radius;
     float layerDepth;
     boolean visible;
     BuildingTile buildingTile;
+    List<Vector2f> tiles;
 
     public TileRadiusIndicator(int radius, BuildingTile buildingTile) {
         this.radius = radius;
@@ -20,6 +24,7 @@ public class TileRadiusIndicator implements Drawable {
         this.layerDepth = 0.3f;
         visible = false;
 
+        getTiles();
         DrawBatch.add(this);
     }
 
@@ -35,6 +40,15 @@ public class TileRadiusIndicator implements Drawable {
 
     @Override
     public void draw() {
+        for (int i = 0; i < tiles.size(); i++){
+            AssetLibrary.radiusIndicatorSprite.position = tiles.get(i);
+            AssetLibrary.radiusIndicatorSprite.draw();
+        }
+    }
+
+    private void getTiles() {
+        tiles = new ArrayList<Vector2f>();
+
         Tuple<Integer> position = buildingTile.position;
 
         int x0 = position.first;
@@ -43,18 +57,11 @@ public class TileRadiusIndicator implements Drawable {
         for (int y = -radius; y <= radius; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (x * x + y * y <= radius * radius) {
-                    drawTile(x0 + x, y0 + y);
+                    tiles.add(new Vector2f((x0 + x) * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x
+                            , (y0 + y) * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y));
                 }
             }
         }
-    }
-
-    private void drawTile(int x, int y) {
-        float _x = x * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x;
-        float _y = y * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y;
-
-        AssetLibrary.radiusIndicatorSprite.position = new Vector2f(_x, _y);
-        AssetLibrary.radiusIndicatorSprite.draw();
     }
 
     @Override

@@ -37,6 +37,8 @@ public class BuildingTile extends Tile {
     public void clickAction() {
         selected = true;
         Board.selectedTile = this;
+
+        if (radiusSize > 0)
         radiusIndicator.visible = true;
     }
 
