@@ -42,28 +42,6 @@ public class IconGrid {
     private void init() {
 
         switch (type) {
-            case TEST:
-                Icon testIcon1 = new Icon();
-                Icon testIcon2 = new Icon();
-                Icon testIcon3 = new Icon();
-                Icon testIcon4 = new Icon();
-                Icon testIcon5 = new Icon();
-                Icon testIcon6 = new Icon();
-                Icon testIcon7 = new Icon();
-                Icon testIcon8 = new Icon();
-                Icon testIcon9 = new Icon();
-                Icon testIcon10 = new Icon();
-                icons.add(testIcon1);
-                icons.add(testIcon2);
-                icons.add(testIcon3);
-                icons.add(testIcon4);
-                icons.add(testIcon5);
-                icons.add(testIcon6);
-                icons.add(testIcon7);
-                icons.add(testIcon8);
-                icons.add(testIcon9);
-                icons.add(testIcon10);
-                break;
             case BUILDING:
                 Icon tentIcon = new Icon(Icon.IconType.TENT, true);
                 icons.add(tentIcon);
