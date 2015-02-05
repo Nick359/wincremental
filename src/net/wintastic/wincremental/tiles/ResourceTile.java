@@ -1,10 +1,10 @@
 package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
+import net.wintastic.lwjgl.Tuple;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
-import org.lwjgl.util.vector.Vector2f;
 
 public class ResourceTile extends Tile {
 
@@ -36,13 +36,13 @@ public class ResourceTile extends Tile {
     ResourceTileType type;
     int currentSize;
 
-    public ResourceTile(Vector2f position) {
+    public ResourceTile(Tuple<Integer> position) {
         super(position);
         this.type = ResourceTileType.GRASS;
         this.currentSize = this.type.initialSize;
     }
 
-    public ResourceTile(Vector2f position, ResourceTileType type) {
+    public ResourceTile(Tuple<Integer> position, ResourceTileType type) {
         super(position);
         this.type = type;
         this.currentSize = this.type.initialSize;

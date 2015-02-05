@@ -1,10 +1,8 @@
 package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
+import net.wintastic.lwjgl.Tuple;
 import net.wintastic.wincremental.AssetLibrary;
-import net.wintastic.wincremental.GameManager;
-import net.wintastic.wincremental.Player;
-import org.lwjgl.util.vector.Vector2f;
 
 public class BuildingTile extends Tile {
 
@@ -25,7 +23,7 @@ public class BuildingTile extends Tile {
 
     BuildingTileType type;
 
-    public BuildingTile(Vector2f position, BuildingTileType type) {
+    public BuildingTile(Tuple<Integer> position, BuildingTileType type) {
         super(position);
         this.type = type;
     }
