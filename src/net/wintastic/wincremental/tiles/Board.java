@@ -9,6 +9,7 @@ import net.wintastic.wincremental.gui.MenuBar;
 public class Board {
     Tile[][] tiles;
     int width, height;
+    public static Tile selectedTile;
 
     public Board(int width, int height) {
         this.width = width;
@@ -28,6 +29,12 @@ public class Board {
                     tiles[i][j] = new ResourceTile(new Tuple<Integer>(i, j), ResourceTile.ResourceTileType.GRASS);
             }
         }
+
+        placeTownCenter();
+    }
+
+    private void placeTownCenter(){
+        setTile(new Tuple<Integer>(width/2, height/2), new BuildingTile(new Tuple<Integer>(width/2, height/2), BuildingTile.BuildingTileType.TOWN_CENTER));
     }
 
     public void setTile(Tuple<Integer> position, Tile newTile) {
@@ -36,6 +43,10 @@ public class Board {
 
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
+            if (selectedTile != null) {
+                ((BuildingTile) selectedTile).toggleSelected();
+            }
+
             Tuple<Integer> p = new Tuple<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.position.x) / GameManager.tileSize),
                     (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.position.y) / GameManager.tileSize));
             Tile t = tiles[p.first][p.second];

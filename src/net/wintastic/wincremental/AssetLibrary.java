@@ -4,6 +4,7 @@ import net.wintastic.lwjgl.Sprite;
 
 public abstract class AssetLibrary {
     //TILES
+    public static final Sprite radiusIndicatorSprite = new Sprite("res/sprites/tiles/radiusIndicatorTile.png");
     public static final Sprite grassTileSprite = new Sprite("res/sprites/tiles/grassTile.png");
 
     //RESOURCE TILES
@@ -11,6 +12,7 @@ public abstract class AssetLibrary {
     public static final Sprite woodTileSprite = new Sprite("res/sprites/tiles/woodTile.png");
 
     //BUILDING TILES
+    public static final Sprite townCenterSprite = new Sprite("res/sprites/tiles/townCenterTile.png");
     public static final Sprite tentTileSprite = new Sprite("res/sprites/tiles/tentTile.png");
     public static final Sprite storageShedTileSprite = new Sprite("res/sprites/tiles/storageShedTile.png");
 
