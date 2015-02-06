@@ -32,12 +32,12 @@ public class ResourceDisplay implements Drawable {
             case TEST:
                 break;
             case GOLD:
-                String goldText = GUIHelper.formatNums(GameManager.player.getGold());
+                String goldText = GUIHelper.formatNumber(GameManager.player.getGold());
                 text.setText(goldText);
                 icon.getTooltip().update();
                 break;
             case WOOD:
-                String woodText = GUIHelper.formatNums(GameManager.player.getWood());
+                String woodText = GUIHelper.formatNumber(GameManager.player.getWood());
                 text.setText(woodText);
                 icon.getTooltip().update();
                 break;
