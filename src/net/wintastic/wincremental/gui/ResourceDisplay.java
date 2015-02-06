@@ -4,6 +4,7 @@ import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;
 import net.wintastic.lwjgl.Text;
 import net.wintastic.wincremental.GameManager;
+import net.wintastic.wincremental.gui.util.GUIHelper;
 import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.Color;
 
@@ -31,11 +32,13 @@ public class ResourceDisplay implements Drawable {
             case TEST:
                 break;
             case GOLD:
-                text.setText(Integer.toString(GameManager.player.getGold()));
+                String goldText = GUIHelper.formatNums(GameManager.player.getGold());
+                text.setText(goldText);
                 icon.getTooltip().update();
                 break;
             case WOOD:
-                text.setText(Integer.toString(GameManager.player.getWood()));
+                String woodText = GUIHelper.formatNums(GameManager.player.getWood());
+                text.setText(woodText);
                 icon.getTooltip().update();
                 break;
         }

@@ -10,8 +10,8 @@ public class Player {
     private int wood;
 
     public Player() {
-        gold = 0;
-        wood = 0;
+        gold = 11156;
+        wood = 568722567;
     }
 
     public int getGold() {
