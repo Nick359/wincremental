@@ -6,6 +6,8 @@ import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
 
+import java.math.BigInteger;
+
 public class ResourceTile extends Tile {
 
     public static enum ResourceTileType {
@@ -24,10 +26,10 @@ public class ResourceTile extends Tile {
         void clickAction() {
             switch (this) {
                 case GOLD:
-                    GameManager.player.changeResource(Player.ResourceType.GOLD, 1);
+                    GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
                     break;
                 case WOOD:
-                    GameManager.player.changeResource(Player.ResourceType.WOOD, 1);
+                    GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
                     break;
             }
         }

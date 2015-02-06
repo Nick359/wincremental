@@ -1,38 +1,40 @@
 package net.wintastic.wincremental;
 
+import java.math.BigInteger;
+
 public class Player {
 
     public static enum ResourceType {
         GOLD, WOOD
     }
 
-    private int gold;
-    private int wood;
+    private BigInteger gold;
+    private BigInteger wood;
 
     public Player() {
-        gold = 0;
-        wood = 0;
+        gold = BigInteger.ZERO;
+        wood = BigInteger.ZERO;
     }
 
-    public int getGold() {
+    public BigInteger getGold() {
         return gold;
     }
 
-    public int getWood() {
+    public BigInteger getWood() {
         return wood;
     }
 
-    public boolean changeResource(ResourceType type, int amount) {
+    public boolean changeResource(ResourceType type, BigInteger amount) {
         switch (type) {
             case GOLD:
-                if (gold + amount < 0)
+                if (gold.add(amount).compareTo(BigInteger.ZERO) < 0)
                     return false;
-                this.gold += amount;
+                this.gold = this.gold.add(amount);
                 return true;
             case WOOD:
-                if (wood + amount < 0)
+                if (wood.add(amount).compareTo(BigInteger.ZERO) < 0)
                     return false;
-                this.wood += amount;
+                this.wood = this.wood.add(amount);
                 return true;
         }
         return true;

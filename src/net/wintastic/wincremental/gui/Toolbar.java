@@ -29,7 +29,7 @@ public class Toolbar implements Drawable {
         ResourceDisplay woodDisplay = new ResourceDisplay(Icon.IconType.WOOD, new Vector2f(0f, 0f));
         resourceDisplays.add(woodDisplay);
 
-        ResourceDisplay goldDisplay = new ResourceDisplay(Icon.IconType.GOLD, new Vector2f(92f, 0f));
+        ResourceDisplay goldDisplay = new ResourceDisplay(Icon.IconType.GOLD, new Vector2f(120f, 0f));
         resourceDisplays.add(goldDisplay);
 
     }
