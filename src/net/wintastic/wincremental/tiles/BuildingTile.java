@@ -11,8 +11,8 @@ public class BuildingTile extends Tile {
         TENT(AssetLibrary.tentTileSprite, 0),
         STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0);
 
-        Sprite sprite;
-        int radiusSize;
+        private final Sprite sprite;
+        private int radiusSize;
 
         BuildingTileType(Sprite sprite, int radiusSize) {
             this.sprite = sprite;
@@ -21,16 +21,14 @@ public class BuildingTile extends Tile {
     }
 
     private BuildingTileType type;
-    private int radiusSize;
     private boolean selected;
     private TileRadiusIndicator radiusIndicator;
 
     public BuildingTile(Pair<Integer> position, BuildingTileType type) {
         super(position);
         this.type = type;
-        this.radiusSize = type.radiusSize;
         this.selected = false;
-        radiusIndicator = new TileRadiusIndicator(radiusSize, this);
+        radiusIndicator = new TileRadiusIndicator(type.radiusSize, this);
     }
 
     @Override
@@ -38,11 +36,11 @@ public class BuildingTile extends Tile {
         selected = true;
         Board.setSelectedTile(this);
 
-        if (radiusSize > 0)
-        radiusIndicator.visible = true;
+        if (type.radiusSize > 0)
+            radiusIndicator.visible = true;
     }
 
-    public void toggleSelected(){
+    public void toggleSelected() {
         selected = !selected;
         radiusIndicator.visible = false;
     }

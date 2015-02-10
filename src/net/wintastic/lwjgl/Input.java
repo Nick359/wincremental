@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Input {
-    private static List<Integer> pressedKeys = new ArrayList<Integer>();
-    private static List<Integer> pressedButtons = new ArrayList<Integer>();
+    private static final List<Integer> pressedKeys = new ArrayList<Integer>();
+    private static final List<Integer> pressedButtons = new ArrayList<Integer>();
 
     public static boolean isKeyDown(int key) {
         return Keyboard.isKeyDown(key);

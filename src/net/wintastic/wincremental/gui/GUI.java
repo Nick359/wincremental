@@ -2,8 +2,8 @@ package net.wintastic.wincremental.gui;
 
 public class GUI {
 
-    private Toolbar toolbar;
-    private MenuBar menuBar;
+    private final Toolbar toolbar;
+    private final MenuBar menuBar;
 
     public GUI() {
         toolbar = new Toolbar();

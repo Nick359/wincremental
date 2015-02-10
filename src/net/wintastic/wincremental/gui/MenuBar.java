@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MenuBar implements Drawable {
 
-    private List<IconGrid> iconGrids;
+    private final List<IconGrid> iconGrids;
     private Text buildingLabel;
     public static Icon selectedIcon;
     private float layerDepth;

@@ -15,7 +15,7 @@ public class TileRadiusIndicator implements Drawable {
     private int radius;
     private float layerDepth;
     boolean visible;
-    private BuildingTile buildingTile;
+    private final BuildingTile buildingTile;
     private List<Pair<Integer>> tiles;
 
     public TileRadiusIndicator(int radius, BuildingTile buildingTile) {

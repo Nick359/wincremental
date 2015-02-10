@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class DrawBatch {
-    private static List<Drawable> l = new ArrayList<Drawable>();
+    private static final List<Drawable> l = new ArrayList<Drawable>();
 
     public static void add(Drawable d) {
         if (l.contains(d)) return;

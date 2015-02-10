@@ -23,7 +23,7 @@ public class Icon implements Drawable {
 
         IconType(Sprite sprite) {
             this.sprite = sprite;
-            this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite;
+            this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite; //TODO: Either remove selectedSprite as it is always constant, or add new types of markers
         }
 
         public BuildingTile.BuildingTileType getBuildingTileType() {
@@ -43,9 +43,9 @@ public class Icon implements Drawable {
         //  }
     }
 
-    public IconType type;
+    public final IconType type;
     private Vector2f position;
-    private Tooltip tooltip;
+    private final Tooltip tooltip;
     public boolean selected;
     private float layerDepth;
     private boolean visible;
