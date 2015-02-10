@@ -2,21 +2,21 @@ package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;
+import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
-import net.wintastic.lwjgl.Tuple;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Tile implements Drawable {
-    Tuple<Integer> position;
+    Pair<Integer> position;
     float layerDepth;
     boolean visible;
 
-    public Tile(Tuple<Integer> position) {
+    public Tile(Pair<Integer> position) {
         this(position, true);
     }
 
-    public Tile(Tuple<Integer> position, boolean visible) {
+    public Tile(Pair<Integer> position, boolean visible) {
         this.position = position;
         this.layerDepth = 0.2f;
         this.visible = visible;

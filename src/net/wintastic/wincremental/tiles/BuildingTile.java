@@ -1,7 +1,7 @@
 package net.wintastic.wincremental.tiles;
 
+import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
-import net.wintastic.lwjgl.Tuple;
 import net.wintastic.wincremental.AssetLibrary;
 
 public class BuildingTile extends Tile {
@@ -25,7 +25,7 @@ public class BuildingTile extends Tile {
     public boolean selected;
     TileRadiusIndicator radiusIndicator;
 
-    public BuildingTile(Tuple<Integer> position, BuildingTileType type) {
+    public BuildingTile(Pair<Integer> position, BuildingTileType type) {
         super(position);
         this.type = type;
         this.radiusSize = type.radiusSize;

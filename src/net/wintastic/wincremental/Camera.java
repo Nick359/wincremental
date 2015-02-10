@@ -47,7 +47,7 @@ public class Camera {
     }
 
     private void handleMouseInput() {
-        if(Input.isButtonDown(2)) {
+        if(Input.isButtonDown(2) && GameManager.board.mouseInBoard()) {
             velocity = new Vector2f(0,0);
             if(prevMousePosition != null) {
                 Vector2f p = Input.mousePosition();

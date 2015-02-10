@@ -23,7 +23,7 @@ public class GameManager {
     public static Player player;
     public static Camera camera;
     GUI gui;
-    Board board;
+    public static Board board;
 
     public void init() {
         player = new Player();
