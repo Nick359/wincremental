@@ -20,10 +20,10 @@ public class BuildingTile extends Tile {
         }
     }
 
-    BuildingTileType type;
-    int radiusSize;
-    public boolean selected;
-    TileRadiusIndicator radiusIndicator;
+    private BuildingTileType type;
+    private int radiusSize;
+    private boolean selected;
+    private TileRadiusIndicator radiusIndicator;
 
     public BuildingTile(Pair<Integer> position, BuildingTileType type) {
         super(position);
@@ -36,7 +36,7 @@ public class BuildingTile extends Tile {
     @Override
     public void clickAction() {
         selected = true;
-        Board.selectedTile = this;
+        Board.setSelectedTile(this);
 
         if (radiusSize > 0)
         radiusIndicator.visible = true;

@@ -22,14 +22,14 @@ public class GameManager {
 
     public static Player player;
     public static Camera camera;
-    GUI gui;
+    private GUI gui;
     public static Board board;
 
     public void init() {
         player = new Player();
         camera = new Camera(new Vector2f((mapWidth - viewportWidth) * tileSize / 2, (mapHeight - viewportHeight) * tileSize / 2));
         gui = new GUI();
-        board = new Board(mapWidth, mapHeight);
+        board = new Board();
     }
 
     public void update() {

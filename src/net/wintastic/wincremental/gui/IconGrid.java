@@ -13,12 +13,12 @@ public class IconGrid {
         TEST, BUILDING
     }
 
-    GridType type;
-    Vector2f position;
-    List<Icon> icons;
-    int verticalPadding;
-    int horizontalPadding;
-    int iconsPerLine;
+    private GridType type;
+    private Vector2f position;
+    private List<Icon> icons;
+    private int verticalPadding;
+    private int horizontalPadding;
+    private int iconsPerLine;
 
     public IconGrid() {
         this(GridType.TEST, new Vector2f(0f, 0f), 4, 4, 6);
@@ -43,9 +43,9 @@ public class IconGrid {
 
         switch (type) {
             case BUILDING:
-                Icon tentIcon = new Icon(Icon.IconType.TENT, true);
+                Icon tentIcon = new Icon(Icon.IconType.TENT);
                 icons.add(tentIcon);
-                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED, true);
+                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED);
                 icons.add(storageShedIcon);
                 break;
         }

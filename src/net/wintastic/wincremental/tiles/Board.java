@@ -7,13 +7,13 @@ import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.gui.MenuBar;
 
 public class Board {
-    Tile[][] tiles;
-    int width, height;
-    public static Tile selectedTile;
+    private Tile[][] tiles;
+    private int width, height;
+    private static Tile selectedTile;
 
-    public Board(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Board() {
+        this.width = GameManager.mapWidth;
+        this.height = GameManager.mapHeight;
         initializeTiles();
     }
 
@@ -33,8 +33,8 @@ public class Board {
         placeTownCenter();
     }
 
-    private void placeTownCenter(){
-        setTile(new Pair<Integer>(width/2, height/2), new BuildingTile(new Pair<Integer>(width/2, height/2), BuildingTile.BuildingTileType.TOWN_CENTER));
+    private void placeTownCenter() {
+        setTile(new Pair<Integer>(width / 2, height / 2), new BuildingTile(new Pair<Integer>(width / 2, height / 2), BuildingTile.BuildingTileType.TOWN_CENTER));
     }
 
     public Tile getTile(Pair<Integer> position) {
@@ -45,14 +45,18 @@ public class Board {
         tiles[position.first][position.second] = newTile;
     }
 
+    public static void setSelectedTile(Tile selectedTile) {
+        Board.selectedTile = selectedTile;
+    }
+
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
             if (selectedTile != null) {
                 ((BuildingTile) selectedTile).toggleSelected();
             }
 
-            Pair<Integer> p = new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.position.x) / GameManager.tileSize),
-                    (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.position.y) / GameManager.tileSize));
+            Pair<Integer> p = new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
+                    (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
             Tile t = tiles[p.first][p.second];
             t.clickAction();
             if (t instanceof ResourceTile && ((ResourceTile) t).type == ResourceTile.ResourceTileType.GRASS && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {

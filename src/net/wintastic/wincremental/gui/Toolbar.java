@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Toolbar implements Drawable {
 
-    List<ResourceDisplay> resourceDisplays;
-    float layerDepth;
-    boolean visible;
+    private List<ResourceDisplay> resourceDisplays;
+    private float layerDepth;
+    private boolean visible;
 
     public Toolbar() {
         resourceDisplays = new ArrayList<ResourceDisplay>();

@@ -9,17 +9,11 @@ import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Tile implements Drawable {
     Pair<Integer> position;
-    float layerDepth;
-    boolean visible;
+    private float layerDepth;
 
     public Tile(Pair<Integer> position) {
-        this(position, true);
-    }
-
-    public Tile(Pair<Integer> position, boolean visible) {
         this.position = position;
         this.layerDepth = 0.2f;
-        this.visible = visible;
         DrawBatch.add(this);
     }
 
@@ -28,8 +22,8 @@ public abstract class Tile implements Drawable {
     protected abstract Sprite getSprite();
 
     public Vector2f getScreenPosition() {
-        float x = position.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x;
-        float y = position.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y;
+        float x = position.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x;
+        float y = position.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y;
         return new Vector2f(x, y);
     }
 
@@ -51,10 +45,10 @@ public abstract class Tile implements Drawable {
 
     @Override
     public boolean isVisible() {
-        int minX = (int) (GameManager.camera.position.x / GameManager.tileSize - 1);
-        int maxX = (int) (GameManager.camera.position.x / GameManager.tileSize + GameManager.viewportWidth + 1);
-        int minY = (int) (GameManager.camera.position.y / GameManager.tileSize - 1);
-        int maxY = (int) (GameManager.camera.position.y / GameManager.tileSize + GameManager.viewportHeight + 1);
+        int minX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize - 1);
+        int maxX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize + GameManager.viewportWidth + 1);
+        int minY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize - 1);
+        int maxY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 1);
 
         return position.first >= minX && position.first < maxX && position.second >= minY && position.second < maxY;
     }

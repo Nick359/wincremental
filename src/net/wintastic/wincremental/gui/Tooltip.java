@@ -7,10 +7,10 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Tooltip implements Drawable {
 
-    Icon parentIcon;
-    Text headerText;
-    Text bodyText;
-    Text footerText;
+    private Icon parentIcon;
+    private Text headerText;
+    private Text bodyText;
+    private Text footerText;
     private float layerDepth;
     boolean visible;
 

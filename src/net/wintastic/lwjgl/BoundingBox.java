@@ -5,9 +5,9 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class BoundingBox {
 
-    public Vector2f position;
-    public int width;
-    public int height;
+    private Vector2f position;
+    private int width;
+    private int height;
 
     public BoundingBox(Vector2f position, int width, int height) {
         this.position = position;

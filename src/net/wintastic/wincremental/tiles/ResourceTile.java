@@ -36,7 +36,7 @@ public class ResourceTile extends Tile {
     }
 
     ResourceTileType type;
-    int currentSize;
+    private int currentSize;
 
     public ResourceTile(Pair<Integer> position) {
         super(position);

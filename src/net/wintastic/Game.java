@@ -13,10 +13,10 @@ import org.lwjgl.opengl.GL11;
 
 public class Game implements LWJGLGame {
 
-    long fps;
-    long lastFPS;
+    private long fps;
+    private long lastFPS;
 
-    GameManager gameManager = new GameManager();
+    private GameManager gameManager = new GameManager();
 
     @Override
     public void start() {
@@ -68,7 +68,7 @@ public class Game implements LWJGLGame {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    public static void setDisplayMode(int width, int height, boolean fullscreen) {
+    private static void setDisplayMode(int width, int height, boolean fullscreen) {
         try {
             DisplayMode targetDisplayMode = null;
 
@@ -107,7 +107,7 @@ public class Game implements LWJGLGame {
         }
     }
 
-    public void updateFPS() {
+    private void updateFPS() {
         if (getTime() - lastFPS > 1000) {
             Display.setTitle("FPS: " + fps);
             fps = 0;
@@ -116,7 +116,7 @@ public class Game implements LWJGLGame {
         fps++;
     }
 
-    public long getTime() {
+    private long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 

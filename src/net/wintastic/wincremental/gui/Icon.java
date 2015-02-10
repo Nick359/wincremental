@@ -44,26 +44,22 @@ public class Icon implements Drawable {
     }
 
     public IconType type;
-    Vector2f position;
-    Tooltip tooltip;
+    private Vector2f position;
+    private Tooltip tooltip;
     public boolean selected;
-    float layerDepth;
-    boolean visible;
+    private float layerDepth;
+    private boolean visible;
 
-    public Icon() {
-        this(IconType.TEST, new Vector2f(0f, 0f), false);
+    public Icon(IconType type) {
+        this(type, new Vector2f(0f, 0f));
     }
 
-    public Icon(IconType type, boolean visible) {
-        this(type, new Vector2f(0f, 0f), visible);
-    }
-
-    public Icon(IconType type, Vector2f position, boolean visible) {
+    public Icon(IconType type, Vector2f position) {
         this.type = type;
         this.position = position;
         this.layerDepth = 0.6f;
         this.selected = false;
-        this.visible = visible;
+        this.visible = true;
         tooltip = new Tooltip(this);
 
         DrawBatch.add(this);

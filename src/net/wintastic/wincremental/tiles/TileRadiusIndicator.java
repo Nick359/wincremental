@@ -12,11 +12,11 @@ import java.util.List;
 
 public class TileRadiusIndicator implements Drawable {
 
-    int radius;
-    float layerDepth;
+    private int radius;
+    private float layerDepth;
     boolean visible;
-    BuildingTile buildingTile;
-    List<Pair<Integer>> tiles;
+    private BuildingTile buildingTile;
+    private List<Pair<Integer>> tiles;
 
     public TileRadiusIndicator(int radius, BuildingTile buildingTile) {
         this.radius = radius;
@@ -42,8 +42,8 @@ public class TileRadiusIndicator implements Drawable {
     public void draw() {
         for (Pair<Integer> tile : tiles) {
             AssetLibrary.radiusIndicatorSprite.position = new Vector2f(
-                    tile.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x,
-                    tile.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y);
+                    tile.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x,
+                    tile.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y);
             AssetLibrary.radiusIndicatorSprite.draw();
         }
     }
