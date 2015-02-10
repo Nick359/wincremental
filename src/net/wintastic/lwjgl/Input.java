@@ -33,7 +33,7 @@ public abstract class Input {
     }
 
     public static boolean wasKeyDown(int key) {
-        return pressedKeys.contains((Integer) key);
+        return pressedKeys.contains(key);
     }
 
     public static boolean isButtonDown(int button) {
@@ -57,7 +57,7 @@ public abstract class Input {
     }
 
     public static boolean wasButtonDown(int button) {
-        return pressedButtons.contains((Integer) button);
+        return pressedButtons.contains(button);
     }
 
     public static int scrollWheel() {

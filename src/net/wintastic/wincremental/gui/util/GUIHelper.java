@@ -11,8 +11,8 @@ public class GUIHelper {
         String suf = "";
         if (n.compareTo(BigInteger.valueOf(999)) > 0) {
             int nDigits = n.toString().length();
-            int p = (int) nDigits % MAX_LENGTH;
-            int index = (int) ((nDigits - ((nDigits - 1) % MAX_LENGTH)) / MAX_LENGTH);
+            int p = nDigits % MAX_LENGTH;
+            int index = (nDigits - ((nDigits - 1) % MAX_LENGTH)) / MAX_LENGTH;
             if (index < suffix.length)
                 suf = suffix[index];
             else
