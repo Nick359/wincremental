@@ -16,7 +16,7 @@ public class Game implements LWJGLGame {
     private long fps;
     private long lastFPS;
 
-    private GameManager gameManager = new GameManager();
+    private final GameManager gameManager = new GameManager();
 
     @Override
     public void start() {

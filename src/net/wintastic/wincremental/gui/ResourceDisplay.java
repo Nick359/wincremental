@@ -12,12 +12,10 @@ public class ResourceDisplay implements Drawable {
 
     private Icon icon;
     private Text text;
-    private Vector2f position;
     private float layerDepth;
     private boolean visible;
 
     public ResourceDisplay(Icon.IconType type, Vector2f position) {
-        this.position = position;
         icon = new Icon(type, position);
         text = new Text(new Vector2f(position.x + GameManager.iconSize + 6f, position.y + (GameManager.iconSize / 4)), "Resource_Display", "Arial", 1, 16);
         text.color = Color.black;

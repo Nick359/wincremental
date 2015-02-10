@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class GUIHelper {
 
-    private static String[] suffix = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"};
+    private static final String[] suffix = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"};
 
     public static String formatNumber(BigInteger n) {
         String suf = "";

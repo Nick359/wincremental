@@ -89,7 +89,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
         return new Vector2f(min, max);
     }
 
-    public static boolean collides(Shape2D s1, Shape2D s2) throws ClassNotFoundException {
+    public static boolean collides(Shape2D s1, Shape2D s2) {
         for (Vector2f a : s1.getAxes()) {
             Vector2f p1 = s1.projection(a);
             Vector2f p2 = s2.projection(a);

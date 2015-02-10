@@ -8,7 +8,7 @@ import net.wintastic.wincremental.gui.MenuBar;
 
 public class Board {
     private Tile[][] tiles;
-    private int width, height;
+    private final int width, height;
     private static Tile selectedTile;
 
     public Board() {

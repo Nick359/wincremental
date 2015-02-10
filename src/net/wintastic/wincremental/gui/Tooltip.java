@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Tooltip implements Drawable {
 
-    private Icon parentIcon;
+    private final Icon parentIcon;
     private Text headerText;
     private Text bodyText;
     private Text footerText;

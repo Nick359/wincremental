@@ -13,7 +13,7 @@ public class IconGrid {
         TEST, BUILDING
     }
 
-    private GridType type;
+    private final GridType type;
     private Vector2f position;
     private List<Icon> icons;
     private int verticalPadding;

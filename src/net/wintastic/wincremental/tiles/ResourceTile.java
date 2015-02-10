@@ -15,8 +15,8 @@ public class ResourceTile extends Tile {
         GOLD(AssetLibrary.goldTileSprite, 10),
         WOOD(AssetLibrary.woodTileSprite, 20);
 
-        Sprite sprite;
-        int initialSize;
+        private final Sprite sprite;
+        private final int initialSize;
 
         ResourceTileType(Sprite sprite, int initialSize) {
             this.sprite = sprite;
