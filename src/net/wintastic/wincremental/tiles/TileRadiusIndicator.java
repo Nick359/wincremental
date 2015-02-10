@@ -16,7 +16,7 @@ public class TileRadiusIndicator implements Drawable {
     float layerDepth;
     boolean visible;
     BuildingTile buildingTile;
-    List<Vector2f> tiles;
+    List<Pair<Integer>> tiles;
 
     public TileRadiusIndicator(int radius, BuildingTile buildingTile) {
         this.radius = radius;
@@ -40,14 +40,16 @@ public class TileRadiusIndicator implements Drawable {
 
     @Override
     public void draw() {
-        for (int i = 0; i < tiles.size(); i++){
-            AssetLibrary.radiusIndicatorSprite.position = tiles.get(i);
+        for (int i = 0; i < tiles.size(); i++) {
+            AssetLibrary.radiusIndicatorSprite.position = new Vector2f(
+                    tiles.get(i).first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x,
+                    tiles.get(i).second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y);
             AssetLibrary.radiusIndicatorSprite.draw();
         }
     }
 
     private void getTiles() {
-        tiles = new ArrayList<Vector2f>();
+        tiles = new ArrayList<Pair<Integer>>();
 
         Pair<Integer> position = buildingTile.position;
 
@@ -57,8 +59,7 @@ public class TileRadiusIndicator implements Drawable {
         for (int y = -radius; y <= radius; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (x * x + y * y <= radius * radius) {
-                    tiles.add(new Vector2f((x0 + x) * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x
-                            , (y0 + y) * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y));
+                    tiles.add(new Pair<Integer>(x0 + x, y0 + y));
                 }
             }
         }
