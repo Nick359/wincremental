@@ -76,9 +76,7 @@ public class Game implements LWJGLGame {
                 DisplayMode[] modes = Display.getAvailableDisplayModes();
                 int freq = 0;
 
-                for (int i = 0; i < modes.length; i++) {
-                    DisplayMode current = modes[i];
-
+                for (DisplayMode current : modes) {
                     if ((current.getWidth() == width) && (current.getHeight() == height)) {
                         if (targetDisplayMode == null || current.getFrequency() >= freq && current.getBitsPerPixel() > targetDisplayMode.getBitsPerPixel()) {
                             targetDisplayMode = current;

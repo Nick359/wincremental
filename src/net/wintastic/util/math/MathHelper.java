@@ -78,7 +78,7 @@ public class MathHelper {
      * Randomly generates an integer value between the provided bounds.
      *
      * @param min The minimum boundary in which to generate the integer.
-     * @param max The maxiumum boundary in which to generate the integer.
+     * @param max The maximum boundary in which to generate the integer.
      * @return The generated integer.
      */
     public static int randomInt(int min, int max) {

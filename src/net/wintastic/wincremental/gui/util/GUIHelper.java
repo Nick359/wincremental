@@ -5,12 +5,12 @@ import java.math.BigInteger;
 public class GUIHelper {
 
     private static String[] suffix = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"};
-    private static int MAX_LENGTH = 3;
 
     public static String formatNumber(BigInteger n) {
         String suf = "";
         if (n.compareTo(BigInteger.valueOf(999)) > 0) {
             int nDigits = n.toString().length();
+            int MAX_LENGTH = 3;
             int p = nDigits % MAX_LENGTH;
             int index = (nDigits - ((nDigits - 1) % MAX_LENGTH)) / MAX_LENGTH;
             if (index < suffix.length)

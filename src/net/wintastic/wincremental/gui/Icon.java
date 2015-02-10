@@ -26,8 +26,8 @@ public class Icon implements Drawable {
             this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite;
         }
 
-        public BuildingTile.BuildingTileType getBuildingTileType(){
-            switch(this){
+        public BuildingTile.BuildingTileType getBuildingTileType() {
+            switch (this) {
                 case TENT:
                     return BuildingTile.BuildingTileType.TENT;
                 case STORAGE_SHED:
@@ -99,11 +99,7 @@ public class Icon implements Drawable {
         }
         type.sprite.position = position;
         type.sprite.draw();
-        if (contains(Input.mousePosition())) {
-            tooltip.visible = true;
-        } else {
-            tooltip.visible = false;
-        }
+        tooltip.visible = contains(Input.mousePosition());
     }
 
     @Override
@@ -117,8 +113,7 @@ public class Icon implements Drawable {
             return -1;
         else if (this.layerDepth > o.getLayerDepth())
             return 1;
-        else
-            return 0;
+        return 0;
     }
 
 }

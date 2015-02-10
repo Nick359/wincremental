@@ -40,10 +40,10 @@ public class TileRadiusIndicator implements Drawable {
 
     @Override
     public void draw() {
-        for (int i = 0; i < tiles.size(); i++) {
+        for (Pair<Integer> tile : tiles) {
             AssetLibrary.radiusIndicatorSprite.position = new Vector2f(
-                    tiles.get(i).first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x,
-                    tiles.get(i).second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y);
+                    tile.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.position.x,
+                    tile.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.position.y);
             AssetLibrary.radiusIndicatorSprite.draw();
         }
     }

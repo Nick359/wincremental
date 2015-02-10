@@ -74,10 +74,10 @@ public class IconGrid {
     }
 
     public Icon getSelectedIcon() {
-        for (int i = 0; i < icons.size(); i++) {
-            if (icons.get(i).contains(Input.mousePosition())) {
-                icons.get(i).selected = true;
-                return icons.get(i);
+        for (Icon icon : icons) {
+            if (icon.contains(Input.mousePosition())) {
+                icon.selected = true;
+                return icon;
             }
         }
         return null;

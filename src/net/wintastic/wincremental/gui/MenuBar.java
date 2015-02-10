@@ -40,8 +40,8 @@ public class MenuBar implements Drawable {
             if (selectedIcon != null)
                 selectedIcon.selected = false;
 
-            for (int i = 0; i < iconGrids.size(); i++) {
-                selectedIcon = iconGrids.get(i).getSelectedIcon();
+            for (IconGrid iconGrid : iconGrids) {
+                selectedIcon = iconGrid.getSelectedIcon();
             }
         }
     }

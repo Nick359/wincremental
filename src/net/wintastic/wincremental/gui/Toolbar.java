@@ -35,8 +35,8 @@ public class Toolbar implements Drawable {
     }
 
     public void update() {
-        for (int i = 0; i < resourceDisplays.size(); i++) {
-            resourceDisplays.get(i).update();
+        for (ResourceDisplay resourceDisplay : resourceDisplays) {
+            resourceDisplay.update();
         }
     }
 
