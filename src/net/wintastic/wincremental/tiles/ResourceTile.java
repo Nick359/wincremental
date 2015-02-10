@@ -1,7 +1,7 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.Sprite;
 import net.wintastic.lwjgl.Pair;
+import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;

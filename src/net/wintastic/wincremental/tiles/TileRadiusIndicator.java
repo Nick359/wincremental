@@ -2,7 +2,7 @@ package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;
-import net.wintastic.lwjgl.Tuple;
+import net.wintastic.lwjgl.Pair;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
@@ -49,7 +49,7 @@ public class TileRadiusIndicator implements Drawable {
     private void getTiles() {
         tiles = new ArrayList<Vector2f>();
 
-        Tuple<Integer> position = buildingTile.position;
+        Pair<Integer> position = buildingTile.position;
 
         int x0 = position.first;
         int y0 = position.second;
