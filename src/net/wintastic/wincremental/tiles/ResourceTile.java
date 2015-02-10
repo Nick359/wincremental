@@ -1,25 +1,29 @@
 package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
-import net.wintastic.lwjgl.Tuple;
+import net.wintastic.lwjgl.Pair;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
+import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 
 import java.math.BigInteger;
 
 public class ResourceTile extends Tile {
 
     public static enum ResourceTileType {
-        GRASS(AssetLibrary.grassTileSprite, 0),
-        GOLD(AssetLibrary.goldTileSprite, 10),
-        WOOD(AssetLibrary.woodTileSprite, 20);
+        GRASS(AssetLibrary.grassTileSprite, null, 0),
+        GOLD(AssetLibrary.goldTileSprite, ReadableColor.ORANGE, 10),
+        WOOD(AssetLibrary.woodTileSprite, new Color(129, 55, 6), 20);
 
         Sprite sprite;
+        ReadableColor color;
         int initialSize;
 
-        ResourceTileType(Sprite sprite, int initialSize) {
+        ResourceTileType(Sprite sprite, ReadableColor color, int initialSize) {
             this.sprite = sprite;
+            this.color = color;
             this.initialSize = initialSize;
         }
 
@@ -35,16 +39,16 @@ public class ResourceTile extends Tile {
         }
     }
 
-    ResourceTileType type;
+    public ResourceTileType type;
     int currentSize;
 
-    public ResourceTile(Tuple<Integer> position) {
+    public ResourceTile(Pair<Integer> position) {
         super(position);
         this.type = ResourceTileType.GRASS;
         this.currentSize = this.type.initialSize;
     }
 
-    public ResourceTile(Tuple<Integer> position, ResourceTileType type) {
+    public ResourceTile(Pair<Integer> position, ResourceTileType type) {
         super(position);
         this.type = type;
         this.currentSize = this.type.initialSize;
@@ -61,6 +65,11 @@ public class ResourceTile extends Tile {
     @Override
     protected Sprite getSprite() {
         return type.sprite;
+    }
+
+    @Override
+    public ReadableColor getColor() {
+        return type.color;
     }
 
 }
