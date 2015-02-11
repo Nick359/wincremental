@@ -36,8 +36,6 @@ public class Board implements Drawable {
                     tiles[i][j] = TileType.GOLD;
                 else if (MathHelper.randomChance(4))
                     tiles[i][j] = TileType.WOOD;
-                else
-                    tiles[i][j] = TileType.EMPTY;
             }
         }
 
@@ -58,19 +56,25 @@ public class Board implements Drawable {
 
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
-            Pair<Integer> p = new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
-                    (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
+            selectedTilePosition = null;
+            Pair<Integer> p = getMouseTilePosition();
             TileType type = tiles[p.first][p.second];
-            type.clickAction();
-            if (type == TileType.EMPTY && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
+            if (type == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
                 setTile(p, MenuBar.selectedIcon.type.getBuildingTileType());
-            }
-            if (type.getCategory() == Tile.TileCategory.BUILDING) {
-                selectedTilePosition = p;
-            } else {
-                selectedTilePosition = null;
+            } else if (type != null) {
+                if (type.clickAction()) {
+                    tiles[p.first][p.second] = null;
+                }
+                if (type.getCategory() == Tile.TileCategory.BUILDING) {
+                    selectedTilePosition = p;
+                }
             }
         }
+    }
+
+    private Pair<Integer> getMouseTilePosition() {
+        return new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
+                (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
     }
 
     public boolean mouseInBoard() {
@@ -89,15 +93,33 @@ public class Board implements Drawable {
 
     @Override
     public void draw() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                Pair<Integer> p = new Pair<Integer>(i, j);
-                if (Tile.isVisible(p))
-                    Tile.drawTile(tiles[i][j], p);
-            }
-        }
+        drawBoardBackground();
+        drawTiles();
         if (selectedTilePosition != null) {
             drawTileRadiusIndicator();
+        }
+    }
+
+    private void drawBoardBackground() {
+        float dx = GameManager.camera.getPosition().x % GameManager.tileSize;
+        float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
+        for (int i = 0; i <= GameManager.viewportWidth; i++) {
+            for (int j = 0; j <= GameManager.viewportHeight; j++) {
+                AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
+                AssetLibrary.grassTileSprite.draw();
+            }
+        }
+    }
+
+    private void drawTiles() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (tiles[i][j] != null) {
+                    Pair<Integer> p = new Pair<Integer>(i, j);
+                    if (Tile.isVisible(p))
+                        Tile.drawTile(tiles[i][j], p);
+                }
+            }
         }
     }
 

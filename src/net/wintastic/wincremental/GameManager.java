@@ -15,8 +15,8 @@ public class GameManager {
     public static final int iconSize = 32;
     public static final int menuBarWidth = 320;
     public static final int toolbarHeight = 32;
-    public static final int mapWidth = 300;
-    public static final int mapHeight = 200;
+    public static final int mapWidth = 1500;
+    public static final int mapHeight = 1500;
     public static final int viewportWidth = (resX - menuBarWidth) / tileSize;
     public static final int viewportHeight = (resY - toolbarHeight) / tileSize;
 

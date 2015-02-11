@@ -16,11 +16,6 @@ public abstract class Tile {
     }
 
     public enum TileType {
-
-
-
-        EMPTY(AssetLibrary.grassTileSprite, 0, 0, TileCategory.EMPTY),
-
         TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING),
         TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING),
         STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING),
@@ -29,13 +24,13 @@ public abstract class Tile {
         GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE);
 
         private final Sprite sprite;
-        private final int initialSize;
+        private int size;
         private int radius;
         private TileCategory category;
 
         TileType(Sprite sprite, int initialSize, int radius, TileCategory category) {
             this.sprite = sprite;
-            this.initialSize = initialSize;
+            this.size = initialSize;
             this.radius = radius;
             this.category = category;
         }
@@ -52,15 +47,21 @@ public abstract class Tile {
             return this.category;
         }
 
-        public void clickAction() {
-            switch (this) {
-                case WOOD:
-                    GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
-                    break;
-                case GOLD:
-                    GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
-                    break;
+        public boolean clickAction() {
+            if (this.getCategory() == TileCategory.RESOURCE) {
+                switch (this) {
+                    case WOOD:
+                        GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
+                        break;
+                    case GOLD:
+                        GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
+                        break;
+                }
+                this.size--;
+                if (this.size == 0)
+                    return true;
             }
+            return false;
         }
     }
 
