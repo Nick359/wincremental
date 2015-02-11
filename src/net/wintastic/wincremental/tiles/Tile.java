@@ -10,28 +10,46 @@ import org.lwjgl.util.vector.Vector2f;
 import java.math.BigInteger;
 
 public abstract class Tile {
+
+    public enum TileCategory {
+        EMPTY, RESOURCE, BUILDING
+    }
+
     public enum TileType {
-        EMPTY(AssetLibrary.grassTileSprite, 0, 0),
 
-        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16),
-        TENT(AssetLibrary.tentTileSprite, 0, 0),
-        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0),
 
-        WOOD(AssetLibrary.woodTileSprite, 20, 0),
-        GOLD(AssetLibrary.goldTileSprite, 10, 0);
+
+        EMPTY(AssetLibrary.grassTileSprite, 0, 0, TileCategory.EMPTY),
+
+        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING),
+        TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING),
+        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING),
+
+        WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE),
+        GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE);
 
         private final Sprite sprite;
         private final int initialSize;
-        private int radiusSize;
+        private int radius;
+        private TileCategory category;
 
-        TileType(Sprite sprite, int initialSize, int radiusSize) {
+        TileType(Sprite sprite, int initialSize, int radius, TileCategory category) {
             this.sprite = sprite;
             this.initialSize = initialSize;
-            this.radiusSize = radiusSize;
+            this.radius = radius;
+            this.category = category;
         }
 
         public Sprite getSprite() {
             return this.sprite;
+        }
+
+        public int getRadius() {
+            return this.radius;
+        }
+
+        public TileCategory getCategory() {
+            return this.category;
         }
 
         public void clickAction() {

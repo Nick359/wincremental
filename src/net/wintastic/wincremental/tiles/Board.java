@@ -5,9 +5,11 @@ import net.wintastic.lwjgl.Drawable;
 import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Pair;
 import net.wintastic.util.math.MathHelper;
+import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.gui.MenuBar;
 import net.wintastic.wincremental.tiles.Tile.TileType;
+import org.lwjgl.util.vector.Vector2f;
 
 public class Board implements Drawable {
     private TileType[][] tiles;
@@ -54,22 +56,19 @@ public class Board implements Drawable {
         tiles[position.first][position.second] = newTile;
     }
 
-    public void setSelectedTile(Pair<Integer> position) {
-        this.selectedTilePosition = position;
-    }
-
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
-//            if (selectedTilePosition != null) {
-//                ((BuildingTile) selectedTile).toggleSelected();
-//            }
-
             Pair<Integer> p = new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
                     (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
             TileType type = tiles[p.first][p.second];
             type.clickAction();
             if (type == TileType.EMPTY && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
                 setTile(p, MenuBar.selectedIcon.type.getBuildingTileType());
+            }
+            if (type.getCategory() == Tile.TileCategory.BUILDING) {
+                selectedTilePosition = p;
+            } else {
+                selectedTilePosition = null;
             }
         }
     }
@@ -95,6 +94,25 @@ public class Board implements Drawable {
                 Pair<Integer> p = new Pair<Integer>(i, j);
                 if (Tile.isVisible(p))
                     Tile.drawTile(tiles[i][j], p);
+            }
+        }
+        if (selectedTilePosition != null) {
+            drawTileRadiusIndicator();
+        }
+    }
+
+    private void drawTileRadiusIndicator() {
+        int radius = getTile(selectedTilePosition).getRadius();
+        int x0 = selectedTilePosition.first;
+        int y0 = selectedTilePosition.second;
+        for (int y = -radius; y <= radius; y++) {
+            for (int x = -radius; x <= radius; x++) {
+                if (x * x + y * y <= radius * radius) {
+                    AssetLibrary.radiusIndicatorSprite.position = new Vector2f(
+                            (x0 + x) * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x,
+                            (y0 + y) * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y);
+                    AssetLibrary.radiusIndicatorSprite.draw();
+                }
             }
         }
     }
