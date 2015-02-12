@@ -12,7 +12,7 @@ import java.math.BigInteger;
 public abstract class Tile {
 
     public enum TileCategory {
-        EMPTY, RESOURCE, BUILDING
+        RESOURCE, BUILDING
     }
 
     public enum TileType {
