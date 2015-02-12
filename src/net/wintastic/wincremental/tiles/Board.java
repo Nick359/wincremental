@@ -30,12 +30,14 @@ public class Board implements Drawable {
 
     private void initializeTiles() {
         tiles = new TileType[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (MathHelper.randomChance(0.2f))
-                    tiles[i][j] = TileType.GOLD;
-                else if (MathHelper.randomChance(4))
-                    tiles[i][j] = TileType.WOOD;
+        for (TileType type : TileType.values()) {
+            if (type.getCategory() == Tile.TileCategory.RESOURCE) {
+                int nTiles = (int) (width * height * type.getProbability() * MathHelper.randomFloat(0.9f, 1.1f));
+                int[] x = MathHelper.randomInts(nTiles, 0, width);
+                int[] y = MathHelper.randomInts(nTiles, 0, height);
+                for (int i = 0; i < nTiles; i++) {
+                    tiles[x[i]][y[i]] = type;
+                }
             }
         }
 
@@ -112,12 +114,15 @@ public class Board implements Drawable {
     }
 
     private void drawTiles() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        int minX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize - 1);
+        int maxX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize + GameManager.viewportWidth + 1);
+        int minY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize - 1);
+        int maxY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 1);
+        for (int i = minX; i < maxX; i++) {
+            for (int j = minY; j < maxY; j++) {
                 if (tiles[i][j] != null) {
                     Pair<Integer> p = new Pair<Integer>(i, j);
-                    if (Tile.isVisible(p))
-                        Tile.drawTile(tiles[i][j], p);
+                    Tile.drawTile(p, tiles[i][j]);
                 }
             }
         }

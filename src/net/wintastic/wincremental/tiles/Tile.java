@@ -16,23 +16,25 @@ public abstract class Tile {
     }
 
     public enum TileType {
-        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING),
-        TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING),
-        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING),
+        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING, 0),
+        TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING, 0),
+        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING, 0),
 
-        WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE),
-        GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE);
+        WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE, 0.04f),
+        GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE, 0.002f);
 
         private final Sprite sprite;
         private int size;
         private int radius;
         private TileCategory category;
+        private float probability;
 
-        TileType(Sprite sprite, int initialSize, int radius, TileCategory category) {
+        TileType(Sprite sprite, int initialSize, int radius, TileCategory category, float probability) {
             this.sprite = sprite;
             this.size = initialSize;
             this.radius = radius;
             this.category = category;
+            this.probability = probability;
         }
 
         public Sprite getSprite() {
@@ -45,6 +47,10 @@ public abstract class Tile {
 
         public TileCategory getCategory() {
             return this.category;
+        }
+
+        public float getProbability() {
+            return this.probability;
         }
 
         public boolean clickAction() {
@@ -65,7 +71,7 @@ public abstract class Tile {
         }
     }
 
-    public static void drawTile(TileType type, Pair<Integer> position) {
+    public static void drawTile(Pair<Integer> position, TileType type) {
         type.getSprite().position = getScreenPosition(position);
         type.getSprite().draw();
     }
@@ -74,14 +80,5 @@ public abstract class Tile {
         float x = position.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x;
         float y = position.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y;
         return new Vector2f(x, y);
-    }
-
-    public static boolean isVisible(Pair<Integer> position) {
-        int minX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize - 1);
-        int maxX = (int) (GameManager.camera.getPosition().x / GameManager.tileSize + GameManager.viewportWidth + 1);
-        int minY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize - 1);
-        int maxY = (int) (GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 1);
-
-        return position.first >= minX && position.first < maxX && position.second >= minY && position.second < maxY;
     }
 }
