@@ -130,6 +130,8 @@ public class Board implements Drawable {
 
     private void drawTileRadiusIndicator() {
         int radius = getTile(selectedTilePosition).getRadius();
+        if (radius <= 0)
+            return;
         int x0 = selectedTilePosition.first;
         int y0 = selectedTilePosition.second;
         for (int y = -radius; y <= radius; y++) {
