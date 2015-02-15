@@ -56,7 +56,7 @@ public class SpriteSheet implements Drawable {
 
         float fH = (currentFrame % ((int) sprite.getWidth() / frameWidth)) / (sprite.getWidth() / frameWidth);
         float fH2 = fH + 1 / (sprite.getWidth() / frameWidth);
-        float fV = (currentFrame / ((int) sprite.getWidth() / frameHeight)) / (sprite.getHeight() / frameHeight);
+        float fV = (currentFrame / ((int) sprite.getWidth() / frameWidth)) / (sprite.getHeight() / frameHeight);
         float fV2 = fV + 1 / (sprite.getHeight() / frameHeight);
         System.out.println(fV);
 
