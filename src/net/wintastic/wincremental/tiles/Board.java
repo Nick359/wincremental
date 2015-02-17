@@ -74,7 +74,7 @@ public class Board implements Drawable {
         }
     }
 
-    private Pair<Integer> getMouseTilePosition() {
+    public static Pair<Integer> getMouseTilePosition() {
         return new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
                 (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
     }
@@ -105,9 +105,11 @@ public class Board implements Drawable {
     private void drawBoardBackground() {
         float dx = GameManager.camera.getPosition().x % GameManager.tileSize;
         float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
-        for (int i = 0; i <= GameManager.viewportWidth; i++) {
-            for (int j = 0; j <= GameManager.viewportHeight; j++) {
+        for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
+            for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
                 AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
+                AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
+                AssetLibrary.grassTileSprite.scaleY = Tile.scaleY;
                 AssetLibrary.grassTileSprite.draw();
             }
         }
@@ -140,6 +142,8 @@ public class Board implements Drawable {
                     AssetLibrary.radiusIndicatorSprite.position = new Vector2f(
                             (x0 + x) * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x,
                             (y0 + y) * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y);
+                    AssetLibrary.radiusIndicatorSprite.scaleX = Tile.scaleX;
+                    AssetLibrary.radiusIndicatorSprite.scaleY = Tile.scaleY;
                     AssetLibrary.radiusIndicatorSprite.draw();
                 }
             }

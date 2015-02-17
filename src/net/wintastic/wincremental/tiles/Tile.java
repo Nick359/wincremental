@@ -16,6 +16,8 @@ public abstract class Tile {
     }
 
     public enum TileType {
+        EMPTY(AssetLibrary.grassTileSprite, 0, 0, null, 0),
+
         TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING, 0),
         TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING, 0),
         STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING, 0),
@@ -71,8 +73,13 @@ public abstract class Tile {
         }
     }
 
+    public static float scaleX = 1;
+    public static float scaleY = 1;
+
     public static void drawTile(Pair<Integer> position, TileType type) {
         type.getSprite().position = getScreenPosition(position);
+        type.getSprite().scaleX = scaleX;
+        type.getSprite().scaleY = scaleY;
         type.getSprite().draw();
     }
 
