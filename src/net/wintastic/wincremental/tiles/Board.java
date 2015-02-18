@@ -7,14 +7,18 @@ import net.wintastic.lwjgl.Pair;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
+import net.wintastic.wincremental.Player;
 import net.wintastic.wincremental.gui.MenuBar;
 import net.wintastic.wincremental.tiles.Tile.TileType;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.math.BigInteger;
+
 public class Board implements Drawable {
     private TileType[][] tiles;
+    private int[][] resourceQuantities;
     private final int width, height;
-    private Pair<Integer> selectedTilePosition;
+    public Pair<Integer> selectedTilePosition;
     private boolean visible;
     private float layerDepth;
 
@@ -30,6 +34,7 @@ public class Board implements Drawable {
 
     private void initializeTiles() {
         tiles = new TileType[width][height];
+        resourceQuantities = new int[width][height];
         for (TileType type : TileType.values()) {
             if (type.getCategory() == Tile.TileCategory.RESOURCE) {
                 int nTiles = (int) (width * height * type.getProbability() * MathHelper.randomFloat(0.9f, 1.1f));
@@ -37,6 +42,7 @@ public class Board implements Drawable {
                 int[] y = MathHelper.randomInts(nTiles, 0, height);
                 for (int i = 0; i < nTiles; i++) {
                     tiles[x[i]][y[i]] = type;
+                    resourceQuantities[x[i]][y[i]] = type.getSize();
                 }
             }
         }
@@ -64,12 +70,7 @@ public class Board implements Drawable {
             if (type == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
                 setTile(p, MenuBar.selectedIcon.type.getBuildingTileType());
             } else if (type != null) {
-                if (type.clickAction()) {
-                    tiles[p.first][p.second] = null;
-                }
-                if (type.getCategory() == Tile.TileCategory.BUILDING) {
-                    selectedTilePosition = p;
-                }
+                type.clickAction(p);
             }
         }
     }
@@ -81,6 +82,20 @@ public class Board implements Drawable {
 
     public boolean mouseInBoard() {
         return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
+    }
+
+    public void gatherResource(Pair<Integer> p) {
+        switch (getTile(p)) {
+            case WOOD:
+                GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
+                break;
+            case GOLD:
+                GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
+                break;
+        }
+        resourceQuantities[p.first][p.second]--;
+        if (resourceQuantities[p.first][p.second] == 0)
+            tiles[p.first][p.second] = null;
     }
 
     @Override

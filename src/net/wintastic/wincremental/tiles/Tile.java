@@ -4,10 +4,7 @@ import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
-import net.wintastic.wincremental.Player;
 import org.lwjgl.util.vector.Vector2f;
-
-import java.math.BigInteger;
 
 public abstract class Tile {
 
@@ -43,6 +40,10 @@ public abstract class Tile {
             return this.sprite;
         }
 
+        public int getSize() {
+            return this.size;
+        }
+
         public int getRadius() {
             return this.radius;
         }
@@ -55,21 +56,15 @@ public abstract class Tile {
             return this.probability;
         }
 
-        public boolean clickAction() {
-            if (this.getCategory() == TileCategory.RESOURCE) {
-                switch (this) {
-                    case WOOD:
-                        GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
-                        break;
-                    case GOLD:
-                        GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
-                        break;
-                }
-                this.size--;
-                if (this.size == 0)
-                    return true;
+        public void clickAction(Pair<Integer> p) {
+            switch (this.getCategory()) {
+                case RESOURCE:
+                    GameManager.board.gatherResource(p);
+                    break;
+                case BUILDING:
+                    GameManager.board.selectedTilePosition = p;
+                    break;
             }
-            return false;
         }
     }
 
