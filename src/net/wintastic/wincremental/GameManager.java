@@ -12,6 +12,7 @@ public class GameManager {
     public static boolean fullscreen = false;
 
     public static boolean useFogOfWar = true;
+    public static boolean useBuildingCost = false;
 
     public static int tileSize = 16;
     public static final int iconSize = 32;
