@@ -13,7 +13,6 @@ import org.lwjgl.util.vector.Vector2f;
 import java.math.BigInteger;
 
 public class Board implements Drawable {
-    private boolean useFogOfWar = true;
 
     private TileType[][] tiles;
     private int[][] resourceQuantities;
@@ -139,7 +138,7 @@ public class Board implements Drawable {
         if (selectedTilePosition != null) {
             drawTileRadiusIndicator();
         }
-        if (useFogOfWar)
+        if (GameManager.useFogOfWar)
             drawFogOfWar();
     }
 
@@ -149,7 +148,7 @@ public class Board implements Drawable {
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
                 Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
-                if (!useFogOfWar || fogOfWar[tilePosition.first][tilePosition.second] == 1) {
+                if (!GameManager.useFogOfWar || fogOfWar[tilePosition.first][tilePosition.second] == 1) {
                     AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
                     AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
                     AssetLibrary.grassTileSprite.scaleY = Tile.scaleY;
@@ -167,7 +166,7 @@ public class Board implements Drawable {
         for (int i = minX; i < maxX; i++) {
             for (int j = minY; j < maxY; j++) {
                 Pair<Integer> p = new Pair<Integer>(i, j);
-                if (tiles[i][j] != null && (!useFogOfWar || fogOfWar[i][j] == 1)) {
+                if (tiles[i][j] != null && (!GameManager.useFogOfWar || fogOfWar[i][j] == 1)) {
                     Tile.drawTile(p, tiles[i][j]);
                 }
             }

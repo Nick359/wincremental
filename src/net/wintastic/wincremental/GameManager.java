@@ -11,6 +11,8 @@ public class GameManager {
     public static final int resY = 720;
     public static boolean fullscreen = false;
 
+    public static boolean useFogOfWar = true;
+
     public static int tileSize = 16;
     public static final int iconSize = 32;
     public static final int menuBarWidth = 320;
