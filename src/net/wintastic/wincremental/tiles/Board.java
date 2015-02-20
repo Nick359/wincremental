@@ -85,17 +85,20 @@ public class Board implements Drawable {
     }
 
     public void gatherResource(Pair<Integer> p) {
-        switch (getTile(p)) {
-            case WOOD:
-                GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
-                break;
-            case GOLD:
-                GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
-                break;
+        TileType t = getTile(p);
+        if (t.getCategory() == Tile.TileCategory.RESOURCE) {
+            switch (t) {
+                case WOOD:
+                    GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
+                    break;
+                case GOLD:
+                    GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
+                    break;
+            }
+            resourceQuantities[p.first][p.second]--;
+            if (resourceQuantities[p.first][p.second] == 0)
+                tiles[p.first][p.second] = null;
         }
-        resourceQuantities[p.first][p.second]--;
-        if (resourceQuantities[p.first][p.second] == 0)
-            tiles[p.first][p.second] = null;
     }
 
     @Override
