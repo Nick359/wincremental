@@ -48,12 +48,8 @@ public class Board implements Drawable {
                 }
             }
         }
-        placeBuilding(new Pair<Integer>(width / 2, height / 2), TileType.TOWN_CENTER);
-    }
-
-    private void placeBuilding(Pair<Integer> position, TileType type) {
-        setTile(position, type);
-        updateFogOfWar(position);
+        setTile(new Pair<Integer>(width / 2, height / 2), TileType.TOWN_CENTER);
+        updateFogOfWar(new Pair<Integer>(width / 2, height / 2));
     }
 
     private void updateFogOfWar(Pair<Integer> position) {
@@ -96,6 +92,7 @@ public class Board implements Drawable {
         if (GameManager.player.hasEnoughResources(type.getResourceCost())) {
             GameManager.player.applyResourceCost(type.getResourceCost());
             setTile(position, type);
+            updateFogOfWar(position);
         }
     }
 
