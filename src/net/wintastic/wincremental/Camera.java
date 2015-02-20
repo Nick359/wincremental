@@ -13,6 +13,7 @@ public class Camera {
         UP, DOWN, LEFT, RIGHT
     }
 
+    //TODO: Possibly add a z-position to manage tile scale instead of directly modifying tileSize in GameManager when zooming
     private Vector2f position;
     private Vector2f velocity;
     private float maxSpeed;
