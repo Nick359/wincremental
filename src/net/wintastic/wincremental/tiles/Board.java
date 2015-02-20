@@ -135,11 +135,11 @@ public class Board implements Drawable {
 
     private void drawTiles() {
         int minX = (int) MathHelper.clamp(GameManager.camera.getPosition().x / GameManager.tileSize - 1, 0, width);
-        int maxX = (int) MathHelper.clamp(GameManager.camera.getPosition().x / GameManager.tileSize + GameManager.viewportWidth + 1, 0, width);
+        int maxX = (int) MathHelper.clamp(GameManager.camera.getPosition().x / GameManager.tileSize + GameManager.viewportWidth + 2, 0, width);
         int minY = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize - 1, 0, height);
-        int maxY = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 1, 0, height);
-        for (int i = minX; i <= maxX; i++) {
-            for (int j = minY; j <= maxY; j++) {
+        int maxY = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 2, 0, height);
+        for (int i = minX; i < maxX; i++) {
+            for (int j = minY; j < maxY; j++) {
                 if (tiles[i][j] != null) {
                     Pair<Integer> p = new Pair<Integer>(i, j);
                     Tile.drawTile(p, tiles[i][j]);
