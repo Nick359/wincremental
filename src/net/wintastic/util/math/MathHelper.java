@@ -85,7 +85,7 @@ public class MathHelper {
         if (min > max) throw new IllegalArgumentException("Minimum bound cannot be larger than maximum bound!");
         if (min == max) return min;
         Random random = new Random();
-        return random.nextInt(max + 1 - min) + min;
+        return random.nextInt(max - min) + min;
     }
 
     /**
@@ -119,12 +119,26 @@ public class MathHelper {
     /**
      * Returns a random value true with probability given by chance
      *
-     * @param chance The change the return value will be true, as a percentage (ex. 50)
+     * @param chance The change the return value will be true
      * @return The result of the probability calculation
      */
     public static boolean randomChance(float chance) {
         if (chance < 0) throw new IllegalArgumentException("Change cannot be smaller than 0%");
-        return Math.random() < chance / 100;
+        return Math.random() < chance;
+    }
+
+    /** Generates a series of n random non-unique integers.
+     * @param n The number of integers to generate.
+     * @param min The minimum boundary in which to generate the integer.
+     * @param max The maximum boundary in which to generate the integer.
+     * @return The array of random integers.
+     */
+    public static int[] randomInts(int n, int min, int max) {
+        int[] a = new int[n];
+        for (int i = 0; i < a.length; i++) {
+            a[i] = randomInt(min, max);
+        }
+        return a;
     }
 
     public static boolean floatEquals(float a, float b) {

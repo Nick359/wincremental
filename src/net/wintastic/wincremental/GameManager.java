@@ -11,14 +11,14 @@ public class GameManager {
     public static final int resY = 720;
     public static boolean fullscreen = false;
 
-    public static final int tileSize = 16;
+    public static int tileSize = 16;
     public static final int iconSize = 32;
     public static final int menuBarWidth = 320;
     public static final int toolbarHeight = 32;
-    public static final int mapWidth = 300;
-    public static final int mapHeight = 200;
-    public static final int viewportWidth = (resX - menuBarWidth) / tileSize;
-    public static final int viewportHeight = (resY - toolbarHeight) / tileSize;
+    public static final int mapWidth = 1000;    // WARNING: Values over ~256M tiles causes OutOfMemoryError: Java heap space! Woohoo!
+    public static final int mapHeight = 1000;
+    public static int viewportWidth = (resX - menuBarWidth) / tileSize;
+    public static int viewportHeight = (resY - toolbarHeight) / tileSize;
 
     public static Player player;
     public static Camera camera;

@@ -1,7 +1,10 @@
 package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.Input;
+import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.math.GameMathHelper;
+import net.wintastic.wincremental.tiles.Board;
+import net.wintastic.wincremental.tiles.Tile;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -10,6 +13,7 @@ public class Camera {
         UP, DOWN, LEFT, RIGHT
     }
 
+    //TODO: Possibly add a z-position to manage tile scale instead of directly modifying tileSize in GameManager when zooming
     private Vector2f position;
     private Vector2f velocity;
     private float maxSpeed;
@@ -50,6 +54,19 @@ public class Camera {
             prevMousePosition = Input.mousePosition();
         } else {
             prevMousePosition = null;
+        }
+        int scrollWheel = Input.scrollWheel();
+        if (scrollWheel != 0) {
+            Pair<Integer> p = Board.getMouseTilePosition();
+            if (GameManager.tileSize + scrollWheel >= 9 && GameManager.tileSize + scrollWheel <= 128) {
+                GameManager.tileSize += scrollWheel;
+                Tile.scaleX = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageWidth();
+                Tile.scaleY = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageHeight();
+                GameManager.viewportWidth = (GameManager.resX - GameManager.menuBarWidth) / GameManager.tileSize;
+                GameManager.viewportHeight = (GameManager.resY - GameManager.toolbarHeight) / GameManager.tileSize;
+                GameManager.camera.position.x += scrollWheel * p.first;
+                GameManager.camera.position.y += scrollWheel * p.second;
+            }
         }
     }
 

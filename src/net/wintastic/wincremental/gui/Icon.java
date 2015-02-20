@@ -6,7 +6,7 @@ import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
-import net.wintastic.wincremental.tiles.BuildingTile;
+import net.wintastic.wincremental.tiles.Tile;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Icon implements Drawable {
@@ -26,15 +26,14 @@ public class Icon implements Drawable {
             this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite; //TODO: Either remove selectedSprite as it is always constant, or add new types of markers
         }
 
-        public BuildingTile.BuildingTileType getBuildingTileType() {
+        public Tile.TileType getBuildingTileType() {
             switch (this) {
                 case TENT:
-                    return BuildingTile.BuildingTileType.TENT;
+                    return Tile.TileType.TENT;
                 case STORAGE_SHED:
-                    return BuildingTile.BuildingTileType.STORAGE_SHED;
-                default:
-                    return null;
+                    return Tile.TileType.STORAGE_SHED;
             }
+            return null;
         }
 
         //TODO Add a click action for icons
