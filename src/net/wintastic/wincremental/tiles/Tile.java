@@ -4,7 +4,10 @@ import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
+import net.wintastic.wincremental.ResourceCost;
 import org.lwjgl.util.vector.Vector2f;
+
+import java.math.BigInteger;
 
 public abstract class Tile {
 
@@ -13,27 +16,29 @@ public abstract class Tile {
     }
 
     public enum TileType {
-        EMPTY(AssetLibrary.grassTileSprite, 0, 0, null, 0),
+        EMPTY(AssetLibrary.grassTileSprite, 0, 0, null, 0, null),
 
-        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING, 0),
-        TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING, 0),
-        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING, 0),
+        TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(200), BigInteger.valueOf(200))),
+        TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(10), BigInteger.ZERO)),
+        STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(20), BigInteger.ZERO)),
 
-        WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE, 0.04f),
-        GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE, 0.002f);
+        WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE, 0.04f, null),
+        GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE, 0.002f, null);
 
         private final Sprite sprite;
         private int size;
         private int radius;
         private TileCategory category;
         private float probability;
+        private ResourceCost resourceCost;
 
-        TileType(Sprite sprite, int initialSize, int radius, TileCategory category, float probability) {
+        TileType(Sprite sprite, int initialSize, int radius, TileCategory category, float probability, ResourceCost resourceCost) {
             this.sprite = sprite;
             this.size = initialSize;
             this.radius = radius;
             this.category = category;
             this.probability = probability;
+            this.resourceCost = resourceCost;
         }
 
         public Sprite getSprite() {
@@ -54,6 +59,10 @@ public abstract class Tile {
 
         public float getProbability() {
             return this.probability;
+        }
+
+        public ResourceCost getResourceCost() {
+            return this.resourceCost;
         }
 
         public void clickAction(Pair<Integer> p) {

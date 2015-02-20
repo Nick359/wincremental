@@ -24,6 +24,15 @@ public class Player {
         return wood;
     }
 
+    public void applyResourceCost(ResourceCost resourceCost) {
+        changeResource(ResourceType.WOOD, resourceCost.woodCost.negate());
+        changeResource(ResourceType.GOLD, resourceCost.goldCost.negate());
+    }
+
+    public boolean hasEnoughResources(ResourceCost resourceCost) {
+        return (wood.compareTo(resourceCost.woodCost) >= 0 && gold.compareTo(resourceCost.goldCost) >= 0);
+    }
+
     public boolean changeResource(ResourceType type, BigInteger amount) {
         switch (type) {
             case GOLD:

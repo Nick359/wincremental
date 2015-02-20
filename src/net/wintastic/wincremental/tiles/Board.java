@@ -68,10 +68,17 @@ public class Board implements Drawable {
             Pair<Integer> p = getMouseTilePosition();
             TileType type = tiles[p.first][p.second];
             if (type == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
-                setTile(p, MenuBar.selectedIcon.type.getBuildingTileType());
+                placeBuilding(p, MenuBar.selectedIcon.type.getBuildingTileType());
             } else if (type != null) {
                 type.clickAction(p);
             }
+        }
+    }
+
+    private void placeBuilding(Pair<Integer> position, TileType type) {
+        if (GameManager.player.hasEnoughResources(type.getResourceCost())) {
+            GameManager.player.applyResourceCost(type.getResourceCost());
+            setTile(position, type);
         }
     }
 
