@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +109,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
     public static void drawPixel(Vector2f position, ReadableColor color) {
         // set the color of the pixel (R,G,B,A)
         GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-        GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ZERO);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // draw pixel
         GL11.glBegin(GL11.GL_LINE_STRIP);
@@ -122,7 +123,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
     public static void drawCircle(Vector2f position, float radius, ReadableColor color, boolean filled) {
         // set the color of the circle (R,G,B,A)
         GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-        GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ZERO);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         GL11.glBegin(filled ? GL11.GL_TRIANGLE_FAN : GL11.GL_LINE_LOOP);
 
@@ -138,8 +139,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
     public static void drawRectangle(Vector2f position, int width, int height, float rotation, ReadableColor color, boolean filled) {
         // set the color of the quad (R,G,B,A)
         GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-        // TODO: Alpha doesn't work, need fix for all shapes
-        GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ZERO);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // draw quad
         GL11.glPushMatrix();
@@ -162,7 +162,7 @@ public abstract class Shape2D extends GameObject implements Drawable {
     public static void drawLine(Vector2f p1, Vector2f p2, ReadableColor color) {
         // set the color of the line (R,G,B,A)
         GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
-        GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ZERO);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         // draw pixel
         GL11.glBegin(GL11.GL_LINE_STRIP);
