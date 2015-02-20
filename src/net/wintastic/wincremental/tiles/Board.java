@@ -92,6 +92,13 @@ public class Board implements Drawable {
         }
     }
 
+    private void placeBuilding(Pair<Integer> position, TileType type) {
+        if (GameManager.player.hasEnoughResources(type.getResourceCost())) {
+            GameManager.player.applyResourceCost(type.getResourceCost());
+            setTile(position, type);
+        }
+    }
+
     public static Pair<Integer> getMouseTilePosition() {
         return new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
                 (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
