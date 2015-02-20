@@ -1,22 +1,23 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.DrawBatch;
-import net.wintastic.lwjgl.Drawable;
-import net.wintastic.lwjgl.Input;
-import net.wintastic.lwjgl.Pair;
+import net.wintastic.lwjgl.*;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
 import net.wintastic.wincremental.gui.MenuBar;
 import net.wintastic.wincremental.tiles.Tile.TileType;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.math.BigInteger;
 
 public class Board implements Drawable {
+    private boolean useFogOfWar = true;
+
     private TileType[][] tiles;
     private int[][] resourceQuantities;
+    private float[][] fogOfWar;
     private final int width, height;
     public Pair<Integer> selectedTilePosition;
     private boolean visible;
@@ -35,6 +36,7 @@ public class Board implements Drawable {
     private void initializeTiles() {
         tiles = new TileType[width][height];
         resourceQuantities = new int[width][height];
+        fogOfWar = new float[width][height];
         for (TileType type : TileType.values()) {
             if (type.getCategory() == Tile.TileCategory.RESOURCE) {
                 int nTiles = (int) (width * height * type.getProbability() * MathHelper.randomFloat(0.9f, 1.1f));
@@ -46,12 +48,27 @@ public class Board implements Drawable {
                 }
             }
         }
-
-        placeTownCenter();
+        placeBuilding(new Pair<Integer>(width / 2, height / 2), TileType.TOWN_CENTER);
     }
 
-    private void placeTownCenter() {
-        setTile(new Pair<Integer>(width / 2, height / 2), TileType.TOWN_CENTER);
+    private void placeBuilding(Pair<Integer> position, TileType type) {
+        setTile(position, type);
+        updateFogOfWar(position);
+    }
+
+    private void updateFogOfWar(Pair<Integer> position) {
+        int radius = getTile(position).getRadius();
+        if (radius <= 0)
+            return;
+        int x0 = position.first;
+        int y0 = position.second;
+        for (int y = -radius; y <= radius; y++) {
+            for (int x = -radius; x <= radius; x++) {
+                if (x * x + y * y <= radius * radius) {
+                    fogOfWar[x0 + x][y0 + y] = 1;
+                }
+            }
+        }
     }
 
     public TileType getTile(Pair<Integer> position) {
@@ -68,7 +85,7 @@ public class Board implements Drawable {
             Pair<Integer> p = getMouseTilePosition();
             TileType type = tiles[p.first][p.second];
             if (type == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
-                setTile(p, MenuBar.selectedIcon.type.getBuildingTileType());
+                placeBuilding(p, MenuBar.selectedIcon.type.getBuildingTileType());
             } else if (type != null) {
                 type.clickAction(p);
             }
@@ -118,6 +135,8 @@ public class Board implements Drawable {
         if (selectedTilePosition != null) {
             drawTileRadiusIndicator();
         }
+        if (useFogOfWar)
+            drawFogOfWar();
     }
 
     private void drawBoardBackground() {
@@ -125,10 +144,13 @@ public class Board implements Drawable {
         float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
-                AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
-                AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
-                AssetLibrary.grassTileSprite.scaleY = Tile.scaleY;
-                AssetLibrary.grassTileSprite.draw();
+                Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
+                if (!useFogOfWar || fogOfWar[tilePosition.first][tilePosition.second] == 1) {
+                    AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
+                    AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
+                    AssetLibrary.grassTileSprite.scaleY = Tile.scaleY;
+                    AssetLibrary.grassTileSprite.draw();
+                }
             }
         }
     }
@@ -140,9 +162,25 @@ public class Board implements Drawable {
         int maxY = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 2, 0, height);
         for (int i = minX; i < maxX; i++) {
             for (int j = minY; j < maxY; j++) {
-                if (tiles[i][j] != null) {
-                    Pair<Integer> p = new Pair<Integer>(i, j);
+                Pair<Integer> p = new Pair<Integer>(i, j);
+                if (tiles[i][j] != null && (!useFogOfWar || fogOfWar[i][j] == 1)) {
                     Tile.drawTile(p, tiles[i][j]);
+                }
+            }
+        }
+    }
+
+    private void drawFogOfWar() {
+        float dx = GameManager.camera.getPosition().x % GameManager.tileSize;
+        float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
+        for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
+            for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
+                Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
+                if (fogOfWar[tilePosition.first][tilePosition.second] < 1) {
+                    Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
+                    int a = (int) MathHelper.clamp(255 * fogOfWar[i][j] + 55, 0, 255);
+                    Color c = new Color(a, a, a);
+                    Shape2D.drawRectangle(p, GameManager.tileSize, GameManager.tileSize, 0, c, true);
                 }
             }
         }
