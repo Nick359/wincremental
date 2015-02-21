@@ -64,6 +64,30 @@ public class Board implements Drawable {
                 }
             }
         }
+        int gradientRadius = 64;
+        x0 = position.first;
+        y0 = position.second;
+        for (int y = -gradientRadius; y <= gradientRadius; y++) {
+            for (int x = -gradientRadius; x <= gradientRadius; x++) {
+                if (x * x + y * y <= gradientRadius * gradientRadius) {
+                    Pair<Integer> p = new Pair<Integer>(x0 + x, y0 + y);
+                    if (fogOfWar[p.first][p.second] < 1) {
+                        fogOfWar[p.first][p.second] = ((float) (numberOfNearVisibleTiles(p, gradientRadius / 2))) / (gradientRadius * gradientRadius);
+                    }
+                }
+            }
+        }
+    }
+
+    private int numberOfNearVisibleTiles(Pair<Integer> position, int radius) {
+        int total = 0;
+        for (int i = -radius; i <= radius; i++) {
+            for (int j = -radius; j <= radius; j++) {
+                if (i * i + j * j <= radius * radius && fogOfWar[position.first + i][position.second + j] == 1)
+                    total++;
+            }
+        }
+        return total;
     }
 
     public TileType getTile(Pair<Integer> position) {
@@ -181,8 +205,8 @@ public class Board implements Drawable {
                 Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
                 if (fogOfWar[tilePosition.first][tilePosition.second] < 1) {
                     Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
-                    int a = (int) MathHelper.clamp(255 * fogOfWar[i][j] + 55, 0, 255);
-                    Color c = new Color(a, a, a);
+                    int a = (int) (255 * fogOfWar[tilePosition.first][tilePosition.second]);
+                    Color c = new Color(a, a, a, 255 - a);
                     Shape2D.drawRectangle(p, GameManager.tileSize, GameManager.tileSize, 0, c, true);
                 }
             }
