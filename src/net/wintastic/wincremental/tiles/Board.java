@@ -64,7 +64,7 @@ public class Board implements Drawable {
                 }
             }
         }
-        int gradientRadius = 64;
+        int gradientRadius = 32;
         x0 = position.first;
         y0 = position.second;
         for (int y = -gradientRadius; y <= gradientRadius; y++) {
