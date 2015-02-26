@@ -98,6 +98,10 @@ public class Board implements Drawable {
         tiles[position.first][position.second] = newTile;
     }
 
+    public float getFogOfWar(Pair<Integer> position) {
+        return fogOfWar[position.first][position.second];
+    }
+
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
             selectedTilePosition = null;
@@ -112,7 +116,7 @@ public class Board implements Drawable {
     }
 
     private void placeBuilding(Pair<Integer> position, TileType type) {
-        if (GameManager.player.hasEnoughResources(type.getResourceCost())) {
+        if (GameManager.player.hasEnoughResources(type.getResourceCost()) && getFogOfWar(position) == 1) {
             GameManager.player.applyResourceCost(type.getResourceCost());
             setTile(position, type);
             updateFogOfWar(position);
