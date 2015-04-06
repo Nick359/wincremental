@@ -21,6 +21,7 @@ public abstract class Tile {
         TOWN_CENTER(AssetLibrary.townCenterSprite, 0, 16, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(200), BigInteger.valueOf(200))),
         TENT(AssetLibrary.tentTileSprite, 0, 0, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(10), BigInteger.ZERO)),
         STORAGE_SHED(AssetLibrary.storageShedTileSprite, 0, 0, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(20), BigInteger.ZERO)),
+        OUTPOST(AssetLibrary.outpostTileSprite, 0, 8, TileCategory.BUILDING, 0, new ResourceCost(BigInteger.valueOf(40), BigInteger.valueOf(5))),
 
         WOOD(AssetLibrary.woodTileSprite, 20, 0, TileCategory.RESOURCE, 0.04f, null),
         GOLD(AssetLibrary.goldTileSprite, 10, 0, TileCategory.RESOURCE, 0.002f, null);

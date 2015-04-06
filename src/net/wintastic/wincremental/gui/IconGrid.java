@@ -47,6 +47,8 @@ public class IconGrid {
                 icons.add(tentIcon);
                 Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED);
                 icons.add(storageShedIcon);
+                Icon outpostIcon = new Icon(Icon.IconType.OUTPOST);
+                icons.add(outpostIcon);
                 break;
         }
         calculateIconPositions();

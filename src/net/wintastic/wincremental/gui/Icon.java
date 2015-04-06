@@ -15,6 +15,7 @@ public class Icon implements Drawable {
         TEST(AssetLibrary.testIconSprite),
         TENT(AssetLibrary.tentIconSprite),
         STORAGE_SHED(AssetLibrary.storageShedIconSprite),
+        OUTPOST(AssetLibrary.outpostIconSprite),
         GOLD(AssetLibrary.goldIconSprite),
         WOOD(AssetLibrary.woodIconSprite);
 
@@ -32,6 +33,8 @@ public class Icon implements Drawable {
                     return Tile.TileType.TENT;
                 case STORAGE_SHED:
                     return Tile.TileType.STORAGE_SHED;
+                case OUTPOST:
+                    return Tile.TileType.OUTPOST;
             }
             return null;
         }

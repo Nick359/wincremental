@@ -15,6 +15,7 @@ public abstract class AssetLibrary {
     public static final Sprite townCenterSprite = new Sprite("res/sprites/tiles/townCenterTile.png");
     public static final Sprite tentTileSprite = new Sprite("res/sprites/tiles/tentTile.png");
     public static final Sprite storageShedTileSprite = new Sprite("res/sprites/tiles/storageShedTile.png");
+    public static final Sprite outpostTileSprite = new Sprite("res/sprites/tiles/outpostTile.png");
 
     //ICONS
     public static final Sprite testIconSprite = new Sprite("res/sprites/icons/testIcon.png");
@@ -23,6 +24,7 @@ public abstract class AssetLibrary {
     //BUILDING ICONS
     public static final Sprite tentIconSprite = new Sprite("res/sprites/icons/tentIcon.png");
     public static final Sprite storageShedIconSprite = new Sprite("res/sprites/icons/storageShedIcon.png");
+    public static final Sprite outpostIconSprite = new Sprite("res/sprites/icons/outpostIcon.png");
 
     //RESOURCE ICONS
     public static final Sprite goldIconSprite = new Sprite("res/sprites/icons/goldIcon.png");
