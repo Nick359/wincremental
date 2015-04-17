@@ -6,3 +6,6 @@ Proposed Features
 
 Required Features
 - Implement timestep to keep things synchronized
+
+Bugs
+- Zooming out until the right or bottom edges of the map are passed the edge of the screen causes some shaking
