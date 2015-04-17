@@ -1,6 +1,5 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.GameManager;
 import org.lwjgl.util.vector.Vector2f;
@@ -10,20 +9,20 @@ public abstract class Tile {
     public static float scaleX = 1;
     public static float scaleY = 1;
 
-    private static Vector2f getScreenPosition(Pair<Integer> position) {
-        float x = position.first * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x;
-        float y = position.second * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y;
+    private static Vector2f getScreenPosition(Position position) {
+        float x = position.x * GameManager.tileSize + GameManager.menuBarWidth - GameManager.camera.getPosition().x;
+        float y = position.y * GameManager.tileSize + GameManager.toolbarHeight - GameManager.camera.getPosition().y;
         return new Vector2f(x, y);
     }
 
 
-    private Pair<Integer> position;
+    private Position position;
 
-    public Tile(Pair<Integer> position) {
+    public Tile(Position position) {
         this.position = position;
     }
 
-    public Pair<Integer> getPosition() {
+    public Position getPosition() {
         return position;
     }
 

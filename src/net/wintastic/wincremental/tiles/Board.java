@@ -16,7 +16,7 @@ public class Board implements Drawable {
     private Tile[][] tiles;
     private FogOfWar fogOfWar;
     private final int width, height;
-    public Pair<Integer> selectedTilePosition;
+    public Position selectedTilePosition;
     private boolean visible;
     private float layerDepth;
 
@@ -38,35 +38,35 @@ public class Board implements Drawable {
             int[] x = MathHelper.randomInts(nTiles, 0, width);
             int[] y = MathHelper.randomInts(nTiles, 0, height);
             for (int i = 0; i < nTiles; i++) {
-                Pair<Integer> p = new Pair<Integer>(x[i], y[i]);
+                Position p = new Position(x[i], y[i]);
                 setTile(p, new ResourceTile(type, p));
             }
         }
-        Pair<Integer> p = new Pair<Integer>(width / 2, height / 2);
+        Position p = new Position(width / 2, height / 2);
         setTile(p, new BuildingTile(BuildingTile.Type.TOWN_CENTER, p));
-        updateFogOfWar(new Pair<Integer>(width / 2, height / 2));
+        updateFogOfWar(new Position(width / 2, height / 2));
     }
 
-    private void updateFogOfWar(Pair<Integer> position) {
+    private void updateFogOfWar(Position position) {
         int radius = getTile(position).getRadius();
         if (radius <= 0)
             return;
-        int x0 = position.first;
-        int y0 = position.second;
+        int x0 = position.x;
+        int y0 = position.y;
         for (int y = -radius; y <= radius; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (x * x + y * y <= radius * radius) {
-                    fogOfWar.set(new Pair<Integer>(x0 + x, y0 + y), 1);
+                    fogOfWar.set(new Position(x0 + x, y0 + y), 1);
                 }
             }
         }
         int gradientRadius = 32;
-        x0 = position.first;
-        y0 = position.second;
+        x0 = position.x;
+        y0 = position.y;
         for (int y = -gradientRadius; y <= gradientRadius; y++) {
             for (int x = -gradientRadius; x <= gradientRadius; x++) {
                 if (x * x + y * y <= gradientRadius * gradientRadius) {
-                    Pair<Integer> p = new Pair<Integer>(x0 + x, y0 + y);
+                    Position p = new Position(x0 + x, y0 + y);
                     if (fogOfWar.get(p) < 1) {
                         fogOfWar.set(p, ((float) (numberOfNearVisibleTiles(p, gradientRadius / 2))) / (gradientRadius * gradientRadius));
                     }
@@ -75,29 +75,29 @@ public class Board implements Drawable {
         }
     }
 
-    private int numberOfNearVisibleTiles(Pair<Integer> position, int radius) {
+    private int numberOfNearVisibleTiles(Position position, int radius) {
         int total = 0;
         for (int i = -radius; i <= radius; i++) {
             for (int j = -radius; j <= radius; j++) {
-                if (i * i + j * j <= radius * radius && fogOfWar.get(new Pair<Integer>(position.first + i, position.second + j)) == 1)
+                if (i * i + j * j <= radius * radius && fogOfWar.get(new Position(position.x + i, position.y + j)) == 1)
                     total++;
             }
         }
         return total;
     }
 
-    public Tile getTile(Pair<Integer> position) {
-        return tiles[position.first][position.second];
+    public Tile getTile(Position position) {
+        return tiles[position.x][position.y];
     }
 
-    public void setTile(Pair<Integer> position, Tile newTile) {
-        tiles[position.first][position.second] = newTile;
+    public void setTile(Position position, Tile newTile) {
+        tiles[position.x][position.y] = newTile;
     }
 
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
             selectedTilePosition = null;
-            Pair<Integer> p = getMouseTilePosition();
+            Position p = getMouseTilePosition();
             Tile t = getTile(p);
             if (t == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
                 placeBuilding(p, MenuBar.selectedIcon.type.getBuildingTileType());
@@ -107,7 +107,7 @@ public class Board implements Drawable {
         }
     }
 
-    private void placeBuilding(Pair<Integer> position, BuildingTile.Type type) {
+    private void placeBuilding(Position position, BuildingTile.Type type) {
         if (GameManager.player.hasEnoughResources(type.getCost()) && fogOfWar.get(position) == 1) {
             GameManager.player.applyResourceCost(type.getCost());
             setTile(position, new BuildingTile(type, position));
@@ -115,8 +115,8 @@ public class Board implements Drawable {
         }
     }
 
-    public static Pair<Integer> getMouseTilePosition() {
-        return new Pair<Integer>((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
+    public static Position getMouseTilePosition() {
+        return new Position((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
                 (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
     }
 
@@ -124,7 +124,7 @@ public class Board implements Drawable {
         return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
     }
 
-    public void gatherResource(Pair<Integer> position) {
+    public void gatherResource(Position position) {
         Tile tile = getTile(position);
         if (!(tile instanceof ResourceTile)) return;
         ResourceTile t = (ResourceTile) tile;
@@ -169,7 +169,7 @@ public class Board implements Drawable {
         float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
-                Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
+                Position tilePosition = new Position((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
                 if (!GameManager.useFogOfWar || fogOfWar.get(tilePosition) == 1) {
                     AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
                     AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
@@ -199,7 +199,7 @@ public class Board implements Drawable {
         float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
-                Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
+                Position tilePosition = new Position((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
                 if (fogOfWar.get(tilePosition) < 1) {
                     Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
                     int a = (int) (255 * fogOfWar.get(tilePosition));
@@ -214,8 +214,8 @@ public class Board implements Drawable {
         int radius = getTile(selectedTilePosition).getRadius();
         if (radius <= 0)
             return;
-        int x0 = selectedTilePosition.first;
-        int y0 = selectedTilePosition.second;
+        int x0 = selectedTilePosition.x;
+        int y0 = selectedTilePosition.y;
         for (int y = -radius; y <= radius; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (x * x + y * y <= radius * radius) {

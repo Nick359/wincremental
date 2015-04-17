@@ -1,6 +1,5 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.Pair;
 import net.wintastic.wincremental.GameManager;
 
 public class FogOfWar {
@@ -10,16 +9,16 @@ public class FogOfWar {
         this.fogOfWar = new float[GameManager.mapWidth][GameManager.mapHeight];
     }
 
-    public float get(Pair<Integer> position) {
-        if (position.first >= 0 && position.first < GameManager.mapWidth && position.second >= 0 && position.second < GameManager.mapHeight) {
-            return fogOfWar[position.first][position.second];
+    public float get(Position position) {
+        if (position.x >= 0 && position.x < GameManager.mapWidth && position.y >= 0 && position.y < GameManager.mapHeight) {
+            return fogOfWar[position.x][position.y];
         }
         return 0;
     }
 
-    public void set(Pair<Integer> position, float value) {
-        if (position.first >= 0 && position.first < GameManager.mapWidth && position.second >= 0 && position.second < GameManager.mapHeight) {
-            fogOfWar[position.first][position.second] = value;
+    public void set(Position position, float value) {
+        if (position.x >= 0 && position.x < GameManager.mapWidth && position.y >= 0 && position.y < GameManager.mapHeight) {
+            fogOfWar[position.x][position.y] = value;
         }
     }
 }
