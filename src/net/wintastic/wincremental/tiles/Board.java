@@ -6,7 +6,6 @@ import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
 import net.wintastic.wincremental.gui.MenuBar;
-import net.wintastic.wincremental.tiles.Tile.TileType;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -14,9 +13,8 @@ import java.math.BigInteger;
 
 public class Board implements Drawable {
 
-    private TileType[][] tiles;
-    private int[][] resourceQuantities;
-    private float[][] fogOfWar;
+    private Tile[][] tiles;
+    private FogOfWar fogOfWar;
     private final int width, height;
     public Pair<Integer> selectedTilePosition;
     private boolean visible;
@@ -25,29 +23,27 @@ public class Board implements Drawable {
     public Board() {
         this.width = GameManager.mapWidth;
         this.height = GameManager.mapHeight;
+        this.fogOfWar = new FogOfWar();
         initializeTiles();
+
         this.visible = true;
         this.layerDepth = 0.2f;
-
         DrawBatch.add(this);
     }
 
     private void initializeTiles() {
-        tiles = new TileType[width][height];
-        resourceQuantities = new int[width][height];
-        fogOfWar = new float[width][height];
-        for (TileType type : TileType.values()) {
-            if (type.getCategory() == Tile.TileCategory.RESOURCE) {
-                int nTiles = (int) (width * height * type.getProbability() * MathHelper.randomFloat(0.9f, 1.1f));
-                int[] x = MathHelper.randomInts(nTiles, 0, width);
-                int[] y = MathHelper.randomInts(nTiles, 0, height);
-                for (int i = 0; i < nTiles; i++) {
-                    tiles[x[i]][y[i]] = type;
-                    resourceQuantities[x[i]][y[i]] = type.getSize();
-                }
+        tiles = new Tile[width][height];
+        for (ResourceTile.Type type : ResourceTile.Type.values()) {
+            int nTiles = (int) (width * height * type.getProbability() * MathHelper.randomFloat(0.9f, 1.1f));
+            int[] x = MathHelper.randomInts(nTiles, 0, width);
+            int[] y = MathHelper.randomInts(nTiles, 0, height);
+            for (int i = 0; i < nTiles; i++) {
+                Pair<Integer> p = new Pair<Integer>(x[i], y[i]);
+                setTile(p, new ResourceTile(type, p));
             }
         }
-        setTile(new Pair<Integer>(width / 2, height / 2), TileType.TOWN_CENTER);
+        Pair<Integer> p = new Pair<Integer>(width / 2, height / 2);
+        setTile(p, new BuildingTile(BuildingTile.Type.TOWN_CENTER, p));
         updateFogOfWar(new Pair<Integer>(width / 2, height / 2));
     }
 
@@ -60,7 +56,7 @@ public class Board implements Drawable {
         for (int y = -radius; y <= radius; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (x * x + y * y <= radius * radius) {
-                    fogOfWar[x0 + x][y0 + y] = 1;
+                    fogOfWar.set(new Pair<Integer>(x0 + x, y0 + y), 1);
                 }
             }
         }
@@ -71,8 +67,8 @@ public class Board implements Drawable {
             for (int x = -gradientRadius; x <= gradientRadius; x++) {
                 if (x * x + y * y <= gradientRadius * gradientRadius) {
                     Pair<Integer> p = new Pair<Integer>(x0 + x, y0 + y);
-                    if (fogOfWar[p.first][p.second] < 1) {
-                        fogOfWar[p.first][p.second] = ((float) (numberOfNearVisibleTiles(p, gradientRadius / 2))) / (gradientRadius * gradientRadius);
+                    if (fogOfWar.get(p) < 1) {
+                        fogOfWar.set(p, ((float) (numberOfNearVisibleTiles(p, gradientRadius / 2))) / (gradientRadius * gradientRadius));
                     }
                 }
             }
@@ -83,42 +79,38 @@ public class Board implements Drawable {
         int total = 0;
         for (int i = -radius; i <= radius; i++) {
             for (int j = -radius; j <= radius; j++) {
-                if (i * i + j * j <= radius * radius && fogOfWar[position.first + i][position.second + j] == 1)
+                if (i * i + j * j <= radius * radius && fogOfWar.get(new Pair<Integer>(position.first + i, position.second + j)) == 1)
                     total++;
             }
         }
         return total;
     }
 
-    public TileType getTile(Pair<Integer> position) {
+    public Tile getTile(Pair<Integer> position) {
         return tiles[position.first][position.second];
     }
 
-    public void setTile(Pair<Integer> position, TileType newTile) {
+    public void setTile(Pair<Integer> position, Tile newTile) {
         tiles[position.first][position.second] = newTile;
-    }
-
-    public float getFogOfWar(Pair<Integer> position) {
-        return fogOfWar[position.first][position.second];
     }
 
     public void update() {
         if (mouseInBoard() && Input.isButtonPressed(0)) {
             selectedTilePosition = null;
             Pair<Integer> p = getMouseTilePosition();
-            TileType type = tiles[p.first][p.second];
-            if (type == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
+            Tile t = getTile(p);
+            if (t == null && MenuBar.selectedIcon != null && MenuBar.selectedIcon.selected) {
                 placeBuilding(p, MenuBar.selectedIcon.type.getBuildingTileType());
-            } else if (type != null) {
-                type.clickAction(p);
+            } else if (t != null) {
+                t.clickAction();
             }
         }
     }
 
-    private void placeBuilding(Pair<Integer> position, TileType type) {
-        if (GameManager.player.hasEnoughResources(type.getResourceCost()) && getFogOfWar(position) == 1) {
-            GameManager.player.applyResourceCost(type.getResourceCost());
-            setTile(position, type);
+    private void placeBuilding(Pair<Integer> position, BuildingTile.Type type) {
+        if (GameManager.player.hasEnoughResources(type.getCost()) && fogOfWar.get(position) == 1) {
+            GameManager.player.applyResourceCost(type.getCost());
+            setTile(position, new BuildingTile(type, position));
             updateFogOfWar(position);
         }
     }
@@ -132,21 +124,23 @@ public class Board implements Drawable {
         return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
     }
 
-    public void gatherResource(Pair<Integer> p) {
-        TileType t = getTile(p);
-        if (t.getCategory() == Tile.TileCategory.RESOURCE) {
-            switch (t) {
-                case WOOD:
-                    GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
-                    break;
-                case GOLD:
-                    GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
-                    break;
-            }
-            resourceQuantities[p.first][p.second]--;
-            if (resourceQuantities[p.first][p.second] == 0)
-                tiles[p.first][p.second] = null;
+    public void gatherResource(Pair<Integer> position) {
+        Tile tile = getTile(position);
+        if (!(tile instanceof ResourceTile)) return;
+        ResourceTile t = (ResourceTile) tile;
+        switch (t.getType()) {
+            case WOOD:
+                GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
+                break;
+            case GOLD:
+                GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
+                break;
         }
+        t.setSize(t.getSize() - 1);
+        if (t.getSize() == 0) {
+            setTile(position, null);
+        }
+
     }
 
     @Override
@@ -176,7 +170,7 @@ public class Board implements Drawable {
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
                 Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
-                if (!GameManager.useFogOfWar || fogOfWar[tilePosition.first][tilePosition.second] == 1) {
+                if (!GameManager.useFogOfWar || fogOfWar.get(tilePosition) == 1) {
                     AssetLibrary.grassTileSprite.position = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
                     AssetLibrary.grassTileSprite.scaleX = Tile.scaleX;
                     AssetLibrary.grassTileSprite.scaleY = Tile.scaleY;
@@ -193,9 +187,8 @@ public class Board implements Drawable {
         int maxY = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize + GameManager.viewportHeight + 2, 0, height);
         for (int i = minX; i < maxX; i++) {
             for (int j = minY; j < maxY; j++) {
-                Pair<Integer> p = new Pair<Integer>(i, j);
-                if (tiles[i][j] != null && (!GameManager.useFogOfWar || fogOfWar[i][j] == 1)) {
-                    Tile.drawTile(p, tiles[i][j]);
+                if (tiles[i][j] != null && (!GameManager.useFogOfWar || fogOfWar.get(tiles[i][j].getPosition()) == 1)) {
+                    tiles[i][j].draw();
                 }
             }
         }
@@ -207,9 +200,9 @@ public class Board implements Drawable {
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
                 Pair<Integer> tilePosition = new Pair<Integer>((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
-                if (fogOfWar[tilePosition.first][tilePosition.second] < 1) {
+                if (fogOfWar.get(tilePosition) < 1) {
                     Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
-                    int a = (int) (255 * fogOfWar[tilePosition.first][tilePosition.second]);
+                    int a = (int) (255 * fogOfWar.get(tilePosition));
                     Color c = new Color(a, a, a, 255 - a);
                     Shape2D.drawRectangle(p, GameManager.tileSize, GameManager.tileSize, 0, c, true);
                 }
