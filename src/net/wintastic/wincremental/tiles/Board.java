@@ -1,12 +1,13 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.*;
+import net.wintastic.lwjgl.DrawBatch;
+import net.wintastic.lwjgl.Drawable;
+import net.wintastic.lwjgl.Input;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
 import net.wintastic.wincremental.gui.MenuBar;
-import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.math.BigInteger;
@@ -44,46 +45,7 @@ public class Board implements Drawable {
         }
         Position p = new Position(width / 2, height / 2);
         setTile(p, new BuildingTile(BuildingTile.Type.TOWN_CENTER, p));
-        updateFogOfWar(new Position(width / 2, height / 2));
-    }
-
-    private void updateFogOfWar(Position position) {
-        int radius = getTile(position).getRadius();
-        if (radius <= 0)
-            return;
-        int x0 = position.x;
-        int y0 = position.y;
-        for (int y = -radius; y <= radius; y++) {
-            for (int x = -radius; x <= radius; x++) {
-                if (x * x + y * y <= radius * radius) {
-                    fogOfWar.set(new Position(x0 + x, y0 + y), 1);
-                }
-            }
-        }
-        int gradientRadius = 32;
-        x0 = position.x;
-        y0 = position.y;
-        for (int y = -gradientRadius; y <= gradientRadius; y++) {
-            for (int x = -gradientRadius; x <= gradientRadius; x++) {
-                if (x * x + y * y <= gradientRadius * gradientRadius) {
-                    Position p = new Position(x0 + x, y0 + y);
-                    if (fogOfWar.get(p) < 1) {
-                        fogOfWar.set(p, ((float) (numberOfNearVisibleTiles(p, gradientRadius / 2))) / (gradientRadius * gradientRadius));
-                    }
-                }
-            }
-        }
-    }
-
-    private int numberOfNearVisibleTiles(Position position, int radius) {
-        int total = 0;
-        for (int i = -radius; i <= radius; i++) {
-            for (int j = -radius; j <= radius; j++) {
-                if (i * i + j * j <= radius * radius && fogOfWar.get(new Position(position.x + i, position.y + j)) == 1)
-                    total++;
-            }
-        }
-        return total;
+        fogOfWar.updateAtPosition(p, getTile(p).getRadius());
     }
 
     public Tile getTile(Position position) {
@@ -111,7 +73,7 @@ public class Board implements Drawable {
         if (GameManager.player.hasEnoughResources(type.getCost()) && fogOfWar.get(position) == 1) {
             GameManager.player.applyResourceCost(type.getCost());
             setTile(position, new BuildingTile(type, position));
-            updateFogOfWar(position);
+            fogOfWar.updateAtPosition(position, getTile(position).getRadius());
         }
     }
 
@@ -160,8 +122,9 @@ public class Board implements Drawable {
         if (selectedTilePosition != null) {
             drawTileRadiusIndicator();
         }
-        if (GameManager.useFogOfWar)
-            drawFogOfWar();
+        if (GameManager.useFogOfWar) {
+            fogOfWar.draw();
+        }
     }
 
     private void drawBoardBackground() {
@@ -189,22 +152,6 @@ public class Board implements Drawable {
             for (int j = minY; j < maxY; j++) {
                 if (tiles[i][j] != null && (!GameManager.useFogOfWar || fogOfWar.get(tiles[i][j].getPosition()) == 1)) {
                     tiles[i][j].draw();
-                }
-            }
-        }
-    }
-
-    private void drawFogOfWar() {
-        float dx = GameManager.camera.getPosition().x % GameManager.tileSize;
-        float dy = GameManager.camera.getPosition().y % GameManager.tileSize;
-        for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
-            for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
-                Position tilePosition = new Position((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
-                if (fogOfWar.get(tilePosition) < 1) {
-                    Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
-                    int a = (int) (255 * fogOfWar.get(tilePosition));
-                    Color c = new Color(a, a, a, 255 - a);
-                    Shape2D.drawRectangle(p, GameManager.tileSize, GameManager.tileSize, 0, c, true);
                 }
             }
         }
