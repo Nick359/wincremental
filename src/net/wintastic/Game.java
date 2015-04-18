@@ -109,7 +109,7 @@ public class Game implements LWJGLGame {
 
     private void updateFPS() {
         if (getTime() - lastFPS > 1000) {
-            Display.setTitle("FPS: " + fps);
+            Display.setTitle("FPS: " + fps + ", Zoom: " + ((float)GameManager.tileSize / GameManager.defaultTileSize * 100f) + "%");
             fps = 0;
             lastFPS += 1000;
         }

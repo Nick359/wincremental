@@ -15,6 +15,7 @@ public class GameManager {
     public static boolean useBuildingCost = false;
 
     public static int tileSize = 16;
+    public static final int defaultTileSize = 16;
     public static final int iconSize = 32;
     public static final int menuBarWidth = 320;
     public static final int toolbarHeight = 32;
