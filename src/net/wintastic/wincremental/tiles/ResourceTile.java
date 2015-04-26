@@ -1,75 +1,66 @@
 package net.wintastic.wincremental.tiles;
 
-import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
-import net.wintastic.wincremental.Player;
-import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
-
-import java.math.BigInteger;
 
 public class ResourceTile extends Tile {
 
-    public static enum ResourceTileType {
-        GRASS(AssetLibrary.grassTileSprite, null, 0),
-        GOLD(AssetLibrary.goldTileSprite, ReadableColor.ORANGE, 10),
-        WOOD(AssetLibrary.woodTileSprite, new Color(129, 55, 6), 20);
+    public enum Type {
+        WOOD(20, 0.04f, AssetLibrary.woodTileSprite),
+        GOLD(10, 0.002f, AssetLibrary.goldTileSprite);
 
-        Sprite sprite;
-        ReadableColor color;
-        int initialSize;
+        private int initialSize;
+        private float probability;
+        private Sprite sprite;
 
-        ResourceTileType(Sprite sprite, ReadableColor color, int initialSize) {
-            this.sprite = sprite;
-            this.color = color;
+        Type(int initialSize, float probability, Sprite sprite) {
             this.initialSize = initialSize;
+            this.probability = probability;
+            this.sprite = sprite;
         }
 
-        void clickAction() {
-            switch (this) {
-                case GOLD:
-                    GameManager.player.changeResource(Player.ResourceType.GOLD, BigInteger.ONE);
-                    break;
-                case WOOD:
-                    GameManager.player.changeResource(Player.ResourceType.WOOD, BigInteger.ONE);
-                    break;
-            }
+        public int getInitialSize() {
+            return initialSize;
+        }
+
+        public float getProbability() {
+            return probability;
+        }
+
+        public Sprite getSprite() {
+            return sprite;
         }
     }
 
-    public ResourceTileType type;
-    int currentSize;
+    private Type type;
+    private int size;
 
-    public ResourceTile(Pair<Integer> position) {
-        super(position);
-        this.type = ResourceTileType.GRASS;
-        this.currentSize = this.type.initialSize;
-    }
-
-    public ResourceTile(Pair<Integer> position, ResourceTileType type) {
+    public ResourceTile(Type type, Position position) {
         super(position);
         this.type = type;
-        this.currentSize = this.type.initialSize;
+        this.size = type.getInitialSize();
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     @Override
     public void clickAction() {
-        type.clickAction();
-        this.currentSize--;
-        if (currentSize == 0)
-            this.type = ResourceTileType.GRASS;
+        GameManager.board.gatherResource(getPosition());
     }
 
     @Override
-    protected Sprite getSprite() {
-        return type.sprite;
+    public Sprite getSprite() {
+        return type.getSprite();
     }
-
-    @Override
-    public ReadableColor getColor() {
-        return type.color;
-    }
-
 }

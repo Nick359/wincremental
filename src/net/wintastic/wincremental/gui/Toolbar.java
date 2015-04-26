@@ -12,12 +12,14 @@ import java.util.List;
 
 public class Toolbar implements Drawable {
 
-    List<ResourceDisplay> resourceDisplays;
-    float layerDepth;
-    boolean visible;
+    private final List<ResourceDisplay> resourceDisplays;
+    private final Clock clock;
+    private float layerDepth;
+    private boolean visible;
 
     public Toolbar() {
         resourceDisplays = new ArrayList<ResourceDisplay>();
+        clock = new Clock(new Vector2f(0, 0));
         layerDepth = 0.4f;
         visible = true;
         init();
@@ -35,8 +37,8 @@ public class Toolbar implements Drawable {
     }
 
     public void update() {
-        for (int i = 0; i < resourceDisplays.size(); i++) {
-            resourceDisplays.get(i).update();
+        for (ResourceDisplay resourceDisplay : resourceDisplays) {
+            resourceDisplay.update();
         }
     }
 

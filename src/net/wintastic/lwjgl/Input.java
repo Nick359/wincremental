@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Input {
-    private static List<Integer> pressedKeys = new ArrayList<Integer>();
-    private static List<Integer> pressedButtons = new ArrayList<Integer>();
+    private static final List<Integer> pressedKeys = new ArrayList<Integer>();
+    private static final List<Integer> pressedButtons = new ArrayList<Integer>();
 
     public static boolean isKeyDown(int key) {
         return Keyboard.isKeyDown(key);
@@ -33,7 +33,7 @@ public abstract class Input {
     }
 
     public static boolean wasKeyDown(int key) {
-        return pressedKeys.contains((Integer) key);
+        return pressedKeys.contains(key);
     }
 
     public static boolean isButtonDown(int button) {
@@ -57,7 +57,7 @@ public abstract class Input {
     }
 
     public static boolean wasButtonDown(int button) {
-        return pressedButtons.contains((Integer) button);
+        return pressedButtons.contains(button);
     }
 
     public static int scrollWheel() {

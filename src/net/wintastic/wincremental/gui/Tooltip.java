@@ -7,10 +7,10 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Tooltip implements Drawable {
 
-    Icon parentIcon;
-    Text headerText;
-    Text bodyText;
-    Text footerText;
+    private final Icon parentIcon;
+    private Text headerText;
+    private Text bodyText;
+    private Text footerText;
     private float layerDepth;
     boolean visible;
 
@@ -40,6 +40,11 @@ public class Tooltip implements Drawable {
                 bodyText = new Text(new Vector2f(0f, 0f), "-20 WOOD     +100 CAPACITY", "Arial", 0, 12);
                 footerText = new Text(new Vector2f(0f, 0f), "A humble place to put your crap in.", "Arial", 2, 12, org.newdawn.slick.Color.white, 256, 0f);
                 break;
+            case OUTPOST:
+                headerText = new Text(new Vector2f(0f, 0f), "Outpost", "Arial", 1, 16);
+                bodyText = new Text(new Vector2f(0f, 0f), "-40 WOOD     -5 GOLD", "Arial", 0, 12);
+                footerText = new Text(new Vector2f(0f, 0f), "Sometimes it's nice to see where you're going.", "Arial", 2, 12);
+                break;
             case WOOD:
                 headerText = new Text(new Vector2f(0f, 0f), "Wood", "Arial", 1, 16);
                 bodyText = new Text(new Vector2f(0f, 0f), "You have " + GameManager.player.getWood() + " wood.", "Arial", 0, 12);
@@ -58,6 +63,8 @@ public class Tooltip implements Drawable {
             case TEST:
                 break;
             case TENT:
+            case STORAGE_SHED:
+            case OUTPOST:
                 break;
             case WOOD:
                 bodyText.setText("You have " + GameManager.player.getWood() + " wood.");

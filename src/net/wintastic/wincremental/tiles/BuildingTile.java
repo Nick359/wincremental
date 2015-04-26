@@ -1,63 +1,62 @@
 package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
-import net.wintastic.lwjgl.Pair;
 import net.wintastic.wincremental.AssetLibrary;
-import org.lwjgl.util.ReadableColor;
+import net.wintastic.wincremental.GameManager;
+import net.wintastic.wincremental.ResourceCost;
+
+import java.math.BigInteger;
 
 public class BuildingTile extends Tile {
 
-    public static enum BuildingTileType {
-        TOWN_CENTER(AssetLibrary.townCenterSprite, ReadableColor.BLACK, 16),
-        TENT(AssetLibrary.tentTileSprite, ReadableColor.BLACK, 0),
-        STORAGE_SHED(AssetLibrary.storageShedTileSprite, ReadableColor.BLACK, 0);
+    public enum Type {
+        TOWN_CENTER(16, new ResourceCost(BigInteger.valueOf(200), BigInteger.valueOf(200)), AssetLibrary.townCenterSprite),
+        TENT(0, new ResourceCost(BigInteger.valueOf(10), BigInteger.ZERO), AssetLibrary.tentTileSprite),
+        STORAGE_SHED(0, new ResourceCost(BigInteger.valueOf(20), BigInteger.ZERO), AssetLibrary.storageShedTileSprite),
+        OUTPOST(8, new ResourceCost(BigInteger.valueOf(40), BigInteger.valueOf(5)), AssetLibrary.outpostTileSprite);
 
-        Sprite sprite;
-        ReadableColor color;
-        int radiusSize;
+        private int radius;
+        private ResourceCost cost;
+        private Sprite sprite;
 
-        BuildingTileType(Sprite sprite, ReadableColor color, int radiusSize) {
+        Type(int radius, ResourceCost cost, Sprite sprite) {
+            this.radius = radius;
+            this.cost = cost;
             this.sprite = sprite;
-            this.color = color;
-            this.radiusSize = radiusSize;
+        }
+
+        public int getRadius() {
+            return radius;
+        }
+
+        public ResourceCost getCost() {
+            return cost;
+        }
+
+        public Sprite getSprite() {
+            return sprite;
         }
     }
 
-    public BuildingTileType type;
-    int radiusSize;
-    public boolean selected;
-    TileRadiusIndicator radiusIndicator;
+    private Type type;
 
-    public BuildingTile(Pair<Integer> position, BuildingTileType type) {
+    public BuildingTile(Type type, Position position) {
         super(position);
         this.type = type;
-        this.radiusSize = type.radiusSize;
-        this.selected = false;
-        radiusIndicator = new TileRadiusIndicator(radiusSize, this);
+    }
+
+    @Override
+    public int getRadius() {
+        return type.getRadius();
     }
 
     @Override
     public void clickAction() {
-        selected = true;
-        Board.selectedTile = this;
-
-        if (radiusSize > 0)
-        radiusIndicator.visible = true;
-    }
-
-    public void toggleSelected(){
-        selected = !selected;
-        radiusIndicator.visible = false;
+        GameManager.board.selectedTilePosition = getPosition();
     }
 
     @Override
-    protected Sprite getSprite() {
-        return type.sprite;
+    public Sprite getSprite() {
+        return type.getSprite();
     }
-
-    @Override
-    public ReadableColor getColor() {
-        return type.color;
-    }
-
 }

@@ -13,10 +13,10 @@ import org.lwjgl.opengl.GL11;
 
 public class Game implements LWJGLGame {
 
-    long fps;
-    long lastFPS;
+    private long fps;
+    private long lastFPS;
 
-    GameManager gameManager = new GameManager();
+    private final GameManager gameManager = new GameManager();
 
     @Override
     public void start() {
@@ -68,7 +68,7 @@ public class Game implements LWJGLGame {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    public static void setDisplayMode(int width, int height, boolean fullscreen) {
+    private static void setDisplayMode(int width, int height, boolean fullscreen) {
         try {
             DisplayMode targetDisplayMode = null;
 
@@ -76,9 +76,7 @@ public class Game implements LWJGLGame {
                 DisplayMode[] modes = Display.getAvailableDisplayModes();
                 int freq = 0;
 
-                for (int i = 0; i < modes.length; i++) {
-                    DisplayMode current = modes[i];
-
+                for (DisplayMode current : modes) {
                     if ((current.getWidth() == width) && (current.getHeight() == height)) {
                         if (targetDisplayMode == null || current.getFrequency() >= freq && current.getBitsPerPixel() > targetDisplayMode.getBitsPerPixel()) {
                             targetDisplayMode = current;
@@ -109,16 +107,16 @@ public class Game implements LWJGLGame {
         }
     }
 
-    public void updateFPS() {
+    private void updateFPS() {
         if (getTime() - lastFPS > 1000) {
-            Display.setTitle("FPS: " + fps);
+            Display.setTitle("FPS: " + fps + ", Zoom: " + ((float)GameManager.tileSize / GameManager.defaultTileSize * 100f) + "%");
             fps = 0;
             lastFPS += 1000;
         }
         fps++;
     }
 
-    public long getTime() {
+    private long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }
 

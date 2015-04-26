@@ -10,14 +10,11 @@ import java.util.List;
 
 public class MenuBar implements Drawable {
 
-    List<IconGrid> iconGrids;
-    Text buildingLabel;
+    private final List<IconGrid> iconGrids;
+    private Text buildingLabel;
     public static Icon selectedIcon;
-
-    Minimap minimap;
-
-    float layerDepth;
-    boolean visible;
+    private float layerDepth;
+    private boolean visible;
 
     public MenuBar() {
         iconGrids = new ArrayList<IconGrid>();
@@ -32,8 +29,6 @@ public class MenuBar implements Drawable {
         IconGrid buildingGrid = new IconGrid(IconGrid.GridType.BUILDING, new Vector2f(10f, 32f), 4, 4, 6);
         iconGrids.add(buildingGrid);
         buildingLabel = new Text(new Vector2f(32f, 40f), "Buildings", "Arial", 1, 16, org.newdawn.slick.Color.black, 300, 0f);
-
-        minimap = new Minimap(GameManager.board, GameManager.menuBarWidth, GameManager.menuBarWidth*2/3); //TODO: change hardcoded value to something better
     }
 
     private boolean mouseInMenu() {
@@ -45,11 +40,10 @@ public class MenuBar implements Drawable {
             if (selectedIcon != null)
                 selectedIcon.selected = false;
 
-            for (int i = 0; i < iconGrids.size(); i++) {
-                selectedIcon = iconGrids.get(i).getSelectedIcon();
+            for (IconGrid iconGrid : iconGrids) {
+                selectedIcon = iconGrid.getSelectedIcon();
             }
         }
-        minimap.update();
     }
 
     @Override

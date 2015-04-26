@@ -15,6 +15,7 @@ public class Icon implements Drawable {
         TEST(AssetLibrary.testIconSprite),
         TENT(AssetLibrary.tentIconSprite),
         STORAGE_SHED(AssetLibrary.storageShedIconSprite),
+        OUTPOST(AssetLibrary.outpostIconSprite),
         GOLD(AssetLibrary.goldIconSprite),
         WOOD(AssetLibrary.woodIconSprite);
 
@@ -23,18 +24,19 @@ public class Icon implements Drawable {
 
         IconType(Sprite sprite) {
             this.sprite = sprite;
-            this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite;
+            this.selectedSprite = AssetLibrary.iconSelectedMarkerSprite; //TODO: Either remove selectedSprite as it is always constant, or add new types of markers
         }
 
-        public BuildingTile.BuildingTileType getBuildingTileType(){
-            switch(this){
+        public BuildingTile.Type getBuildingTileType() {
+            switch (this) {
                 case TENT:
-                    return BuildingTile.BuildingTileType.TENT;
+                    return BuildingTile.Type.TENT;
                 case STORAGE_SHED:
-                    return BuildingTile.BuildingTileType.STORAGE_SHED;
-                default:
-                    return null;
+                    return BuildingTile.Type.STORAGE_SHED;
+                case OUTPOST:
+                    return BuildingTile.Type.OUTPOST;
             }
+            return null;
         }
 
         //TODO Add a click action for icons
@@ -43,27 +45,23 @@ public class Icon implements Drawable {
         //  }
     }
 
-    public IconType type;
-    Vector2f position;
-    Tooltip tooltip;
+    public final IconType type;
+    private Vector2f position;
+    private final Tooltip tooltip;
     public boolean selected;
-    float layerDepth;
-    boolean visible;
+    private float layerDepth;
+    private boolean visible;
 
-    public Icon() {
-        this(IconType.TEST, new Vector2f(0f, 0f), false);
+    public Icon(IconType type) {
+        this(type, new Vector2f(0f, 0f));
     }
 
-    public Icon(IconType type, boolean visible) {
-        this(type, new Vector2f(0f, 0f), visible);
-    }
-
-    public Icon(IconType type, Vector2f position, boolean visible) {
+    public Icon(IconType type, Vector2f position) {
         this.type = type;
         this.position = position;
         this.layerDepth = 0.6f;
         this.selected = false;
-        this.visible = visible;
+        this.visible = true;
         tooltip = new Tooltip(this);
 
         DrawBatch.add(this);
@@ -99,11 +97,7 @@ public class Icon implements Drawable {
         }
         type.sprite.position = position;
         type.sprite.draw();
-        if (contains(Input.mousePosition())) {
-            tooltip.visible = true;
-        } else {
-            tooltip.visible = false;
-        }
+        tooltip.visible = contains(Input.mousePosition());
     }
 
     @Override
@@ -117,8 +111,7 @@ public class Icon implements Drawable {
             return -1;
         else if (this.layerDepth > o.getLayerDepth())
             return 1;
-        else
-            return 0;
+        return 0;
     }
 
 }

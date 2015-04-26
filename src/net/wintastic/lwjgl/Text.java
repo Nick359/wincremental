@@ -113,8 +113,9 @@ public class Text extends GameObject implements Drawable {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         for (int i = 0; i < lines.size(); i++) {
             this.font.drawString(this.position.x, this.position.y + this.getHeight() * i, this.lines.get(i), this.color);
-
         }
+        // Unbind the text texture so that it doesn't apply to subsequent draw calls
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
 
     @Override

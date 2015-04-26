@@ -13,12 +13,12 @@ public class IconGrid {
         TEST, BUILDING
     }
 
-    GridType type;
-    Vector2f position;
-    List<Icon> icons;
-    int verticalPadding;
-    int horizontalPadding;
-    int iconsPerLine;
+    private final GridType type;
+    private Vector2f position;
+    private List<Icon> icons;
+    private int verticalPadding;
+    private int horizontalPadding;
+    private int iconsPerLine;
 
     public IconGrid() {
         this(GridType.TEST, new Vector2f(0f, 0f), 4, 4, 6);
@@ -43,10 +43,12 @@ public class IconGrid {
 
         switch (type) {
             case BUILDING:
-                Icon tentIcon = new Icon(Icon.IconType.TENT, true);
+                Icon tentIcon = new Icon(Icon.IconType.TENT);
                 icons.add(tentIcon);
-                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED, true);
+                Icon storageShedIcon = new Icon(Icon.IconType.STORAGE_SHED);
                 icons.add(storageShedIcon);
+                Icon outpostIcon = new Icon(Icon.IconType.OUTPOST);
+                icons.add(outpostIcon);
                 break;
         }
         calculateIconPositions();
@@ -74,10 +76,10 @@ public class IconGrid {
     }
 
     public Icon getSelectedIcon() {
-        for (int i = 0; i < icons.size(); i++) {
-            if (icons.get(i).contains(Input.mousePosition())) {
-                icons.get(i).selected = true;
-                return icons.get(i);
+        for (Icon icon : icons) {
+            if (icon.contains(Input.mousePosition())) {
+                icon.selected = true;
+                return icon;
             }
         }
         return null;
