@@ -68,9 +68,10 @@ public class FogOfWar {
         for (int i = 0; i <= GameManager.viewportWidth + 1; i++) {
             for (int j = 0; j <= GameManager.viewportHeight + 1; j++) {
                 Position tilePosition = new Position((int) (GameManager.camera.getPosition().x / GameManager.tileSize + i), (int) (GameManager.camera.getPosition().y / GameManager.tileSize + j));
-                if (get(tilePosition) < 1) {
+                float f = get(tilePosition);
+                if (f > 0 && f < 1) {
                     Vector2f p = new Vector2f(i * GameManager.tileSize - dx + GameManager.menuBarWidth, j * GameManager.tileSize - dy + GameManager.toolbarHeight);
-                    int a = (int) (255 * get(tilePosition));
+                    int a = (int) (255 * f);
                     Color c = new Color(a, a, a, 255 - a);
                     Shape2D.drawRectangle(p, GameManager.tileSize, GameManager.tileSize, 0, c, true);
                 }
