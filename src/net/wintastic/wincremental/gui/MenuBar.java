@@ -13,11 +13,13 @@ public class MenuBar implements Drawable {
     private final List<IconGrid> iconGrids;
     private Text buildingLabel;
     public static Icon selectedIcon;
+    private Minimap minimap;
     private float layerDepth;
     private boolean visible;
 
     public MenuBar() {
         iconGrids = new ArrayList<IconGrid>();
+        minimap = new Minimap(GameManager.board, GameManager.menuBarWidth, GameManager.menuBarWidth * 2 / 3); //TODO: change hardcoded to better version
         layerDepth = 0.4f;
         visible = true;
         init();
@@ -44,6 +46,7 @@ public class MenuBar implements Drawable {
                 selectedIcon = iconGrid.getSelectedIcon();
             }
         }
+        minimap.update(false);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.math.BigInteger;
 public class Board implements Drawable {
 
     private Tile[][] tiles;
-    private FogOfWar fogOfWar;
+    public FogOfWar fogOfWar;
     private final int width, height;
     public Position selectedTilePosition;
     private boolean visible;

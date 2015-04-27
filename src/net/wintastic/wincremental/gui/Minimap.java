@@ -2,12 +2,11 @@ package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;
-import net.wintastic.lwjgl.Pair;
 import net.wintastic.lwjgl.Shape2D;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.tiles.Board;
-import net.wintastic.wincremental.tiles.ResourceTile;
+import net.wintastic.wincremental.tiles.Position;
 import net.wintastic.wincremental.tiles.Tile;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector2f;
@@ -19,7 +18,7 @@ public class Minimap implements Drawable {
     int height;
     int actualWidth;
     int actualHeight;
-    Pair<Integer> topLeftTile;
+    Position topLeftTile;
     int borderWidth;
     float layerDepth;
     boolean visible;
@@ -41,25 +40,31 @@ public class Minimap implements Drawable {
 
         this.pixels = new ReadableColor[actualWidth][actualHeight];
         this.prevTime = System.currentTimeMillis();
+        this.update(true);
 
         DrawBatch.add(this);
     }
 
-    private Pair<Integer> getInitialTopLeftTile() {
-        int x = (int) MathHelper.clamp(GameManager.camera.position.x / GameManager.tileSize - width / 2, 0, GameManager.mapWidth);
-        int y = (int) MathHelper.clamp(GameManager.camera.position.y / GameManager.tileSize - height / 2, 0, GameManager.mapHeight);
-        return new Pair<Integer>(x, y);
+    private Position getInitialTopLeftTile() {
+        int x = (int) MathHelper.clamp(GameManager.camera.getPosition().x / GameManager.tileSize - width / 2, 0, GameManager.mapWidth);
+        int y = (int) MathHelper.clamp(GameManager.camera.getPosition().y / GameManager.tileSize - height / 2, 0, GameManager.mapHeight);
+        return new Position(x, y);
     }
 
-    public void update() {
-        if (System.currentTimeMillis() - prevTime > 500) {
-            System.out.println("!");
+    public void update(boolean force) {
+        if (force || System.currentTimeMillis() - prevTime > 2000) {
             prevTime = System.currentTimeMillis();
             for (int i = 0; i < actualWidth; i++) {
                 for (int j = 0; j < actualHeight; j++) {
-                    Tile t = GameManager.board.getTile(new Pair<Integer>(topLeftTile.first + i, topLeftTile.second + j));
-                    if (!(t instanceof ResourceTile && ((ResourceTile) t).type == ResourceTile.ResourceTileType.GRASS))
-                        pixels[i][j] = t.getColor();
+                    Position p = new Position(topLeftTile.x + i, topLeftTile.y + j);
+                    if (board.fogOfWar.get(p) == 1) {
+                        Tile t = board.getTile(p);
+                        if (t == null) {
+                            pixels[i][j] = ReadableColor.GREEN;
+                        } else {
+                            pixels[i][j] = board.getTile(p).getColor();
+                        }
+                    }
                 }
             }
         }
@@ -79,7 +84,7 @@ public class Minimap implements Drawable {
     public void draw() {
         Shape2D.drawRectangle(position, width, height, 0f, ReadableColor.LTGREY, true);
         Shape2D.drawRectangle(new Vector2f(position.x + borderWidth, position.y + borderWidth),
-                width - borderWidth * 2, height - borderWidth * 2, 0f, ReadableColor.GREEN, true);
+                width - borderWidth * 2, height - borderWidth * 2, 0f, ReadableColor.BLACK, true);
         drawMinimapContents();
     }
 
@@ -88,7 +93,6 @@ public class Minimap implements Drawable {
             for (int j = 0; j < actualHeight; j++) {
                 if (pixels[i][j] != null)
                     Shape2D.drawPixel(new Vector2f(position.x + borderWidth + i, position.y + borderWidth + j), pixels[i][j]);
-
             }
         }
     }

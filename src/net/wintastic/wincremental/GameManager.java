@@ -32,8 +32,8 @@ public class GameManager {
     public void init() {
         player = new Player();
         camera = new Camera(new Vector2f((mapWidth - viewportWidth) * tileSize / 2, (mapHeight - viewportHeight) * tileSize / 2));
-        gui = new GUI();
         board = new Board();
+        gui = new GUI();
     }
 
     public void update() {
