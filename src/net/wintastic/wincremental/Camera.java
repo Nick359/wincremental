@@ -58,7 +58,7 @@ public class Camera {
         int scrollWheel = Input.scrollWheel();
         if (scrollWheel != 0) {
             Position p = Board.getMouseTilePosition();
-            if (GameManager.tileSize + scrollWheel >= 1 && GameManager.tileSize + scrollWheel <= 128) {
+            if (GameManager.tileSize + scrollWheel >= 4 && GameManager.tileSize + scrollWheel <= 128) {
                 GameManager.tileSize += scrollWheel;
                 Tile.scaleX = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageWidth();
                 Tile.scaleY = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageHeight();
