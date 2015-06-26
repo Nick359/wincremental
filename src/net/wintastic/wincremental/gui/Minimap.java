@@ -64,6 +64,8 @@ public class Minimap implements Drawable {
                         } else {
                             pixels[i][j] = board.getTile(p).getColor();
                         }
+                    } else {
+                        pixels[i][j] = null;
                     }
                 }
             }
@@ -111,7 +113,6 @@ public class Minimap implements Drawable {
         Shape2D.drawRectangle(getRectPosition(), GameManager.viewportWidth, GameManager.viewportHeight, 0, ReadableColor.WHITE, false);
     }
 
-    // TODO: minimap does not update tiles that should be invisible
     private void drawMinimapContents() {
         for (int i = 0; i < actualWidth; i++) {
             for (int j = 0; j < actualHeight; j++) {
