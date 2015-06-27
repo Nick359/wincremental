@@ -29,7 +29,9 @@ public class Camera {
 
     public void update() {
         handleKeyboardInput();
-        handleMouseInput();
+        handleMouseBoardInput();
+        handleMouseMinimapInput();
+        handleZoomInput();
         updatePosition();
     }
 
@@ -44,28 +46,35 @@ public class Camera {
             move(Direction.RIGHT);
     }
 
-    private void handleMouseInput() {
-        if (Input.isButtonDown(2) && GameManager.board.mouseInBoard()) {
-            velocity = new Vector2f(0, 0);
-            if (prevMousePosition != null) {
-                Vector2f p = Input.mousePosition();
-                GameMathHelper.addVector(position, new Vector2f(prevMousePosition.x - p.x, prevMousePosition.y - p.y));
+    private void handleMouseBoardInput() {
+        if (GameHelper.mouseInBoard()) {
+            if (Input.isButtonDown(2)) {
+                velocity = new Vector2f(0, 0);
+                if (prevMousePosition != null) {
+                    Vector2f p = Input.mousePosition();
+                    GameMathHelper.addVector(position, new Vector2f(prevMousePosition.x - p.x, prevMousePosition.y - p.y));
+                }
+                prevMousePosition = Input.mousePosition();
+            } else {
+                prevMousePosition = null;
             }
-            prevMousePosition = Input.mousePosition();
-        } else {
-            prevMousePosition = null;
         }
-        int scrollWheel = Input.scrollWheel();
-        if (scrollWheel != 0) {
-            Position p = Board.getMouseTilePosition();
-            if (GameManager.tileSize + scrollWheel >= 4 && GameManager.tileSize + scrollWheel <= 128) {
-                GameManager.tileSize += scrollWheel;
-                Tile.scaleX = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageWidth();
-                Tile.scaleY = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageHeight();
-                GameManager.viewportWidth = (GameManager.resX - GameManager.menuBarWidth) / GameManager.tileSize;
-                GameManager.viewportHeight = (GameManager.resY - GameManager.toolbarHeight) / GameManager.tileSize;
-                GameManager.camera.position.x += scrollWheel * p.x;
-                GameManager.camera.position.y += scrollWheel * p.y;
+    }
+
+    private void handleZoomInput() {
+        if (GameHelper.mouseInBoard() || GameHelper.mouseInMinimap()) {
+            int scrollWheel = Input.scrollWheel();
+            if (scrollWheel != 0) {
+                Position p = Board.getMouseTilePosition();
+                if (GameManager.tileSize + scrollWheel >= 4 && GameManager.tileSize + scrollWheel <= 128) {
+                    GameManager.tileSize += scrollWheel;
+                    Tile.scaleX = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageWidth();
+                    Tile.scaleY = (float) GameManager.tileSize / AssetLibrary.grassTileSprite.texture.getImageHeight();
+                    GameManager.viewportWidth = (GameManager.resX - GameManager.menuBarWidth) / GameManager.tileSize;
+                    GameManager.viewportHeight = (GameManager.resY - GameManager.toolbarHeight) / GameManager.tileSize;
+                    GameManager.camera.position.x += scrollWheel * p.x;
+                    GameManager.camera.position.y += scrollWheel * p.y;
+                }
             }
         }
     }
@@ -76,6 +85,24 @@ public class Camera {
         GameMathHelper.clamp(velocity, -maxSpeed, maxSpeed, -maxSpeed, maxSpeed);
         GameMathHelper.clamp(position, 0, GameManager.mapWidth * GameManager.tileSize - GameManager.viewportWidth * GameManager.tileSize,
                 0, GameManager.mapHeight * GameManager.tileSize - GameManager.viewportHeight * GameManager.tileSize);
+    }
+
+    public void handleMouseMinimapInput() {
+        if (GameHelper.mouseInMinimap()) {
+            if (Input.isButtonPressed(0)) {
+                Position p = GameManager.minimap.getHoveredTile();
+                position = new Vector2f((p.x - GameManager.viewportWidth / 2) * GameManager.tileSize, (p.y - GameManager.viewportHeight / 2) * GameManager.tileSize);
+            } else if (Input.isButtonDown(0)) {
+                velocity = new Vector2f(0, 0);
+                if (prevMousePosition != null) {
+                    Vector2f p = Input.mousePosition();
+                    GameMathHelper.addVector(position, new Vector2f((p.x - prevMousePosition.x) * GameManager.tileSize, (p.y - prevMousePosition.y) * GameManager.tileSize));
+                }
+                prevMousePosition = Input.mousePosition();
+            } else {
+                prevMousePosition = null;
+            }
+        }
     }
 
     public void move(Direction direction) {

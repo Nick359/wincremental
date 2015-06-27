@@ -2,6 +2,7 @@ package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.wincremental.gui.GUI;
+import net.wintastic.wincremental.gui.Minimap;
 import net.wintastic.wincremental.tiles.Board;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -26,20 +27,23 @@ public class GameManager {
 
     public static Player player;
     public static Camera camera;
-    private GUI gui;
+    public static GUI gui;
     public static Board board;
+    public static Minimap minimap;
 
     public void init() {
         player = new Player();
         camera = new Camera(new Vector2f((mapWidth - viewportWidth) * tileSize / 2, (mapHeight - viewportHeight) * tileSize / 2));
-        board = new Board();
         gui = new GUI();
+        board = new Board();
+        minimap = new Minimap(GameManager.board, GameManager.menuBarWidth, GameManager.menuBarWidth * 2 / 3); //TODO: change hardcoded to better version
     }
 
     public void update() {
         camera.update();
         gui.update();
         board.update();
+        minimap.update(false);
     }
 
     public void draw() {

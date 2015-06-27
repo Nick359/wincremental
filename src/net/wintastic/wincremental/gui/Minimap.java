@@ -2,6 +2,7 @@ package net.wintastic.wincremental.gui;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;
+import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Shape2D;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.GameManager;
@@ -72,6 +73,20 @@ public class Minimap implements Drawable {
         }
     }
 
+    public boolean mouseInMinimap() {
+        return Input.mousePosition().x >= position.x + borderWidth && Input.mousePosition().x < position.x + width - borderWidth &&
+                Input.mousePosition().y >= position.y + borderWidth && Input.mousePosition().y < position.y + height - borderWidth;
+    }
+
+    public Position getHoveredTile() {
+        if (mouseInMinimap()) {
+            return new Position(topLeftTile.x + (int) (Input.mousePosition().x - borderWidth - position.x),
+                    topLeftTile.y + (int) (Input.mousePosition().y - borderWidth - position.y));
+        }
+        return null;
+    }
+
+    //TODO: if dragging minimap rectangle, move mouse to keep up with rectangle
     private boolean updateRectPosition() {
         Position prevTopLeftTile = topLeftTile;
         if (GameManager.camera.getPosition().x / GameManager.tileSize < topLeftTile.x) {
