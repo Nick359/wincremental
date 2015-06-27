@@ -1,4 +1,4 @@
-package net.wintastic.wincremental.gui;
+package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.lwjgl.Drawable;

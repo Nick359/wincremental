@@ -2,7 +2,6 @@ package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.DrawBatch;
 import net.wintastic.wincremental.gui.GUI;
-import net.wintastic.wincremental.gui.Minimap;
 import net.wintastic.wincremental.tiles.Board;
 import org.lwjgl.util.vector.Vector2f;
 
