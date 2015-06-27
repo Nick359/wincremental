@@ -5,7 +5,6 @@ import net.wintastic.lwjgl.Drawable;
 import net.wintastic.lwjgl.Input;
 import net.wintastic.lwjgl.Shape2D;
 import net.wintastic.util.math.MathHelper;
-import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.tiles.Board;
 import net.wintastic.wincremental.tiles.Position;
 import net.wintastic.wincremental.tiles.Tile;
@@ -76,6 +75,12 @@ public class Minimap implements Drawable {
     public boolean mouseInMinimap() {
         return Input.mousePosition().x >= position.x + borderWidth && Input.mousePosition().x < position.x + width - borderWidth &&
                 Input.mousePosition().y >= position.y + borderWidth && Input.mousePosition().y < position.y + height - borderWidth;
+    }
+
+    public boolean mouseInRect() {
+        Vector2f m = Input.mousePosition();
+        Vector2f p = getRectPosition();
+        return m.x >= p.x && m.x < p.x + GameManager.viewportWidth && m.y >= p.y && m.y < p.y + GameManager.viewportHeight;
     }
 
     public Position getHoveredTile() {

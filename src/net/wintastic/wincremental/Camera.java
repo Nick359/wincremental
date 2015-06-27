@@ -89,10 +89,11 @@ public class Camera {
 
     public void handleMouseMinimapInput() {
         if (GameHelper.mouseInMinimap()) {
-            if (Input.isButtonPressed(0)) {
+            if (Input.isButtonPressed(0) && !GameManager.minimap.mouseInRect()) {
                 Position p = GameManager.minimap.getHoveredTile();
                 position = new Vector2f((p.x - GameManager.viewportWidth / 2) * GameManager.tileSize, (p.y - GameManager.viewportHeight / 2) * GameManager.tileSize);
-            } else if (Input.isButtonDown(0)) {
+            }
+            if (Input.isButtonDown(0)) {
                 velocity = new Vector2f(0, 0);
                 if (prevMousePosition != null) {
                     Vector2f p = Input.mousePosition();
