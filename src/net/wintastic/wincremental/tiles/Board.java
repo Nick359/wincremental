@@ -5,6 +5,7 @@ import net.wintastic.lwjgl.Drawable;
 import net.wintastic.lwjgl.Input;
 import net.wintastic.util.math.MathHelper;
 import net.wintastic.wincremental.AssetLibrary;
+import net.wintastic.wincremental.GameHelper;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.Player;
 import net.wintastic.wincremental.gui.MenuBar;
@@ -15,7 +16,7 @@ import java.math.BigInteger;
 public class Board implements Drawable {
 
     private Tile[][] tiles;
-    private FogOfWar fogOfWar;
+    public FogOfWar fogOfWar;
     private final int width, height;
     public Position selectedTilePosition;
     private boolean visible;
@@ -57,7 +58,7 @@ public class Board implements Drawable {
     }
 
     public void update() {
-        if (mouseInBoard() && Input.isButtonPressed(0)) {
+        if (GameHelper.mouseInBoard() && Input.isButtonPressed(0)) {
             selectedTilePosition = null;
             Position p = getMouseTilePosition();
             Tile t = getTile(p);
@@ -80,10 +81,6 @@ public class Board implements Drawable {
     public static Position getMouseTilePosition() {
         return new Position((int) ((Input.mousePosition().x - GameManager.menuBarWidth + GameManager.camera.getPosition().x) / GameManager.tileSize),
                 (int) ((Input.mousePosition().y - GameManager.toolbarHeight + GameManager.camera.getPosition().y) / GameManager.tileSize));
-    }
-
-    public boolean mouseInBoard() {
-        return Input.mousePosition().x >= GameManager.menuBarWidth && Input.mousePosition().x < GameManager.resX && Input.mousePosition().y >= GameManager.toolbarHeight && Input.mousePosition().y < GameManager.resY;
     }
 
     public void gatherResource(Position position) {

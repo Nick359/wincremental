@@ -68,4 +68,16 @@ public abstract class Input {
     public static Vector2f mousePosition() {
         return new Vector2f(Mouse.getX(), Display.getHeight() - Mouse.getY());
     }
+
+    public static void setMousePosition(int x, int y) {
+        Mouse.setCursorPosition(x, Display.getHeight() - y);
+    }
+
+    public static void moveMousePosition(int x, int y) {
+        Mouse.setCursorPosition(Mouse.getX() + x, Mouse.getY() - y);
+    }
+
+    public static void setMouseVisible(boolean showMouse) {
+        Mouse.setGrabbed(!showMouse);
+    }
 }

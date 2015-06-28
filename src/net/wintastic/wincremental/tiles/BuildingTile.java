@@ -4,6 +4,7 @@ import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
 import net.wintastic.wincremental.ResourceCost;
+import org.lwjgl.util.ReadableColor;
 
 import java.math.BigInteger;
 
@@ -58,5 +59,10 @@ public class BuildingTile extends Tile {
     @Override
     public Sprite getSprite() {
         return type.getSprite();
+    }
+
+    @Override
+    public ReadableColor getColor() {
+        return ReadableColor.ORANGE;
     }
 }

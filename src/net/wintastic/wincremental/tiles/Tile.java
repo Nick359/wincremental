@@ -2,6 +2,7 @@ package net.wintastic.wincremental.tiles;
 
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.GameManager;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Tile {
@@ -33,6 +34,8 @@ public abstract class Tile {
     public abstract void clickAction();
 
     public abstract Sprite getSprite();
+
+    public abstract ReadableColor getColor();
 
     public void draw() {
         Sprite s = getSprite();

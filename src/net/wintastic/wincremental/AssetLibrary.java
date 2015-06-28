@@ -30,4 +30,7 @@ public abstract class AssetLibrary {
     public static final Sprite goldIconSprite = new Sprite("res/sprites/icons/goldIcon.png");
     public static final Sprite woodIconSprite = new Sprite("res/sprites/icons/woodIcon.png");
 
+    //Cursor
+    public static final Sprite cursorSprite = new Sprite("res/sprites/cursor.png");
+
 }

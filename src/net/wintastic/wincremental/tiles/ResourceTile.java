@@ -3,6 +3,7 @@ package net.wintastic.wincremental.tiles;
 import net.wintastic.lwjgl.Sprite;
 import net.wintastic.wincremental.AssetLibrary;
 import net.wintastic.wincremental.GameManager;
+import org.lwjgl.util.ReadableColor;
 
 public class ResourceTile extends Tile {
 
@@ -62,5 +63,10 @@ public class ResourceTile extends Tile {
     @Override
     public Sprite getSprite() {
         return type.getSprite();
+    }
+
+    @Override
+    public ReadableColor getColor() {
+        return ReadableColor.RED;
     }
 }
