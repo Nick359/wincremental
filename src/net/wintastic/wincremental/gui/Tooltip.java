@@ -87,10 +87,11 @@ public class Tooltip implements Drawable {
 
     @Override
     public void draw() {
-        Shape2D.drawRectangle(Input.mousePosition(), 300, 200, 0f, new Color(200, 200, 200), true);
-        headerText.position = new Vector2f(Input.mousePosition().x + 12f, Input.mousePosition().y + 6f);
-        bodyText.position = new Vector2f(Input.mousePosition().x + 12f, Input.mousePosition().y + 32f);
-        footerText.position = new Vector2f(Input.mousePosition().x + 12f, Input.mousePosition().y + 128f);
+        Vector2f p = new Vector2f(Input.mousePosition().x + 18, Input.mousePosition().y + 18);
+        Shape2D.drawRectangle(p, 300, 200, 0f, new Color(200, 200, 200), true);
+        headerText.position = new Vector2f(p.x + 12f, p.y + 6f);
+        bodyText.position = new Vector2f(p.x + 12f, p.y + 32f);
+        footerText.position = new Vector2f(p.x + 12f, p.y + 128f);
         headerText.draw();
         bodyText.draw();
         footerText.draw();

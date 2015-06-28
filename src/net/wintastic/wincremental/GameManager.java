@@ -1,8 +1,11 @@
 package net.wintastic.wincremental;
 
 import net.wintastic.lwjgl.DrawBatch;
+import net.wintastic.lwjgl.Input;
+import net.wintastic.lwjgl.Shape2D;
 import net.wintastic.wincremental.gui.GUI;
 import net.wintastic.wincremental.tiles.Board;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.vector.Vector2f;
 
 public class GameManager {
@@ -10,6 +13,7 @@ public class GameManager {
     public static final int resX = 1280;
     public static final int resY = 720;
     public static boolean fullscreen = false;
+    public static boolean showMouse = false;
 
     public static boolean useFogOfWar = true;
     public static boolean useBuildingCost = false;
@@ -36,6 +40,7 @@ public class GameManager {
         gui = new GUI();
         board = new Board();
         minimap = new Minimap(GameManager.board, GameManager.menuBarWidth, GameManager.menuBarWidth * 2 / 3); //TODO: change hardcoded to better version
+        Input.setMouseVisible(showMouse);
     }
 
     public void update() {
@@ -47,6 +52,11 @@ public class GameManager {
 
     public void draw() {
         DrawBatch.draw();
+        if(!showMouse) {
+            AssetLibrary.cursorSprite.position = Input.mousePosition();
+            AssetLibrary.cursorSprite.draw();
+        }
+
     }
 
 }
